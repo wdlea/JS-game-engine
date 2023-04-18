@@ -19,7 +19,9 @@ export class GameObject {
         return this.components
     }
 
-    public _Awake(): void { this.components.forEach((component: IComponent) => component.Awake()) }
+    public _Awake(): void {
+        this.components.forEach((component: IComponent) => component.Awake())
+    }
     public _Update(): void {
         this.components.forEach(
             (component: IComponent) => {
@@ -61,12 +63,15 @@ export class GameObject {
         return ret;
     }
     public AddComponent(component: IComponent) {
-        component.Awake()
-        // component.Start()
-        this.components.push(component);
+        if (component.IsCompatable(this)) {
+            component.Awake()
+            // component.Start()
+            this.components.push(component);
 
-        if (IsRenderer(component)) {
-            this.renderers.push(component)
+            if (IsRenderer(component)) {
+                this.renderers.push(component)
+            }
         }
+
     }
 }
