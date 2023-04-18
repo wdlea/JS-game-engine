@@ -1,10 +1,14 @@
-import { Game } from ".";
+/**
+ * This file contains the Entity class, which is the smallest thing that can interact with the game -An Atomic
+ */
+
+import { Game } from "./game";
 import { IComponent } from "./component";
 import { IRenderer, IsRenderer } from "./renderer";
 
 
-/**A GameObject is the smallest possible thing that can interact with the game, it has zero functionality on its own */
-export class GameObject {
+/**A Entity is the smallest possible thing that can interact with the game, it has zero functionality on its own */
+export class Entity {
 
     private components: Array<IComponent> = [];
     private renderers: Array<IRenderer> = [];
@@ -43,7 +47,7 @@ export class GameObject {
         )
     }
 
-    /** Gets the first compoonent added of the specific type, found by calling IComponent.WhoAmI
+    /** Gets the first component added of the specific type, found by calling IComponent.WhoAmI
      * @param type string, compared to every components WhoAmI fuction
      * @returns The component found, if any, otheriwse null
      */
@@ -75,7 +79,7 @@ export class GameObject {
     }
 
     /**
-     * Appends a component to the GameObjects componenet
+     * Appends a component to the Entities componenet
      * @param component IComponent, the component to add
      */
     public AddComponent(component: IComponent) {

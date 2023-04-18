@@ -1,8 +1,8 @@
-import { Game } from ".";
-import { GameObject } from "./object";
+import { Game } from "./game";
+import { Entity } from "./entity";
 
 export class Scene {
-    public objects: Array<GameObject> = [];//contains objectionable content
+    public objects: Array<Entity> = [];//contains objectionable content
 
     public Load(g: Game) {
         g.ActiveScene = this
@@ -12,7 +12,7 @@ export class Scene {
     }
     public _Update() {
         this.objects.forEach(
-            (object: GameObject) => {
+            (object: Entity) => {
                 object._Update();
             }
         )
