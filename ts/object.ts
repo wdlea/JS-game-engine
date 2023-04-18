@@ -1,10 +1,18 @@
+import { Game } from ".";
 import { IComponent } from "./component";
+import { IRenderer, IsRenderer } from "./renderer";
 
 export class GameObject {
+
     private components: Array<IComponent> = [];
+    private renderers: Array<IRenderer> = [];
 
-    constructor() {
-
+    constructor(game: Game) {
+        game.MakeDefaultComponents().forEach(
+            (component: IComponent) => {
+                this.AddComponent(component);
+            }
+        )
     }
 
     public get Components(): Array<IComponent> {
@@ -12,7 +20,25 @@ export class GameObject {
     }
 
     public _Awake(): void { this.components.forEach((component: IComponent) => component.Awake()) }
-    public _Update(): void { this.components.forEach((component: IComponent) => component.Update()) }
+    public _Update(): void {
+        this.components.forEach(
+            (component: IComponent) => {
+                if (component.enabled) {
+                    component.Update()
+                }
+            }
+        )
+    }
+    public _OnRender(context: WebGLRenderingContext): void {
+        this.renderers.forEach(
+            (renderer: IRenderer) => {
+                if (renderer.enabled) {
+                    renderer.OnRender(context)
+                }
+            }
+        )
+    }
+
 
     public GetComponentOfType(type: string): IComponent | null {
         for (let i = 0; i < this.components.length; i++) {
@@ -38,5 +64,9 @@ export class GameObject {
         component.Awake()
         // component.Start()
         this.components.push(component);
+
+        if (IsRenderer(component)) {
+            this.renderers.push(component)
+        }
     }
 }
