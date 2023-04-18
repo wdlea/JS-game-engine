@@ -1,0 +1,23 @@
+{
+  "name": "js-game-engine",
+  "version": "1.0.0",
+  "description": "My JS game engine",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdlea/JS-game-engine.git"
+  },
+  "author": "William L",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wdlea/JS-game-engine/issues"
+  },
+  "homepage": "https://github.com/wdlea/JS-game-engine#readme",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
