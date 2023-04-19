@@ -1,8 +1,14 @@
-import { Game } from ".";
+/**
+ * This file contains the Entity class, which is the smallest thing that can interact with the game -An Atomic
+ */
+
+import { Game } from "./game";
 import { IComponent } from "./component";
 import { IRenderer, IsRenderer } from "./renderer";
 
-export class GameObject {
+
+/**A Entity is the smallest possible thing that can interact with the game, it has zero functionality on its own */
+export class Entity {
 
     private components: Array<IComponent> = [];
     private renderers: Array<IRenderer> = [];
@@ -41,7 +47,10 @@ export class GameObject {
         )
     }
 
-
+    /** Gets the first component added of the specific type, found by calling IComponent.WhoAmI
+     * @param type string, compared to every components WhoAmI fuction
+     * @returns The component found, if any, otheriwse null
+     */
     public GetComponentOfType(type: string): IComponent | null {
         for (let i = 0; i < this.components.length; i++) {
             const component = this.components[i];
@@ -51,6 +60,12 @@ export class GameObject {
         }
         return null;
     }
+
+    /**
+     * Much like GetComponentOfType, but returns all matches
+     * @param type string, compared to every components WhoAmI fuction
+     * @returns an array with all the components found, will be empty if there is no matches
+     */
     public GetComponentsOfType(type: string): Array<IComponent> {
         let ret: Array<IComponent> = []
 
@@ -62,6 +77,11 @@ export class GameObject {
         }
         return ret;
     }
+
+    /**
+     * Appends a component to the Entities componenet
+     * @param component IComponent, the component to add
+     */
     public AddComponent(component: IComponent) {
         if (component.IsCompatable(this)) {
             component.Awake()
