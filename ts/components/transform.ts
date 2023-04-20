@@ -3,8 +3,8 @@
  */
 
 import { mat4, vec3 } from "gl-matrix";
-import { IComponent } from "./component";
-import { Entity } from "./entity";
+import { IComponent } from "../component";
+import { Entity } from "../entity";
 
 export const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
 
@@ -15,6 +15,7 @@ let it_recieves = vec3.create();
  * Component that represents an objects tranformations in 3D space
  */
 export class Transform implements IComponent {
+
     public enabled = true;
 
     private position = vec3.create();
@@ -116,7 +117,8 @@ export class Transform implements IComponent {
     }
 
     IsCompatable(object: Entity): boolean { return true }
-    Awake(): void { }
+    OnAttach(): void { }
+    Start(): void { }
     Update(): void { }
     get WhoAmI(): string { return TRANSFORM_IDENTIFIER; }
 }

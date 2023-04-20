@@ -2,7 +2,9 @@
  * This file contains the base "Game" class,
  */
 
+import { mat4 } from "gl-matrix";
 import { IComponent } from "./component";
+import { RenderData, RenderQuality } from "./renderData";
 import { Scene } from "./scene";
 
 
@@ -10,12 +12,17 @@ const GL_CANVAS_SELECTOR = "canvas#render-canvas";
 
 export let OnUpdate: { (): void } | null = null;
 
+
+
+
 /**Base class for a game */
 export class Game {
     private Glcontext: WebGLRenderingContext;
     private GLinitialized: boolean = false;
 
     private activeScene: Scene;
+
+    private renderData: RenderData | null = null;
 
     /**Unloads current scene and replaces it with the new scene */
     set ActiveScene(newScene: Scene) {
@@ -42,7 +49,10 @@ export class Game {
     /**initializes WEBGL and begins render/update loop*/
     public DefaultStartup() {
         this.StartWEBGL();
+        this.SetSettings();
         this.StartRender();
+
+
     }
 
 
@@ -63,6 +73,24 @@ export class Game {
         while (1) {
             this.activeScene._Update();//update constantly
             if (OnUpdate !== null) { OnUpdate() }//allow other scripts to use CPU ticks 
+        }
+    }
+
+    public SetSettings(
+        renderQuality: RenderQuality = RenderQuality.Potato,
+        fov: number = 60 * Math.PI / 180,
+        aspectRatio: number = this.Glcontext.canvas.width / this.Glcontext.canvas.height
+    ) {
+
+        let viewMatrix = mat4.create()
+        mat4.perspective(viewMatrix, fov, aspectRatio, 0.1, 1000)
+
+        this.renderData = {
+            context: this.Glcontext,
+            viewMatrix: viewMatrix,
+            defaultProgram: undefined,
+
+            quality: renderQuality,
         }
     }
 

@@ -6,8 +6,6 @@
  * the interface for every component that wants the OnRender callback
  */
 export interface IRenderer {
-    discriminator: "RENDERER"
-
     enabled: boolean
 
     /**
@@ -23,5 +21,5 @@ export interface IRenderer {
  * @returns boolean, if the object is a renderer
  */
 export function IsRenderer(obj: any): obj is IRenderer {
-    return obj.discriminator === "RENDERER"
+    return "OnRender" in obj
 }

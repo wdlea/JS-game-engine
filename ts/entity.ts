@@ -26,7 +26,7 @@ export class Entity {
     }
 
     public _Awake(): void {
-        this.components.forEach((component: IComponent) => component.Awake())
+        this.components.forEach((component: IComponent) => component.Start())
     }
     public _Update(): void {
         this.components.forEach(
@@ -84,7 +84,7 @@ export class Entity {
      */
     public AddComponent(component: IComponent) {
         if (component.IsCompatable(this)) {
-            component.Awake()
+            component.OnAttach(this)
             // component.Start()
             this.components.push(component);
 
