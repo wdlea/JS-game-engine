@@ -2,7 +2,7 @@
  * Contains definition for the mesh renderer component
  */
 
-import { IComponent } from "../component";
+import { IComponent } from "../core/component";
 import { Entity } from "../entity";
 import { IRenderer } from "../renderer";
 import { Transform, TRANSFORM_IDENTIFIER } from "./transform";

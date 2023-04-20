@@ -3,8 +3,9 @@
  */
 
 import { mat4 } from "gl-matrix";
+import { FetchProgram } from "../fetch";
 import { IComponent } from "./component";
-import { RenderData, RenderQuality } from "./renderData";
+import { RenderData, RenderQuality } from "./rendering";
 import { Scene } from "./scene";
 
 
@@ -13,7 +14,7 @@ const GL_CANVAS_SELECTOR = "canvas#render-canvas";
 export let OnUpdate: { (): void } | null = null;
 
 
-
+export const DEFAULT_PROGRAM_NAME = "default"
 
 /**Base class for a game */
 export class Game {
@@ -76,11 +77,12 @@ export class Game {
         }
     }
 
-    public SetSettings(
+    public async SetSettings(
         renderQuality: RenderQuality = RenderQuality.Potato,
         fov: number = 60 * Math.PI / 180,
         aspectRatio: number = this.Glcontext.canvas.width / this.Glcontext.canvas.height
     ) {
+        const programPromise = FetchProgram(this.Glcontext, DEFAULT_PROGRAM_NAME);
 
         let viewMatrix = mat4.create()
         mat4.perspective(viewMatrix, fov, aspectRatio, 0.1, 1000)
@@ -88,7 +90,7 @@ export class Game {
         this.renderData = {
             context: this.Glcontext,
             viewMatrix: viewMatrix,
-            defaultProgram: undefined,
+            defaultProgram: await programPromise,
 
             quality: renderQuality,
         }
