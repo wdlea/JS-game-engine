@@ -2,7 +2,10 @@
  * This file contains the base "Game" class,
  */
 
+import { mat4 } from "gl-matrix";
+import { FetchProgram } from "../fetch";
 import { IComponent } from "./component";
+import { RenderData, RenderQuality } from "./rendering";
 import { Scene } from "./scene";
 
 
@@ -10,12 +13,17 @@ const GL_CANVAS_SELECTOR = "canvas#render-canvas";
 
 export let OnUpdate: { (): void } | null = null;
 
+
+export const DEFAULT_PROGRAM_NAME = "default"
+
 /**Base class for a game */
 export class Game {
     private Glcontext: WebGLRenderingContext;
     private GLinitialized: boolean = false;
 
     private activeScene: Scene;
+
+    private renderData: RenderData | null = null;
 
     /**Unloads current scene and replaces it with the new scene */
     set ActiveScene(newScene: Scene) {
@@ -42,7 +50,10 @@ export class Game {
     /**initializes WEBGL and begins render/update loop*/
     public DefaultStartup() {
         this.StartWEBGL();
+        this.SetSettings();
         this.StartRender();
+
+
     }
 
 
@@ -63,6 +74,25 @@ export class Game {
         while (1) {
             this.activeScene._Update();//update constantly
             if (OnUpdate !== null) { OnUpdate() }//allow other scripts to use CPU ticks 
+        }
+    }
+
+    public async SetSettings(
+        renderQuality: RenderQuality = RenderQuality.Potato,
+        fov: number = 60 * Math.PI / 180,
+        aspectRatio: number = this.Glcontext.canvas.width / this.Glcontext.canvas.height
+    ) {
+        const programPromise = FetchProgram(this.Glcontext, DEFAULT_PROGRAM_NAME);
+
+        let viewMatrix = mat4.create()
+        mat4.perspective(viewMatrix, fov, aspectRatio, 0.1, 1000)
+
+        this.renderData = {
+            context: this.Glcontext,
+            projectionMatrix: viewMatrix,
+            defaultProgram: await programPromise,
+
+            quality: renderQuality,
         }
     }
 
@@ -101,7 +131,8 @@ export class Game {
     private RecursivelyRender() {
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
 
-        this.ActiveScene._OnRender(this.Glcontext)
+        if (this.renderData === null) throw Error("renderData is null")
+        this.ActiveScene._OnRender(this.renderData)
 
         //recursive part
         requestAnimationFrame(this.RecursivelyRender)

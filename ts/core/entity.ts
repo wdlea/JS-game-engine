@@ -4,7 +4,7 @@
 
 import { Game } from "./game";
 import { IComponent } from "./component";
-import { IRenderer, IsRenderer } from "./renderer";
+import { IRenderer, IsRenderer, RenderData } from "./rendering";
 
 
 /**A Entity is the smallest possible thing that can interact with the game, it has zero functionality on its own */
@@ -26,7 +26,7 @@ export class Entity {
     }
 
     public _Awake(): void {
-        this.components.forEach((component: IComponent) => component.Awake())
+        this.components.forEach((component: IComponent) => component.Start())
     }
     public _Update(): void {
         this.components.forEach(
@@ -37,11 +37,11 @@ export class Entity {
             }
         )
     }
-    public _OnRender(context: WebGLRenderingContext): void {
+    public _OnRender(data: RenderData): void {
         this.renderers.forEach(
             (renderer: IRenderer) => {
                 if (renderer.enabled) {
-                    renderer.OnRender(context)
+                    renderer.OnRender(data)
                 }
             }
         )
@@ -84,7 +84,7 @@ export class Entity {
      */
     public AddComponent(component: IComponent) {
         if (component.IsCompatable(this)) {
-            component.Awake()
+            component.OnAttach(this)
             // component.Start()
             this.components.push(component);
 

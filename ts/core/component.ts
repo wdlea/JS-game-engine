@@ -19,10 +19,12 @@ export interface IComponent {
      */
     IsCompatable(object: Entity): boolean
 
-    /**Called every time when the scene is loaded, 
-     * and once when the object is added to a scene */
-    Awake(): void
-    // Start(): void
+    /**Called once when the component is attatched to an entity */
+    OnAttach(parent: Entity): void
+
+    /*Called every time the entities scene is loaded*/
+    Start(): void
+
     /**Called repeatedly */
     Update(): void
     // LateUpdate(): void
