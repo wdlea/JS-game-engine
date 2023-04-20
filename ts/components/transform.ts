@@ -3,8 +3,7 @@
  */
 
 import { mat4, vec3 } from "gl-matrix";
-import { IComponent } from "../core/component";
-import { Entity } from "../entity";
+import { Entity, IComponent } from "../";
 
 export const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
 

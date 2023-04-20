@@ -131,7 +131,8 @@ export class Game {
     private RecursivelyRender() {
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
 
-        this.ActiveScene._OnRender(this.Glcontext)
+        if (this.renderData === null) throw Error("renderData is null")
+        this.ActiveScene._OnRender(this.renderData)
 
         //recursive part
         requestAnimationFrame(this.RecursivelyRender)

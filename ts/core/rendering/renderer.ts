@@ -2,6 +2,8 @@
  * This file contains the interface IRenderer, and all relating functions
  */
 
+import { RenderData } from "./renderData"
+
 /**
  * the interface for every component that wants the OnRender callback
  */
@@ -10,9 +12,9 @@ export interface IRenderer {
 
     /**
      * Called every animation frame, implemented so i can make Renderer components
-     * @param context WebGLRenderingContext, the rendering context so objects can write to the render buffer
+     * @param context RenderData, the rendering context so objects can write to the render buffer
      */
-    OnRender(context: WebGLRenderingContext): void
+    OnRender(context: RenderData): void
 }
 
 /**

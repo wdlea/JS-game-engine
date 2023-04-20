@@ -1,5 +1,6 @@
 import { Game } from "./game";
 import { Entity } from "./entity";
+import { RenderData } from "./rendering";
 
 export class Scene {
     public objects: Array<Entity> = [];//contains objectionable content
@@ -17,10 +18,10 @@ export class Scene {
             }
         )
     }
-    public _OnRender(context: WebGLRenderingContext) {
+    public _OnRender(data: RenderData) {
         this.objects.forEach(
             (object) => {
-                object._OnRender(context);
+                object._OnRender(data);
             }
         )
     }

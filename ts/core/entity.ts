@@ -4,7 +4,7 @@
 
 import { Game } from "./game";
 import { IComponent } from "./component";
-import { IRenderer, IsRenderer } from "./renderer";
+import { IRenderer, IsRenderer, RenderData } from "./rendering";
 
 
 /**A Entity is the smallest possible thing that can interact with the game, it has zero functionality on its own */
@@ -37,11 +37,11 @@ export class Entity {
             }
         )
     }
-    public _OnRender(context: WebGLRenderingContext): void {
+    public _OnRender(data: RenderData): void {
         this.renderers.forEach(
             (renderer: IRenderer) => {
                 if (renderer.enabled) {
-                    renderer.OnRender(context)
+                    renderer.OnRender(data)
                 }
             }
         )
