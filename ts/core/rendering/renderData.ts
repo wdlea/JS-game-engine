@@ -15,7 +15,7 @@ export enum RenderQuality {
 /**Represents all data that gets passed to renderers */
 export type RenderData = {
     context: WebGLRenderingContext,
-    viewMatrix: mat4,
+    projectionMatrix: mat4,
     defaultProgram: WebGLProgram,
     quality: RenderQuality
 }

@@ -89,7 +89,7 @@ export class Game {
 
         this.renderData = {
             context: this.Glcontext,
-            viewMatrix: viewMatrix,
+            projectionMatrix: viewMatrix,
             defaultProgram: await programPromise,
 
             quality: renderQuality,

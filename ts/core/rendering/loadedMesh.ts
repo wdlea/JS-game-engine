@@ -1,12 +1,16 @@
 import { Model } from "obj-lib/lib/model";
 
 export class LoadedMesh {
-    private vertexBuffer: WebGLBuffer;
-    private indexBuffer: WebGLBuffer;
-    private normalBuffer: WebGLBuffer;
-    private textureBuffer: WebGLBuffer;
+    public vertexBuffer: WebGLBuffer;
+    public indexBuffer: WebGLBuffer;
+    public normalBuffer: WebGLBuffer;
+    public textureBuffer: WebGLBuffer;
+
+    public indexCount: number = -1;
 
     constructor(gl: WebGLRenderingContext) {
+
+
         const tempVertexBuffer = gl.createBuffer();
         const tempTriangleBuffer = gl.createBuffer();
         const tempNormalBuffer = gl.createBuffer();
@@ -32,6 +36,7 @@ export class LoadedMesh {
         const loaded = new LoadedMesh(gl);
 
 
+
         //unpack all vertices
         let vertexArray = new Float32Array(model.vertices.length * 4);
         for (let vertex = 0; vertex < model.vertices.length; vertex++) {
@@ -46,6 +51,7 @@ export class LoadedMesh {
 
         //cast indices to uint16array
         const indicesArray = new Uint16Array(model.indices);
+        loaded.indexCount = model.indices.length;//set indexCount
 
         //buffer indices
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, loaded.indexBuffer);

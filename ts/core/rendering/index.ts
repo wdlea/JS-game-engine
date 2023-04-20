@@ -4,3 +4,4 @@
 
 export * from "./renderData"
 export * from "./renderer"
+export * from "./loadedMesh"
