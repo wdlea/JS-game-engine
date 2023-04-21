@@ -3,6 +3,7 @@
  */
 
 import { mat4 } from "gl-matrix";
+import { Transform } from "../components";
 import { FetchProgram } from "../fetch";
 import { IComponent } from "./component";
 import { RenderData, RenderQuality } from "./rendering";
@@ -18,7 +19,8 @@ export const DEFAULT_PROGRAM_NAME = "default"
 
 /**Base class for a game */
 export class Game {
-    private Glcontext: WebGLRenderingContext;
+    //@ts-expect-error
+    private Glcontext: WebGL2RenderingContext;
     private GLinitialized: boolean = false;
 
     private activeScene: Scene;
@@ -40,7 +42,6 @@ export class Game {
     }
 
     constructor(startingScene: Scene) {
-        this.Glcontext = new WebGLRenderingContext();//this value will never be used, but typescript seems to think it necessary so its here
 
         //load specified scene
         this.activeScene = startingScene;
@@ -50,10 +51,7 @@ export class Game {
     /**initializes WEBGL and begins render/update loop*/
     public DefaultStartup() {
         this.StartWEBGL();
-        this.SetSettings();
         this.StartRender();
-
-
     }
 
 
@@ -77,29 +75,9 @@ export class Game {
         }
     }
 
-    public async SetSettings(
-        renderQuality: RenderQuality = RenderQuality.Potato,
-        fov: number = 60 * Math.PI / 180,
-        aspectRatio: number = this.Glcontext.canvas.width / this.Glcontext.canvas.height
-    ) {
-        const programPromise = FetchProgram(this.Glcontext, DEFAULT_PROGRAM_NAME);
-
-        let viewMatrix = mat4.create()
-        mat4.perspective(viewMatrix, fov, aspectRatio, 0.1, 1000)
-
-        this.renderData = {
-            context: this.Glcontext,
-            projectionMatrix: viewMatrix,
-            defaultProgram: await programPromise,
-
-            quality: renderQuality,
-        }
-    }
-
-
     //returns an array of all components Entitys will have on them by defualt, such as Transform when i implement it
     public MakeDefaultComponents(): Array<IComponent> {
-        return [];
+        return [new Transform()];
     }
 
     /**Finds WEBGL context as per GL_CANVAS_SELECTOR*/
@@ -109,7 +87,7 @@ export class Game {
             throw new Error("Could not find HTML element " + GL_CANVAS_SELECTOR)
         }
 
-        const gl = glCanvas.getContext("webgl")
+        const gl = glCanvas.getContext("webgl2")
         if (gl === null) {
             throw new Error("Could not obtain canvases WEBGL context, check that it is supported.");
         }
