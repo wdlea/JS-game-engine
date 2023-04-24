@@ -6,7 +6,6 @@ import { mat4 } from "gl-matrix";
 import { Transform } from "../components";
 import { FetchProgram } from "../fetch";
 import { IComponent } from "./component";
-import { RenderData, RenderQuality } from "./rendering";
 import { Scene } from "./scene";
 
 
@@ -25,7 +24,6 @@ export class Game {
 
     private activeScene: Scene;
 
-    private renderData: RenderData | null = null;
 
     /**Unloads current scene and replaces it with the new scene */
     set ActiveScene(newScene: Scene) {
@@ -109,8 +107,7 @@ export class Game {
     private RecursivelyRender() {
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
 
-        if (this.renderData === null) throw Error("renderData is null")
-        this.ActiveScene._OnRender(this.renderData)
+        this.ActiveScene._OnRender()
 
         //recursive part
         requestAnimationFrame(this.RecursivelyRender)

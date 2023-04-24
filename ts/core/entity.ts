@@ -4,7 +4,7 @@
 
 import { Game } from "./game";
 import { IComponent } from "./component";
-import { IRenderer, IsRenderer, RenderData } from "./rendering";
+import { IRenderer, IsRenderer } from "./rendering";
 
 
 /**A Entity is the smallest possible thing that can interact with the game, it has zero functionality on its own */
@@ -25,6 +25,10 @@ export class Entity {
         return this.components
     }
 
+    public get Renderers(): Array<IRenderer> {
+        return this.renderers;
+    }
+
     public _Awake(): void {
         this.components.forEach((component: IComponent) => component.Start())
     }
@@ -33,15 +37,6 @@ export class Entity {
             (component: IComponent) => {
                 if (component.enabled) {
                     component.Update()
-                }
-            }
-        )
-    }
-    public _OnRender(data: RenderData): void {
-        this.renderers.forEach(
-            (renderer: IRenderer) => {
-                if (renderer.enabled) {
-                    renderer.OnRender(data)
                 }
             }
         )
