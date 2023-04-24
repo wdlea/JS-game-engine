@@ -7,5 +7,7 @@ export interface IRenderer {
 }
 
 export function IsRenderer(obj: any): obj is IRenderer {
-    return "OnRender" in obj.members;
+    if (obj === null || obj === undefined)
+        return false
+    return "OnRender" in Object.getOwnPropertyNames(obj);
 }

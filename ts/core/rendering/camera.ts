@@ -20,10 +20,12 @@ export class Camera {
     public uniforms: Uniforms;
 
 
-    public cameraMatrix: CameraMatrix = new CameraMatrix();
+    public cameraMatrix: CameraMatrix;
 
     constructor(gl: WebGL2RenderingContext) {
         this._gl = gl;
+
+        this.cameraMatrix = new CameraMatrix(gl)
 
         this.InitializeUniforms();
 

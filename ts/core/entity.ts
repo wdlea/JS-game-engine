@@ -32,7 +32,7 @@ export class Entity {
     public _Awake(): void {
         this.components.forEach((component: IComponent) => component.Start())
     }
-    public _Update(): void {
+    public Update(): void {
         this.components.forEach(
             (component: IComponent) => {
                 if (component.enabled) {

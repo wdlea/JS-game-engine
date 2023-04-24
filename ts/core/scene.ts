@@ -17,14 +17,14 @@ export class Scene {
     public Unload(g: Game) {
 
     }
-    public _Update() {
+    public Update() {
         this.entities.forEach(
             (object: Entity) => {
-                object._Update();
+                object.Update();
             }
         )
     }
-    public _OnRender() {
+    public OnRender() {
         this.camera.RenderObjects(this.renderers)
     }
 

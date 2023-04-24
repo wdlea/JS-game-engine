@@ -110,13 +110,19 @@ export class ShaderProgram {
 
         for (let currentVs = 0; currentVs < avss.length; currentVs++) {
             const vss = avss[currentVs];
-            maybeCompiledVertexShaders[currentVs].source = vss;
-            maybeCompiledVertexShaders[currentVs].type = gl.VERTEX_SHADER;
+            maybeCompiledVertexShaders[currentVs] = {
+                source: vss,
+                type: gl.VERTEX_SHADER,
+                shader: null
+            }
         }
         for (let currentFs = 0; currentFs < afss.length; currentFs++) {
             const fss = avss[currentFs];
-            maybeCompiledFragmentShaders[currentFs].source = fss;
-            maybeCompiledFragmentShaders[currentFs].type = gl.FRAGMENT_SHADER;
+            maybeCompiledFragmentShaders[currentFs] = {
+                source: fss,
+                type: gl.FRAGMENT_SHADER,
+                shader: null
+            }
         }
 
         let finishedOrders: Array<ShaderProgram> = new Array<ShaderProgram>(orders.length)

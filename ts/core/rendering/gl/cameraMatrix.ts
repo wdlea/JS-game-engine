@@ -12,13 +12,15 @@ export class CameraMatrix {
 
     private finalMatrix = mat4.create();
 
-    constructor() {
-        this.RecomputeProjectionMatrix();
+    constructor(gl: WebGL2RenderingContext) {
+        this.RecomputeProjectionMatrix(gl);
     }
 
-    public RecomputeProjectionMatrix() {
-        //@ts-expect-error, probably wouldent happen, it will TODO make it not happen
-        const aspectRatio = this._gl.canvas.clientWidth / this._gl.canvas.clientWidth;
+    public RecomputeProjectionMatrix(gl: WebGL2RenderingContext) {
+        if (gl.canvas instanceof OffscreenCanvas)
+            throw new Error("Canvas is offscreen")
+
+        const aspectRatio = gl.canvas.clientWidth / gl.canvas.clientWidth;
         mat4.perspective(
             this.projectionMatrix,
             45 / 180 * Math.PI,
