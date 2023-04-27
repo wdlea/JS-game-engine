@@ -117,7 +117,7 @@ export class ShaderProgram {
             }
         }
         for (let currentFs = 0; currentFs < afss.length; currentFs++) {
-            const fss = avss[currentFs];
+            const fss = afss[currentFs];
             maybeCompiledFragmentShaders[currentFs] = {
                 source: fss,
                 type: gl.FRAGMENT_SHADER,

@@ -1,7 +1,7 @@
 /**
  * Defines the settings layouts
  * GLOBAL UNIFORMS
- * 0. materialIndex(4)
+ * 0. cameraMatrix(4)
  * PER OBJECT UNIFORMS
  * 4. transformMatrix(4)
  * 8. textureIndex(1)

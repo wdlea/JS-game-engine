@@ -4,7 +4,7 @@ import { Camera, IRenderer } from "./rendering";
 
 export class Scene {
 
-    private camera: Camera;
+    public camera: Camera;
     public entities: Array<Entity> = [];//contains objectionable content
 
     constructor(gl: WebGL2RenderingContext) {

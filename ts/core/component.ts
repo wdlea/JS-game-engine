@@ -37,3 +37,14 @@ export interface IComponent {
      */
     get WhoAmI(): string
 }
+export class BaseComponent implements IComponent {
+    enabled: boolean = true;
+    IsCompatable(object: Entity): boolean {
+        return false
+    }
+    OnAttach(parent: Entity): void { }
+    Start(): void { }
+    Update(): void { }
+    get WhoAmI(): string { return ""; }
+
+}

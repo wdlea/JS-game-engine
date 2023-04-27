@@ -20,7 +20,7 @@ export class Camera {
     public uniforms: Uniforms;
 
 
-    public cameraMatrix: CameraMatrix;
+    public cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
 
     constructor(gl: WebGL2RenderingContext) {
         this._gl = gl;

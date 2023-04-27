@@ -35,6 +35,10 @@ export class CameraMatrix {
         this.transformationMatrix = v;
         this.anyMatrixUpdated = true;
     }
+    set ProjectionMatrix(v: mat4) {
+        this.projectionMatrix = v;
+        this.anyMatrixUpdated = true;
+    }
 
     get Matrix() {
         if (this.anyMatrixUpdated) {
