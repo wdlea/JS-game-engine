@@ -1,17 +1,17 @@
-/**
- * Contains definition for the mesh renderer component
- */
-
 import { IComponent, Entity } from "../";
 import { Camera } from "../core/rendering/camera";
 import { IRenderer } from "../core/rendering/iRenderer";
-import { EngineMesh } from "../core/rendering/mesh";
 import { MeshInstance } from "../core/rendering/meshInstance";
 import { Transform, TRANSFORM_IDENTIFIER } from "./transform";
 
 export const MESH_RENDERER_IDENTIFIER = "MESH_RENDERER"
 
-
+/**
+ * A basic renderer
+ * @implements {IComponent}
+ * @implements {IRenderer}
+ * @category Components
+ */
 export class MeshRenderer implements IComponent, IRenderer {
     public enabled: boolean = true;
 

@@ -17,7 +17,10 @@ export let OnUpdate: { (): void } | null = null;
 
 export const DEFAULT_PROGRAM_NAME = "default"
 
-/**Base class for a game */
+/**
+ * Base class for a Game
+ * @category Core
+ */
 export class Game {
     private Glcontext: WebGL2RenderingContext;
     private GLinitialized: boolean = false;

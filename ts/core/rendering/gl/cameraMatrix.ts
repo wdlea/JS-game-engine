@@ -3,7 +3,11 @@ import { mat4 } from "gl-matrix";
 const CAMERA_NEAR = 0.01;
 const CAMERA_FAR = 100;
 
-
+/**
+ * Class representing a 4x4 projection matrix
+ * Uses lazy evaluation for the matrix to save processing power
+ * @category Rendering
+ */
 export class CameraMatrix {
     private projectionMatrix = mat4.create();
     private transformationMatrix = mat4.create();
@@ -16,6 +20,10 @@ export class CameraMatrix {
         this.RecomputeProjectionMatrix(gl);
     }
 
+    /**
+     * Recomputes matrix
+     * @param {WebGL2RenderingContext} gl 
+     */
     public RecomputeProjectionMatrix(gl: WebGL2RenderingContext) {
         if (gl.canvas instanceof OffscreenCanvas)
             throw new Error("Canvas is offscreen")

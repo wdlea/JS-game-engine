@@ -2,21 +2,39 @@ import { Game } from "./game";
 import { Entity } from "./entity";
 import { Camera, IRenderer } from "./rendering";
 
+/**
+ * Base class for a scene in a game, only one can be active at a time, but Entities can be part of multiple scenes
+ * @category Core 
+*/
 export class Scene {
 
     public camera: Camera;
     public entities: Array<Entity> = [];//contains objectionable content
 
+    /**
+     * Makes a new scene
+     * @param {WebGL2RenderingContext} gl 
+     */
     constructor(gl: WebGL2RenderingContext) {
         this.camera = new Camera(gl);
     }
-
+    /**
+     * Sets this scene as active 
+     * @param {Game} g The game to make the scene active in
+     */
     public Load(g: Game) {
         g.ActiveScene = this
     }
+    /**
+     * Called when scene is unloaded
+     * @param {Game} g The game to make the scene active in
+     */
     public Unload(g: Game) {
 
     }
+    /**
+     * Called repeatedly, and non-fixed speed
+     */
     public Update() {
         this.entities.forEach(
             (object: Entity) => {
@@ -24,7 +42,11 @@ export class Scene {
             }
         )
     }
+    /**
+     * Called every AnimationFrame
+     */
     public OnRender() {
+        this.camera.BeginDraw()
         this.camera.RenderObjects(this.renderers)
     }
 

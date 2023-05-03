@@ -1,4 +1,9 @@
+import { ShaderProgram } from "./shaderProgram";
 
+/**
+ * Represents an attribute in a shader
+ * @category Internal
+ */
 export class ShaderAttribute {
     public buffer: WebGLBuffer;
 
@@ -8,10 +13,10 @@ export class ShaderAttribute {
 
     /**
      * 
-     * @param location number, the location of the shader attribute(gl.GetAttributeLocation)
-     * @param size number, the amount of components that are "given" to each vertex shader call
-     * @param type number, a GLENUM of the type of number given eg gl.FLOAT or gl.UINT16
-     * @param buffer WebGLBuffer
+     * @param {number} location The location of the shader attribute(gl.GetAttributeLocation)
+     * @param {number} size The amount of components that are "given" to each vertex shader call
+     * @param {number} type A GLENUM of the type of number given eg gl.FLOAT or gl.UINT16
+     * @param {WebGLBuffer} buffer
      */
     constructor(location: number, size: number, type: number, buffer: WebGLBuffer) {
         this.location = location;
@@ -20,8 +25,13 @@ export class ShaderAttribute {
 
         this.buffer = buffer;
     }
-
-    public Apply(gl: WebGL2RenderingContext, shader: WebGLProgram) {
+    /**
+     * Applies attribute to a shader program
+     * @param {WebGL2RenderingContext} gl 
+     * @param {ShaderProgram} shader 
+     */
+    public Apply(gl: WebGL2RenderingContext, shader: ShaderProgram) {
+        shader.Use(gl);
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
         gl.vertexAttribPointer(
             this.location,

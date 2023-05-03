@@ -18,6 +18,10 @@ const FLOAT_LENGTH = 1;
 const VECTOR_LENGTH = 1;
 const MAT4_LENGTH = 4 * 4;
 
+/**
+ * Represents the Uniform Buffer
+ * @category Rendering
+ */
 export class RendererSettings {
     public globals: GlobalSettings;
     public objects: Readonly<ObjectSettings>;
@@ -50,12 +54,21 @@ export class RendererSettings {
     }
 }
 
+/**
+ * Represents a section of Uniform Buffer
+ * @category Rendering
+ */
 interface ISettings {
     get AsArray(): Float32Array
     get Length(): Number;
 }
 
 const GLOBAL_SETTINGS_LENGTH = MAT4_LENGTH;
+/**
+ * Represents settings that are relatively constant
+ * @implements {ISettings}
+ * @category Rendering
+ */
 export class GlobalSettings implements ISettings {
     private cameraMatrix: mat4;
     private cameraMatrixUpdated = true;
@@ -70,6 +83,8 @@ export class GlobalSettings implements ISettings {
 
     /**
      * @param cameraMatrix The Camera Matrix, represents the position and projection of the camera
+     * @implements {ISettings}
+     * @category Rendering
      */
     constructor(cameraMatrix: mat4) {
         this.cameraMatrix = cameraMatrix;
@@ -91,6 +106,11 @@ export class GlobalSettings implements ISettings {
 }
 
 const OBJECT_SETTINGS_LENGTH = MAT4_LENGTH + FLOAT_LENGTH;
+/**
+ * Represents settings that change on a per-object basis
+ * @implements {ISettings}
+ * @category Rendering
+*/
 export class ObjectSettings implements ISettings {
     private transformMatrix: mat4;
     private transformMatrixUpdated = true;
@@ -141,7 +161,13 @@ export class ObjectSettings implements ISettings {
     }
 }
 
+
 const LIGHT_SETTINGS_LENGTH = VECTOR_LENGTH * 2 + FLOAT_LENGTH + VECTOR_LENGTH
+/**
+ * Represents settings to do with lighting, expect this to change often
+ * @implements {ISettings}
+ * @category Rendering 
+*/
 export class LightSettings implements ISettings {
     private lightPosition: vec4;
     private lightPositionUpdated = true;

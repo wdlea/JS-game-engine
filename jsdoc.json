@@ -1,0 +1,39 @@
+{
+    "tags": {
+        "allowUnknownTags": ["optional", "category", "subcategory"]
+    },
+    "plugins": [
+        "node_modules/better-docs/category",
+        "node_modules/better-docs/typescript"
+    ],
+    "source": {
+        "includePattern": "ts\\\\[^\\.]+\\.(jsx|js|ts|tsx)$"
+    },
+    "opts": {
+        "template": "node_modules/better-docs"
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "search": true,
+        "default": {
+            "staticFiles": {
+              "include": [
+                  
+              ]
+            }
+        },
+        "better-docs": {
+            "name": "JS-game-engine Docs",
+            "title": "JS-game-engine Docs", 
+            "css": "style.css",
+	    "hideGenerator": false,
+            "navLinks": [
+                {
+                    "label": "Github",
+                    "href": "https://github.com/wdlea/JS-game-engine/"
+                }
+            ]
+        }
+    }
+}

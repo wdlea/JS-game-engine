@@ -33,6 +33,10 @@ function CompileMaybeCompiled(gl: WebGL2RenderingContext, m: maybeCompiledShader
     return m;
 }
 
+/**
+ * Represents a shader program
+ * @category Rendering
+ */
 export class ShaderProgram {
     private program: WebGLProgram;
     public customAttributes: Array<ShaderAttribute>;
@@ -97,12 +101,12 @@ export class ShaderProgram {
 
     /**
      * Compiles shaders in series and links them into programs
-     * @param gl WebGL2RenderingContext, the webgl rendering context
-     * @param avss Array<string>, **A**rray of **V**ertex **S**hader **S**ources
-     * @param afss Array<string>, **A**rray of **F**ragment **S**hader **S**ources
-     * @param attributesLookups Array<Array<AttributeLookup>>, an array containing arrays of attributes to lookup on a per-program basis by name
-     * @param orders Array<ShaderOrder>, all the programs you want creates
-     * @returns Array<ShaderProgram>, all the compiled and linked programs
+     * @param {WebGL2RenderingContext} gl the webgl rendering context
+     * @param {Array<string>} avss **A**rray of **V**ertex **S**hader **S**ources
+     * @param {Array<string>} afss **A**rray of **F**ragment **S**hader **S**ources
+     * @param {Array<Array<AttributeLookup>>} attributesLookups An array containing arrays of attributes to lookup on a per-program basis by name
+     * @param {Array<ShaderOrder>} orders All the programs you want creates
+     * @returns Array<ShaderProgram> All the compiled and linked programs
      */
     static BatchCompileAndLink(gl: WebGL2RenderingContext, avss: Array<string>, afss: Array<string>, attributesLookups: Array<Array<AttributeLookup>>, orders: Array<ShaderOrder>): Array<ShaderProgram> {
         let maybeCompiledVertexShaders = new Array<maybeCompiledShader>(avss.length);
@@ -156,7 +160,10 @@ export class ShaderProgram {
 
         return finishedOrders;
     }
-
+    /**
+     * 
+     * @param gl makes the current program active
+     */
     Use(gl: WebGL2RenderingContext) {
         gl.useProgram(this.program)
     }

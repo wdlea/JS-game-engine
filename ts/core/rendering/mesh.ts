@@ -2,6 +2,11 @@ import { Model } from "obj-lib";
 import { MeshInstance } from "./meshInstance";
 import { ShaderProgram } from "./shaderProgram";
 
+/**
+ * Class that represents a loaded mesh in the engine
+ * @see MeshInstance
+ * @category Rendering
+ */
 export class EngineMesh {
     vertexBuffer: WebGLBuffer;
     indexBuffer: WebGLBuffer;
@@ -10,6 +15,14 @@ export class EngineMesh {
 
     indexCount: number;
 
+    /**
+     * Makes a new EngineMesh from data and buffers it
+     * @param {WebGL2RenderingContext} gl 
+     * @param {Float32Array} vertices 
+     * @param {Uint16Array} indices 
+     * @param {Float32Array} UVs 
+     * @param {Float32Array} Normals 
+     */
     constructor(gl: WebGL2RenderingContext, vertices: Float32Array, indices: Uint16Array, UVs: Float32Array, Normals: Float32Array) {
         this.indexCount = indices.length;
 
@@ -53,6 +66,12 @@ export class EngineMesh {
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
     }
 
+    /**
+     * Creates an EngineMesh from a model
+     * @param {WebGL2RenderingContext} gl 
+     * @param {Model} model 
+     * @returns {EngineMesh}
+     */
     static FromModel(gl: WebGL2RenderingContext, model: Model): EngineMesh {
         let vertices: Float32Array = new Float32Array(model.vertices.length * 4);
         let UVs: Float32Array = new Float32Array(model.UVs.length * 3);
@@ -89,6 +108,11 @@ export class EngineMesh {
         )
     }
 
+    /**
+     * Creates a MeshInstance from the given mesh
+     * @param {ShaderProgram} shader The shader program to use when rendering the instance
+     * @returns {MeshInstance}
+     */
     MakeInstance(shader: ShaderProgram): MeshInstance {
         return new MeshInstance(
             Object.freeze(this),
