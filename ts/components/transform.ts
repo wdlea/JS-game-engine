@@ -1,7 +1,3 @@
-/**
- * Contains the transform component
- */
-
 import { mat4, vec3 } from "gl-matrix";
 import { Entity, IComponent } from "../";
 
@@ -12,6 +8,8 @@ let it_recieves = vec3.create();
 
 /**
  * Component that represents an objects tranformations in 3D space
+ * @category Components
+ * @implements {IComponent}
  */
 export class Transform implements IComponent {
 

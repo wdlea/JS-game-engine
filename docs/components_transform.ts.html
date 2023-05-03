@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JS-game-engine Docs components/transform.ts</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="style.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">JS-game-engine Docs</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/wdlea/JS-game-engine/"
+                        >
+                            Github
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FetchProgram">FetchProgram</a></li><li><a href="global.html#FetchShader">FetchShader</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/transform.ts</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { mat4, vec3 } from "gl-matrix";
+import { Entity, IComponent } from "../";
+
+export const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
+
+//this vector is here so i can set things to this and not worry about consequences, DO NOT read from it
+let it_recieves = vec3.create();
+
+/**
+ * Component that represents an objects tranformations in 3D space
+ * @category Components
+ * @implements {IComponent}
+ */
+export class Transform implements IComponent {
+
+    public enabled = true;
+
+    private position = vec3.create();
+    private rotationRAD = vec3.create();
+    private scale = vec3.create();
+
+    //Whether the position, rotation or scale respectively have changed since recomputation
+    private scaleUpdated = false;
+    private rotationUpdated = false;
+    private positionUpdated = false;
+
+    //Matrices at each stage of computation
+    private scaledMatrix: mat4 = mat4.create();
+    private rotatedMatrix: mat4 = mat4.create()
+    private movedMatrix: mat4 = mat4.create();
+
+    public get ModelMatrix() {
+        this.RecomputeAll();
+        return this.movedMatrix;
+    }
+
+    /**
+     * Recomputes model view matrix scale, its position
+     *  will remain at origin if callnext is not set to true
+     * @param callnext whether to recursively call functions to recompute rotation and transformation
+     */
+    private RecomputeScale(callnext: boolean = true) {
+        mat4.scale(this.scaledMatrix, mat4.create(), this.scale);
+        this.scaleUpdated = true;
+        if (callnext) this.RecomputeRotation(callnext = true)
+    }
+
+    /**
+     * Recomputes model view matrix rotation, 
+     * this is in XYZ order, its position will remain at 
+     * origin if callnext is not set to true
+     * @param callnext whether to recursively call functions to recompute transformation
+     */
+    private RecomputeRotation(callnext: boolean = true) {
+        if (!this.scaleUpdated) {
+            this.RecomputeScale(true)
+        }
+        this.rotationUpdated = true;
+
+        mat4.rotateX(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[0])
+        mat4.rotateY(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[1])
+        mat4.rotateZ(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[2])
+        if (callnext) this.RecomputePosition();
+    }
+
+    /**
+     * Recomputes modelMatrixes position
+     */
+    private RecomputePosition() {
+
+        //check if other parts of matrix have been recomputed
+        if (!this.scaleUpdated) {
+            this.RecomputeScale(true)
+        }
+        if (!this.rotationUpdated) {
+            this.RecomputeRotation(true)
+        }
+        this.positionUpdated = true;
+
+
+        mat4.translate(this.movedMatrix, this.rotatedMatrix, this.position)
+    }
+
+    /**
+     * Recomputes all values, if they need to be,
+     * in scale, rotation(X->Y->Z)(RADS), position order
+     */
+    private RecomputeAll() {
+        if (this.positionUpdated || this.rotationUpdated || this.scaleUpdated) {
+            this.RecomputePosition();
+        }
+    }
+
+
+    get Position() { return this.position }
+    get RotationRAD() { return this.rotationRAD }
+    get RotationDEG() { return vec3.scale(it_recieves, this.rotationRAD, 180 / Math.PI) }
+    get Scale() { return this.scale }
+
+    set Position(v: vec3) {
+        this.positionUpdated = true;
+        this.position = v
+    }
+    set RotationRAD(v: vec3) {
+        this.rotationUpdated = true;
+        this.rotationRAD = v
+    }
+    set RotationDEG(v: vec3) {
+        this.rotationRAD = vec3.scale(it_recieves, v, Math.PI / 180)
+    }
+    set Scale(v: vec3) {
+        this.scaleUpdated = true;
+        this.scale = v
+    }
+
+    IsCompatable(object: Entity): boolean { return true }
+    OnAttach(): void { }
+    Start(): void { }
+    Update(): void { }
+    get WhoAmI(): string { return TRANSFORM_IDENTIFIER; }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>

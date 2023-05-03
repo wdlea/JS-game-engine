@@ -1,7 +1,8 @@
 /**
- * This file is the entry point of the package, and serves no purpouse but to make everything visible
+ * @ignore
  */
 
-export * from "./renderData"
-export * from "./renderer"
-export * from "./loadedMesh"
+export { Camera } from "./camera";
+export { IRenderer, IsRenderer } from "./iRenderer"
+export { MeshInstance } from "./meshInstance"
+export { EngineMesh } from "./mesh"

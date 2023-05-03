@@ -1,18 +1,22 @@
-/**
- * This file contains the Entity class, which is the smallest thing that can interact with the game -An Atomic
- */
-
 import { Game } from "./game";
 import { IComponent } from "./component";
-import { IRenderer, IsRenderer, RenderData } from "./rendering";
+import { IRenderer, IsRenderer } from "./rendering";
 
 
-/**A Entity is the smallest possible thing that can interact with the game, it has zero functionality on its own */
+/**
+ * A Entity is the smallest possible thing that can
+ * interact with the game, it has zero functionality on its own
+ * @category Core
+ */
 export class Entity {
 
     private components: Array<IComponent> = [];
     private renderers: Array<IRenderer> = [];
 
+    /**
+     * @param {Game} game An instance of the Game 
+     * @constructor
+     */
     constructor(game: Game) {
         game.MakeDefaultComponents().forEach(
             (component: IComponent) => {
@@ -25,10 +29,15 @@ export class Entity {
         return this.components
     }
 
+    public get Renderers(): Array<IRenderer> {
+        return this.renderers;
+    }
+
     public _Awake(): void {
         this.components.forEach((component: IComponent) => component.Start())
     }
-    public _Update(): void {
+
+    public Update(): void {
         this.components.forEach(
             (component: IComponent) => {
                 if (component.enabled) {
@@ -37,19 +46,10 @@ export class Entity {
             }
         )
     }
-    public _OnRender(data: RenderData): void {
-        this.renderers.forEach(
-            (renderer: IRenderer) => {
-                if (renderer.enabled) {
-                    renderer.OnRender(data)
-                }
-            }
-        )
-    }
 
     /** Gets the first component added of the specific type, found by calling IComponent.WhoAmI
-     * @param type string, compared to every components WhoAmI fuction
-     * @returns The component found, if any, otheriwse null
+     * @param {string} type Compared to every components WhoAmI fuction
+     * @returns {IComponent | null} The component found, if any, otheriwse null
      */
     public GetComponentOfType(type: string): IComponent | null {
         for (let i = 0; i < this.components.length; i++) {
@@ -63,8 +63,8 @@ export class Entity {
 
     /**
      * Much like GetComponentOfType, but returns all matches
-     * @param type string, compared to every components WhoAmI fuction
-     * @returns an array with all the components found, will be empty if there is no matches
+     * @param {string} type Compared to every components WhoAmI fuction
+     * @returns {Array<IComponent>} an array with all the components found, will be empty if there is no matches
      */
     public GetComponentsOfType(type: string): Array<IComponent> {
         let ret: Array<IComponent> = []
@@ -80,7 +80,7 @@ export class Entity {
 
     /**
      * Appends a component to the Entities componenet
-     * @param component IComponent, the component to add
+     * @param {IComponent} component the component to add
      */
     public AddComponent(component: IComponent) {
         if (component.IsCompatable(this)) {

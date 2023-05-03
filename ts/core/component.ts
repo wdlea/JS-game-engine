@@ -1,11 +1,8 @@
-/**
- * This file contains the IComponent interface and everything to do with it
- */
-
 import { Entity } from "./entity"
 
 /**
- * Interface for components
+ * Interface that all components must derive from
+ * @category Core
  */
 export interface IComponent {
     enabled: boolean
@@ -36,4 +33,20 @@ export interface IComponent {
      * @returns string, the string with the objects type name
      */
     get WhoAmI(): string
+}
+
+/**
+ * Base class for components
+ * @category Core
+ */
+export class BaseComponent implements IComponent {
+    enabled: boolean = true;
+    IsCompatable(object: Entity): boolean {
+        return false
+    }
+    OnAttach(parent: Entity): void { }
+    Start(): void { }
+    Update(): void { }
+    get WhoAmI(): string { return ""; }
+
 }

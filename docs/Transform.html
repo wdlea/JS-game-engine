@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JS-game-engine Docs Transform</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="style.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">JS-game-engine Docs</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/wdlea/JS-game-engine/"
+                        >
+                            Github
+                        </a>
+                    
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FetchProgram">FetchProgram</a></li><li><a href="global.html#FetchShader">FetchShader</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Class</p>
+                    <h1>Transform</h1>
+                </header>
+                
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>Transform<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Component that represents an objects tranformations in 3D space</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
+
+
+    
+    <h4 class="name" id="Transform">
+        <a class="href-link" href="#Transform">#</a>
+        
+        <span class="code-name">
+            
+                new Transform<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="IComponent.html">IComponent</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="components_transform.ts.html" class="button">View Source</a>
+            <span>
+                <a href="components_transform.ts.html">components/transform.ts</a>, <a href="components_transform.ts.html#line11">line 11</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<code class="param-type">boolean</code>
+
+
+    </span>
+
+<h4 class="name" id="IsCompatable">
+    <a class="href-link" href="#IsCompatable">#</a>
+    
+    <span class="code-name">
+        IsCompatable
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Checks if a component can go on a Entity, implemented with th idea that this could help preventduplicate components, or components that rely on others, such as transform.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="IComponent.html#IsCompatable">IComponent#IsCompatable</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="core_component.ts.html" class="button">View Source</a>
+            <span>
+                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line23">line 23</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<code class="param-type">void</code>
+
+
+    </span>
+
+<h4 class="name" id="OnAttach">
+    <a class="href-link" href="#OnAttach">#</a>
+    
+    <span class="code-name">
+        OnAttach
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Called once when the component is attatched to an entity
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="IComponent.html#OnAttach">IComponent#OnAttach</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="core_component.ts.html" class="button">View Source</a>
+            <span>
+                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line32">line 32</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<code class="param-type">void</code>
+
+
+    </span>
+
+<h4 class="name" id="Update">
+    <a class="href-link" href="#Update">#</a>
+    
+    <span class="code-name">
+        Update
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Called repeatedly
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="IComponent.html#Update">IComponent#Update</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="core_component.ts.html" class="button">View Source</a>
+            <span>
+                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line36">line 36</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<code class="param-type">string</code>
+
+
+    </span>
+
+<h4 class="name" id="WhoAmI">
+    <a class="href-link" href="#WhoAmI">#</a>
+    
+    <span class="code-name">
+        WhoAmI
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    Used in the engine to compare objects types, could also be hacked to get components to "mimic" othercomponents, i dont know how useful that is but it is a possible use case.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="IComponent.html#WhoAmI">IComponent#WhoAmI</a></li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="core_component.ts.html" class="button">View Source</a>
+            <span>
+                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line40">line 40</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="RecomputeAll">
+        <a class="href-link" href="#RecomputeAll">#</a>
+        
+        <span class="code-name">
+            
+                RecomputeAll<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Recomputes all values, if they need to be,in scale, rotation(X->Y->Z)(RADS), position order
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="components_transform.ts.html" class="button">View Source</a>
+            <span>
+                <a href="components_transform.ts.html">components/transform.ts</a>, <a href="components_transform.ts.html#line74">line 74</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="RecomputePosition">
+        <a class="href-link" href="#RecomputePosition">#</a>
+        
+        <span class="code-name">
+            
+                RecomputePosition<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Recomputes modelMatrixes position
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="components_transform.ts.html" class="button">View Source</a>
+            <span>
+                <a href="components_transform.ts.html">components/transform.ts</a>, <a href="components_transform.ts.html#line59">line 59</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="RecomputeRotation">
+        <a class="href-link" href="#RecomputeRotation">#</a>
+        
+        <span class="code-name">
+            
+                RecomputeRotation<span class="signature">(callnext)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Recomputes model view matrix rotation,this is in XYZ order, its position will remain atorigin if callnext is not set to true
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>callnext</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          true
+      
+      </td>
+  
+
+  <td class="description last">whether to recursively call functions to recompute transformation</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="components_transform.ts.html" class="button">View Source</a>
+            <span>
+                <a href="components_transform.ts.html">components/transform.ts</a>, <a href="components_transform.ts.html#line45">line 45</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="RecomputeScale">
+        <a class="href-link" href="#RecomputeScale">#</a>
+        
+        <span class="code-name">
+            
+                RecomputeScale<span class="signature">(callnext)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Recomputes model view matrix scale, its position will remain at origin if callnext is not set to true
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>callnext</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          true
+      
+      </td>
+  
+
+  <td class="description last">whether to recursively call functions to recompute rotation and transformation</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="components_transform.ts.html" class="button">View Source</a>
+            <span>
+                <a href="components_transform.ts.html">components/transform.ts</a>, <a href="components_transform.ts.html#line33">line 33</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+<script src="scripts/search.js"> </script>
+
+
+</body>
+</html>
