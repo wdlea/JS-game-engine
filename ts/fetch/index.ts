@@ -1,6 +1,7 @@
-/**
- * This file is the entry point of the package, and serves no purpouse but to make everything visible
- */
+import SetupAJAX from "./setup";
 
-export * from "./fetchShader"
-export * from "./fetchProgram"
+SetupAJAX()
+
+//only can be used after setup
+export { FetchEngineMesh } from "./FetchEngineMesh";
+export { FetchPrograms } from "./FetchPrograms";

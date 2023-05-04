@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs core/rendering/camera.ts</title>
+  <title>JS-game-engine Docs fetch/setup.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -93,7 +93,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>core/rendering/camera.ts</h1>
+                    <h1>fetch/setup.ts</h1>
                 </header>
                 
 
@@ -102,147 +102,25 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { mat4, vec3, vec4 } from "gl-matrix";
-import { CameraMatrix } from "./gl/cameraMatrix";
-import { IRenderer } from "./iRenderer";
-import { MeshInstance } from "./meshInstance";
-import { GlobalSettings, LightSettings, ObjectSettings, RendererSettings } from "./uniforms";
+            <pre class="prettyprint source linenums"><code>import $ from "jquery"
 
-
-const VERTEX_ATTRIB_LOCATION = 0
-const UV_ATTRIB_LOCATION = 1
-const NORMAL_ATTRIB_LOCATION = 2
+export const BASE_RESOURCE_PATH = "http://127.0.0.1:5500/static/"
 /**
- * Class that represents a camera in 3D space
- * @category Rendering
+ * Sets up AJAX
+ * @category Internal
  */
-export class Camera {
-    public _gl: WebGL2RenderingContext;
-
-    private uniformBuffer: WebGLBuffer;
-
-    //@ts-expect-error, it is actually initialized with InitializeUniforms()
-    public uniforms: RendererSettings;
-
-
-    private cameraMatrix: Readonly&lt;CameraMatrix>;//todo see if cameramatrix has changed
-    set CameraMatrix(v: CameraMatrix) {
-        v.RecomputeProjectionMatrix(this._gl)
-        this.cameraMatrix = Object.freeze(v)
-
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
-    }
-
-    /**
-     * Makes a new Camera
-     * @param {WebGL2RenderingContext} gl The Rendering context
-     */
-    constructor(gl: WebGL2RenderingContext) {
-        this._gl = gl;
-
-        this.cameraMatrix = new CameraMatrix(gl)
-
-        this.InitializeUniforms();
-
-        const tempUniformBuffer = gl.createBuffer();
-        if (tempUniformBuffer === null)
-            throw Error("Could not create buffer")
-
-        this.uniformBuffer = tempUniformBuffer;
-    }
-    /**
-     * Creates an new RenderSettings object, and fills it with some settings
-     */
-    private InitializeUniforms() {
-        const globals = new GlobalSettings(this.cameraMatrix.Matrix);
-        const object = new ObjectSettings(mat4.create(), 0);
-        const lighting = new LightSettings(vec4.create(), vec4.create(), 0, vec4.create());
-
-        this.uniforms = new RendererSettings(globals, object, lighting);
-    }
-
-    /**
-     * Makes the screen ready for drawing
-     */
-    BeginDraw() {
-        this._gl.clear(this._gl.DEPTH_BUFFER_BIT | this._gl.COLOR_BUFFER_BIT)
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
-    }
-
-    /**
-     * Draws a mesh to screen, using Depth Buffer
-     * @param {MeshInstance} m The mesh to render
-     */
-    DrawMesh(m: MeshInstance) {
-        m.shader.Use(this._gl);
-        this.uniforms.objects = m.settings;
-        this.uniforms.WriteBuffer(this._gl, this.uniformBuffer);
-
-        //set custom attributes
-        m.shader.customAttributes.forEach((a) => {
-            a.Apply(this._gl, m.shader)
-        })
-
-
-        //set default attributes
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
-        this._gl.vertexAttribPointer(
-            VERTEX_ATTRIB_LOCATION,
-            4,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
-
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
-        this._gl.vertexAttribPointer(
-            UV_ATTRIB_LOCATION,
-            3,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
-
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
-        this._gl.vertexAttribPointer(
-            NORMAL_ATTRIB_LOCATION,
-            3,
-            this._gl.FLOAT,
-            true,//normalize normals
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
-
-        this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, m.mesh.indexBuffer)
-        this._gl.drawElements(
-            this._gl.TRIANGLES,
-            m.mesh.indexCount,
-            this._gl.UNSIGNED_SHORT,
-            0
-        );
-    }
-
-    /**
-     * Renders multiple objects
-     * @param {Array&lt;IRenderer>} objects, an array of the objects to be rendered
-     */
-    RenderObjects(objects: Array&lt;IRenderer>) {
-        this.BeginDraw()
-        objects.forEach(
-            (renderer) => {
-                renderer.OnRender(this);
-            }
-        )
-    }
-}
-
-
-</code></pre>
+export default function SetupAJAX() {
+    $.ajaxSetup({
+        type: "GET",
+        data: {
+            'api-key': "a key that is very secure and 100% hidden from the user and anyone that wants to use my resources"
+        },
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: false
+    })
+}</code></pre>
         </article>
     </section>
 
