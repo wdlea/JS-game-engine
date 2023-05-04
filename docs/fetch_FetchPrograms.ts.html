@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs core/rendering/camera.ts</title>
+  <title>JS-game-engine Docs fetch/FetchPrograms.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -93,7 +93,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>core/rendering/camera.ts</h1>
+                    <h1>fetch/FetchPrograms.ts</h1>
                 </header>
                 
 
@@ -102,146 +102,64 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { mat4, vec3, vec4 } from "gl-matrix";
-import { CameraMatrix } from "./gl/cameraMatrix";
-import { IRenderer } from "./iRenderer";
-import { MeshInstance } from "./meshInstance";
-import { GlobalSettings, LightSettings, ObjectSettings, RendererSettings } from "./uniforms";
+            <pre class="prettyprint source linenums"><code>import { AttributeLookup, ShaderOrder, ShaderProgram } from "../core/rendering/shaderProgram";
+import { BASE_RESOURCE_PATH } from "./setup";
 
+const SHADER_SUBPATH = "shaders/"
+const VERTEX_SHADER_SUBPATH = "vertex/"
+const VERTEX_SHADER_SUFFIX = ".vert"
+const FRAGMENT_SHADER_SUBPATH = "fragment/"
+const FRAGMENT_SHADER_SUFFIX = ".frag"
 
-const VERTEX_ATTRIB_LOCATION = 0
-const UV_ATTRIB_LOCATION = 1
-const NORMAL_ATTRIB_LOCATION = 2
 /**
- * Class that represents a camera in 3D space
- * @category Rendering
+ * Requests, compiles shaders and links programs.
+ * Optimised for speed.
+ * @see ShaderProgram.BatchCompileAndLink() similar args to this, calls it
+ * @param {WebGL2RenderingContext} gl The webgl rendering context
+ * @param {Array&lt;string>} vsp An array with all the names of vertex shaders
+ * @param {Array&lt;string>} fsp An array with all the names of fragment shaders
+ * @param {Array&lt;AttributeLookup>} AttributeLookups An array with all the AttributeLookups
+ * @param {Array&lt;ShaderOrder>} orders An array with all the desired programs
+ * @returns 
  */
-export class Camera {
-    public _gl: WebGL2RenderingContext;
+export function FetchPrograms(gl: WebGL2RenderingContext, vsp: Array&lt;string>, fsp: Array&lt;string>, AttributeLookups: Array&lt;Array&lt;AttributeLookup>>, orders: Array&lt;ShaderOrder>): Promise&lt;Array&lt;ShaderProgram>> {
+    return new Promise(async (resolve, reject) => {
+        let vsReqs: Array&lt;JQuery.jqXHR&lt;string>> = []
 
-    private uniformBuffer: WebGLBuffer;
+        for (let vspi = 0; vspi &lt; vsp.length; vspi++) {
+            const vspath = BASE_RESOURCE_PATH + SHADER_SUBPATH + VERTEX_SHADER_SUBPATH + vsp[vspi] + VERTEX_SHADER_SUFFIX;
+            vsReqs.push(
+                $.ajax({
+                    url: vspath,
+                })
+            )
+        }
 
-    //@ts-expect-error, it is actually initialized with InitializeUniforms()
-    public uniforms: RendererSettings;
+        let fsReqs: Array&lt;JQuery.jqXHR&lt;string>> = []
 
+        for (let fspi = 0; fspi &lt; fsp.length; fspi++) {
+            const fspath = BASE_RESOURCE_PATH + SHADER_SUBPATH + FRAGMENT_SHADER_SUBPATH + fsp[fspi] + FRAGMENT_SHADER_SUFFIX;
+            fsReqs.push(
+                $.ajax({
+                    url: fspath,
+                })
+            )
+        }
 
-    private cameraMatrix: Readonly&lt;CameraMatrix>;//todo see if cameramatrix has changed
-    set CameraMatrix(v: CameraMatrix) {
-        v.RecomputeProjectionMatrix(this._gl)
-        this.cameraMatrix = Object.freeze(v)
-
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
-    }
-
-    /**
-     * Makes a new Camera
-     * @param {WebGL2RenderingContext} gl The Rendering context
-     */
-    constructor(gl: WebGL2RenderingContext) {
-        this._gl = gl;
-
-        this.cameraMatrix = new CameraMatrix(gl)
-
-        this.InitializeUniforms();
-
-        const tempUniformBuffer = gl.createBuffer();
-        if (tempUniformBuffer === null)
-            throw Error("Could not create buffer")
-
-        this.uniformBuffer = tempUniformBuffer;
-    }
-    /**
-     * Creates an new RenderSettings object, and fills it with some settings
-     */
-    private InitializeUniforms() {
-        const globals = new GlobalSettings(this.cameraMatrix.Matrix);
-        const object = new ObjectSettings(mat4.create(), 0);
-        const lighting = new LightSettings(vec4.create(), vec4.create(), 0, vec4.create());
-
-        this.uniforms = new RendererSettings(globals, object, lighting);
-    }
-
-    /**
-     * Makes the screen ready for drawing
-     */
-    BeginDraw() {
-        this._gl.clear(this._gl.DEPTH_BUFFER_BIT | this._gl.COLOR_BUFFER_BIT)
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
-    }
-
-    /**
-     * Draws a mesh to screen, using Depth Buffer
-     * @param {MeshInstance} m The mesh to render
-     */
-    DrawMesh(m: MeshInstance) {
-        m.shader.Use(this._gl);
-        this.uniforms.objects = m.settings;
-        this.uniforms.WriteBuffer(this._gl, this.uniformBuffer);
-
-        //set custom attributes
-        m.shader.customAttributes.forEach((a) => {
-            a.Apply(this._gl, m.shader)
+        //resolve all reqs
+        let vss: Array&lt;string> = []
+        vsReqs.forEach(async (req) => {
+            vss.push(await req)
         })
 
+        let fss: Array&lt;string> = []
+        fsReqs.forEach(async (req) => {
+            fss.push(await req)
+        })
 
-        //set default attributes
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
-        this._gl.vertexAttribPointer(
-            VERTEX_ATTRIB_LOCATION,
-            4,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
-
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
-        this._gl.vertexAttribPointer(
-            UV_ATTRIB_LOCATION,
-            3,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
-
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
-        this._gl.vertexAttribPointer(
-            NORMAL_ATTRIB_LOCATION,
-            3,
-            this._gl.FLOAT,
-            true,//normalize normals
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
-
-        this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, m.mesh.indexBuffer)
-        this._gl.drawElements(
-            this._gl.TRIANGLES,
-            m.mesh.indexCount,
-            this._gl.UNSIGNED_SHORT,
-            0
-        );
-    }
-
-    /**
-     * Renders multiple objects
-     * @param {Array&lt;IRenderer>} objects, an array of the objects to be rendered
-     */
-    RenderObjects(objects: Array&lt;IRenderer>) {
-        this.BeginDraw()
-        objects.forEach(
-            (renderer) => {
-                renderer.OnRender(this);
-            }
-        )
-    }
+        resolve(ShaderProgram.BatchCompileAndLink(gl, vss, fss, AttributeLookups, orders))
+    })
 }
-
-
 </code></pre>
         </article>
     </section>
