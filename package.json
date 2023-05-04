@@ -13,7 +13,7 @@
     "url": "git+https://github.com/wdlea/JS-game-engine.git"
   },
   "author": "William L",
-  "license": "ISC",
+  "license": "See license in ./license",
   "bugs": {
     "url": "https://github.com/wdlea/JS-game-engine/issues"
   },
@@ -23,10 +23,10 @@
     "better-docs": "^2.7.2",
     "jsdoc": "^4.0.2",
     "obj-lib": "file:../obj-lib",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "taffydb": "^2.7.3"
   },
   "dependencies": {
-    "jquery": "^3.6.4",
-    "taffydb": "^2.7.3"
+    "jquery": "^3.6.4"
   }
 }
