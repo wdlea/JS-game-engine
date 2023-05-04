@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs core/rendering/shaderProgram.ts</title>
+  <title>JS-game-engine Docs debugger/FrameStats.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -93,7 +93,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>core/rendering/shaderProgram.ts</h1>
+                    <h1>debugger/FrameStats.ts</h1>
                 </header>
                 
 
@@ -102,178 +102,41 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { ShaderAttribute } from "./ShaderAttribute";
-
-export type AttributeLookup = {
-    name: string,
-    size: number,
-    type: number
-}
-
-export type ShaderOrder = {
-    fsIndex: number,
-    vsIndex: number,
-    lookupsIndex: number | null
-}
-type maybeCompiledShader = {
-    source: string,
-    shader: WebGLShader | null,
-    type: number
-}
-function CompileMaybeCompiled(gl: WebGL2RenderingContext, m: maybeCompiledShader): maybeCompiledShader {
-    if (m.shader === null) {
-        const tShader = gl.createShader(m.type);
-        if (tShader === null)
-            throw Error("Could not create shader");
-
-        gl.shaderSource(tShader, m.source);
-        gl.compileShader(tShader);
-        if (!gl.getShaderParameter(tShader, gl.COMPILE_STATUS))
-            throw Error("Could not compile shader: " + gl.getShaderInfoLog(tShader) + " with source :" + m.source);
-
-        m.shader = tShader;
-    }
-
-    return m;
-}
-
-/**
- * Represents a shader program
- * @category Rendering
+            <pre class="prettyprint source linenums"><code>/**
+ * Class that represents the stats within the frame
+ * @category Debugging
  */
-export class ShaderProgram {
-    private program: WebGLProgram;
-    public customAttributes: Array&lt;ShaderAttribute>;
-
-    constructor(program: WebGLProgram, attributes: Array&lt;ShaderAttribute> = []) {
-        this.program = program;
-        this.customAttributes = attributes;
-    }
-
+export class FrameStats {
+    RendererCount = 0;
+    VertexCount = 0;
+    IndexCount = 0;
+    ProgramCount = 0;
+    RenderStartTime = 0;
+    RenderEndTime = 0;
     /**
-     * Links a shader program, note that this only links, if you dont want to clutter you workflow with compile look into ShaderProgram.BatchCompileAndLink
-     * @param gl WebGL2RenderingContext, 
-     * @param vs WebGLShader, **V**ertex **S**hader
-     * @param fs WebGLShader, **F**ragment **S**hader
-     * @param attributesLookup Array&lt;AttributeLookup>, an array of all the attributes you want to acess in the program, looked up by name
-     * @returns ShaderProgram, the linked program
+     * Closes a FrameStats, fills in remaining fields and returns a frozen copy, the zeros the instance it is called on
+     * @returns {Readonly&lt;FrameStats>}
      */
-    static FromShaders(gl: WebGL2RenderingContext, vs: WebGLShader, fs: WebGLShader, attributesLookup: Array&lt;AttributeLookup> = []): ShaderProgram {
-        const program = gl.createProgram();
-        if (program === null)
-            throw Error("Could not create shader program")
+    End = (): Readonly&lt;FrameStats> => {
+        this.RenderEndTime = performance.now();
+        const ret: Readonly&lt;FrameStats> = Object.freeze({ ...this });
 
-        gl.attachShader(program, vs);
-        gl.attachShader(program, fs);
-        gl.linkProgram(program);
-        gl.validateProgram(program);
+        this.Zero()
 
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-            throw Error("Could not link program: " + gl.getProgramInfoLog(program));
-
-        let attribs: Array&lt;ShaderAttribute> = []
-
-        for (let attributeIndex = 0; attributeIndex &lt; attributesLookup.length; attributeIndex++) {
-            const element = attributesLookup[attributeIndex];
-
-            const buffer = gl.createBuffer();
-            if (buffer === null)
-                throw Error("Could not create buffer" + gl.getError());
-
-            const loc = gl.getAttribLocation(program, element.name)
-            if (loc === null)
-                throw Error("Could not find shader attribute: " + element.name);
-
-            let attrib: ShaderAttribute = new ShaderAttribute(
-                loc,
-                element.size,
-                element.type,
-                buffer
-            );
-
-
-            attribs.push(attrib);
-        }
-
-
-        const shader = new ShaderProgram(
-            program, attribs
-        )
-
-        return shader
-    }
-
-    /**
-     * Compiles shaders in series and links them into programs
-     * @param {WebGL2RenderingContext} gl the webgl rendering context
-     * @param {Array&lt;string>} avss **A**rray of **V**ertex **S**hader **S**ources
-     * @param {Array&lt;string>} afss **A**rray of **F**ragment **S**hader **S**ources
-     * @param {Array&lt;Array&lt;AttributeLookup>>} attributesLookups An array containing arrays of attributes to lookup on a per-program basis by name
-     * @param {Array&lt;ShaderOrder>} orders All the programs you want creates
-     * @returns Array&lt;ShaderProgram> All the compiled and linked programs
-     */
-    static BatchCompileAndLink(gl: WebGL2RenderingContext, avss: Array&lt;string>, afss: Array&lt;string>, attributesLookups: Array&lt;Array&lt;AttributeLookup>>, orders: Array&lt;ShaderOrder>): Array&lt;ShaderProgram> {
-        let maybeCompiledVertexShaders = new Array&lt;maybeCompiledShader>(avss.length);
-        let maybeCompiledFragmentShaders = new Array&lt;maybeCompiledShader>(afss.length);
-
-        for (let currentVs = 0; currentVs &lt; avss.length; currentVs++) {
-            const vss = avss[currentVs];
-            maybeCompiledVertexShaders[currentVs] = {
-                source: vss,
-                type: gl.VERTEX_SHADER,
-                shader: null
-            }
-        }
-        for (let currentFs = 0; currentFs &lt; afss.length; currentFs++) {
-            const fss = afss[currentFs];
-            maybeCompiledFragmentShaders[currentFs] = {
-                source: fss,
-                type: gl.FRAGMENT_SHADER,
-                shader: null
-            }
-        }
-
-        let finishedOrders: Array&lt;ShaderProgram> = new Array&lt;ShaderProgram>(orders.length)
-
-        for (let orderNumber = 0; orderNumber &lt; orders.length; orderNumber++) {
-            const order = orders[orderNumber];
-            let fs = maybeCompiledFragmentShaders[order.fsIndex]
-            let vs = maybeCompiledVertexShaders[order.vsIndex]
-
-            if (fs.shader === null) {
-                fs = CompileMaybeCompiled(gl, fs);
-                maybeCompiledFragmentShaders[order.fsIndex] = fs
-            }
-            if (vs.shader === null) {
-                vs = CompileMaybeCompiled(gl, vs);
-                maybeCompiledVertexShaders[order.vsIndex] = vs
-            }
-
-            if (vs.shader === null)
-                throw Error("Unable to compile vertex shader")
-            if (fs.shader === null)
-                throw Error("Unable to compile fragment shader")
-
-            finishedOrders[orderNumber] = ShaderProgram.FromShaders(
-                gl,
-                vs.shader,
-                fs.shader,
-                order.lookupsIndex != null ? attributesLookups[order.lookupsIndex] : undefined
-            )
-        }
-
-        return finishedOrders;
+        return ret
     }
     /**
-     * 
-     * @param gl makes the current program active
+     * Zeros a FrameStats so it can be used in a next fromae
      */
-    Use(gl: WebGL2RenderingContext) {
-        gl.useProgram(this.program)
+    Zero = () => {
+        this.RendererCount = 0;
+        this.VertexCount = 0;
+        this.IndexCount = 0;
+        this.ProgramCount = 0;
+        this.RenderStartTime = performance.now();
+        this.RenderEndTime = 0;
     }
-}
-
-</code></pre>
+}</code></pre>
         </article>
     </section>
 

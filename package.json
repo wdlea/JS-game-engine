@@ -4,9 +4,16 @@
   "description": "My JS game engine",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "makeDocs": "jsdoc ./ts/ -r -d ./docs -c jsdoc.json",
+
+    "prebuild": "npm run test && npm run makeDocs",
     "build": "tsc",
-    "make-docs":  "jsdoc ./ts/ -r -d ./docs -c jsdoc.json"
+
+    "quickBuild":  "tsc"
+  },
+  "directories": {
+    "test":"tests"
   },
   "repository": {
     "type": "git",
@@ -19,12 +26,15 @@
   },
   "homepage": "https://github.com/wdlea/JS-game-engine#readme",
   "devDependencies": {
+    "@types/jest": "^29.5.1",
     "@types/jquery": "^3.5.16",
     "better-docs": "^2.7.2",
+    "jest": "^29.5.0",
     "jsdoc": "^4.0.2",
     "obj-lib": "file:../obj-lib",
-    "typescript": "^5.0.4",
-    "taffydb": "^2.7.3"
+    "taffydb": "^2.7.3",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "jquery": "^3.6.4"
