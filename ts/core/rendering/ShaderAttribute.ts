@@ -30,7 +30,7 @@ export class ShaderAttribute {
      * @param {WebGL2RenderingContext} gl 
      * @param {ShaderProgram} shader 
      */
-    public Apply(gl: WebGL2RenderingContext, shader: ShaderProgram) {
+    public Apply(gl: WebGL2RenderingContext, shader: Readonly<ShaderProgram>) {
         shader.Use(gl);
         gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
         gl.vertexAttribPointer(
