@@ -3,6 +3,7 @@
  */
 
 import { Transform } from "../components";
+import { FrameStats } from "../debugger";
 
 import { IComponent } from "./component";
 import { Scene } from "./scene";
@@ -26,6 +27,8 @@ export class Game {
     private GLinitialized: boolean = false;
 
     private activeScene: Scene;
+
+    private frameStats: FrameStats = new FrameStats();
 
 
     /**Unloads current scene and replaces it with the new scene */
@@ -95,9 +98,12 @@ export class Game {
     private BoundRecursivelyRender = this.RecursivelyRender.bind(this);
     /**called every animation frame, only call once*/
     private RecursivelyRender() {
+        const prevStats = this.frameStats.End()
+        console.debug(prevStats);
+
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
 
-        this.ActiveScene.OnRender()
+        this.ActiveScene.OnRender(this.frameStats)
 
         //recursive part
         requestAnimationFrame(this.BoundRecursivelyRender)
