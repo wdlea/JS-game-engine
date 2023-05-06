@@ -1,6 +1,8 @@
 import { AttributeLookup, ShaderOrder, ShaderProgram } from "../core/rendering/shaderProgram";
 import { BASE_RESOURCE_PATH } from "./setup";
 
+import $ from "jquery"
+
 const SHADER_SUBPATH = "shaders/"
 const VERTEX_SHADER_SUBPATH = "vertex/"
 const VERTEX_SHADER_SUFFIX = ".vert"
@@ -44,14 +46,18 @@ export function FetchPrograms(gl: WebGL2RenderingContext, vsp: Array<string>, fs
 
         //resolve all reqs
         let vss: Array<string> = []
-        vsReqs.forEach(async (req) => {
-            vss.push(await req)
-        })
+        for (let vssi = 0; vssi < vsReqs.length; vssi++) {
+            const vs = vsReqs[vssi];
+            vss.push(await vs)
+        }
 
         let fss: Array<string> = []
-        fsReqs.forEach(async (req) => {
-            fss.push(await req)
-        })
+        for (let fssi = 0; fssi < fsReqs.length; fssi++) {
+            const fs = fsReqs[fssi];
+            fss.push(await fs)
+        }
+
+        console.log(`${vss.length}/${vsReqs.length} vertex shader(s) and ${fss.length}/${fsReqs.length} fragment shader(s) fetched`)
 
         resolve(ShaderProgram.BatchCompileAndLink(gl, vss, fss, AttributeLookups, orders))
     })
