@@ -2,6 +2,8 @@
  * Class that represents the stats within the frame
  * @category Debugging
  */
+
+
 export class FrameStats {
     RendererCount = 0;
     IndexCount = 0;
@@ -33,6 +35,10 @@ export class FrameStats {
     }
 
     Stringify = () => {
-        return `Stats for frame: ${this.RendererCount} Renderer(s), ${this.IndexCount} Index(es), ${this.CustomAttribCount} Custom Attribute(s), took ${this.RenderEndTime - this.RenderStartTime} ms for frame render`.toString();
+        return `Stats for frame: ${this.RendererCount} Renderer(s), ${this.IndexCount} Index(es), ${this.CustomAttribCount} Custom Attribute(s), took ${this.TimeToRender.toPrecision(3)} ms for frame render`.toString();
+    }
+
+    get TimeToRender(): number {
+        return this.RenderEndTime - this.RenderStartTime
     }
 }

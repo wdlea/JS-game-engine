@@ -1,5 +1,5 @@
 import { Transform } from "../components";
-import { FrameStats } from "../debugger";
+import { DEBUGGER_DISPLAY_ELEMENT_SELECTOR, CONSOLE_LOG_RENDER_TIME_THRESHOLD, FrameStats } from "../debugger";
 
 import { IComponent } from "./component";
 import { Scene } from "./scene";
@@ -27,6 +27,8 @@ export class Game {
 
     private frameStats: FrameStats = new FrameStats();
 
+    public debuggerOutput: HTMLElement | null;
+
 
     /**Unloads current scene and replaces it with the new scene */
     set ActiveScene(newScene: Scene) {
@@ -46,6 +48,8 @@ export class Game {
         startingScene.Load(this);
 
         this.Glcontext = gl;
+
+        this.debuggerOutput = document.querySelector(DEBUGGER_DISPLAY_ELEMENT_SELECTOR);
     }
 
     /**initializes WEBGL and begins render/update loop*/
@@ -133,6 +137,18 @@ export class Game {
         requestAnimationFrame(this.RecursivelyRender)
 
         const currentFrameStats = this.frameStats.End()
-        console.log(currentFrameStats.Stringify());
+        this.DisplayFrameStats(currentFrameStats)
+    }
+    /**
+     * Displays frame stats according to constants set in ./debugger/index.ts
+     * @param {Readonly<FrameStats>} stats The FrameStats to display
+     */
+    private DisplayFrameStats = (stats: Readonly<FrameStats>) => {
+        if (this.debuggerOutput != null) {
+            this.debuggerOutput.textContent = stats.Stringify();
+        }
+        if (stats.TimeToRender >= CONSOLE_LOG_RENDER_TIME_THRESHOLD) {
+            console.log(stats.Stringify())
+        }
     }
 }
