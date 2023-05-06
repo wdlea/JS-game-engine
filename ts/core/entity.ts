@@ -90,8 +90,8 @@ export class Entity {
 
             if (IsRenderer(component)) {
                 this.renderers.push(component)
+                console.log("Renderer added!")
             }
         }
-
     }
 }
