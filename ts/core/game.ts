@@ -123,9 +123,7 @@ export class Game {
      * called every animation frame, only call once, it recurses, as the name suggests.
      */
     private RecursivelyRender = () => {
-        const prevStats = this.frameStats.End()
-        console.log(prevStats.Stringify());
-
+        this.frameStats.StartFrame();
 
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
 
@@ -133,5 +131,8 @@ export class Game {
 
         //recursive part
         requestAnimationFrame(this.RecursivelyRender)
+
+        const currentFrameStats = this.frameStats.End()
+        console.log(currentFrameStats.Stringify());
     }
 }

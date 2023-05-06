@@ -27,8 +27,9 @@ export class FrameStats {
         this.RendererCount = 0;
         this.IndexCount = 0;
         this.CustomAttribCount = 0;
+    }
+    StartFrame = () => {
         this.RenderStartTime = performance.now();
-        this.RenderEndTime = 0;
     }
 
     Stringify = () => {
