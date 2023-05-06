@@ -1,9 +1,10 @@
-import $ from "jquery"
 import { Model } from "obj-lib"
 import { EngineMesh } from "../core"
 import { BASE_RESOURCE_PATH } from "./setup"
 
-const ENGINE_MESH_SUBPATH = "game/models/"
+import $ from "jquery"
+
+const ENGINE_MESH_SUBPATH = "models/"
 const ENGINE_MESH_SUFFIX = ".obj"
 
 /**

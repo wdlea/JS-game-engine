@@ -1,6 +1,8 @@
 import { AttributeLookup, ShaderOrder, ShaderProgram } from "../core/rendering/shaderProgram";
 import { BASE_RESOURCE_PATH } from "./setup";
 
+import $ from "jquery"
+
 const SHADER_SUBPATH = "shaders/"
 const VERTEX_SHADER_SUBPATH = "vertex/"
 const VERTEX_SHADER_SUFFIX = ".vert"
