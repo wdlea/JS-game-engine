@@ -237,22 +237,37 @@ export class ShaderProgram {
 
         for (let orderNumber = 0; orderNumber &lt; orders.length; orderNumber++) {
             const order = orders[orderNumber];
+
+            if (order.fsIndex >= afss.length)
+                throw new Error(`Fragment shader index ${order.fsIndex} too large ${afss.length}`)
+            else if (order.fsIndex &lt; 0)
+                throw new Error(`Fragment shader index ${order.fsIndex} cant be negative`)
+
+            if (order.vsIndex >= avss.length)
+                throw new Error(`Vertex shader index ${order.vsIndex} too large ${avss.length}`)
+            else if (order.vsIndex &lt; 0)
+                throw new Error(`Vertex shader index ${order.vsIndex} cant be negative`)
+
+
             let fs = maybeCompiledFragmentShaders[order.fsIndex]
             let vs = maybeCompiledVertexShaders[order.vsIndex]
 
-            if (fs.shader === null) {
+            if (fs === undefined || vs === undefined)
+                throw new Error("fs or vs is undefined, unreachable behavior")
+
+            if (fs.shader === undefined || fs.shader === null) {
                 fs = CompileMaybeCompiled(gl, fs);
                 maybeCompiledFragmentShaders[order.fsIndex] = fs
             }
-            if (vs.shader === null) {
+            if (vs.shader === undefined || vs.shader === null) {
                 vs = CompileMaybeCompiled(gl, vs);
                 maybeCompiledVertexShaders[order.vsIndex] = vs
             }
 
-            if (vs.shader === null)
-                throw Error("Unable to compile vertex shader")
-            if (fs.shader === null)
+            if (fs.shader === undefined || fs.shader === null)
                 throw Error("Unable to compile fragment shader")
+            if (vs.shader === undefined || vs.shader === null)
+                throw Error("Unable to compile vertex shader")
 
             finishedOrders[orderNumber] = ShaderProgram.FromShaders(
                 gl,

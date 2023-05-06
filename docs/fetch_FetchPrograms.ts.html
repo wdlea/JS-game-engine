@@ -150,14 +150,18 @@ export function FetchPrograms(gl: WebGL2RenderingContext, vsp: Array&lt;string>,
 
         //resolve all reqs
         let vss: Array&lt;string> = []
-        vsReqs.forEach(async (req) => {
-            vss.push(await req)
-        })
+        for (let vssi = 0; vssi &lt; vsReqs.length; vssi++) {
+            const vs = vsReqs[vssi];
+            vss.push(await vs)
+        }
 
         let fss: Array&lt;string> = []
-        fsReqs.forEach(async (req) => {
-            fss.push(await req)
-        })
+        for (let fssi = 0; fssi &lt; fsReqs.length; fssi++) {
+            const fs = fsReqs[fssi];
+            fss.push(await fs)
+        }
+
+        console.log(`${vss.length}/${vsReqs.length} vertex shader(s) and ${fss.length}/${fsReqs.length} fragment shader(s) fetched`)
 
         resolve(ShaderProgram.BatchCompileAndLink(gl, vss, fss, AttributeLookups, orders))
     })
