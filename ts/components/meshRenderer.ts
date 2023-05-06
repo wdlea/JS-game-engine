@@ -2,6 +2,7 @@ import { IComponent, Entity } from "../";
 import { Camera } from "../core/rendering/camera";
 import { IRenderer } from "../core/rendering/iRenderer";
 import { MeshInstance } from "../core/rendering/meshInstance";
+import { FrameStats } from "../debugger";
 import { Transform, TRANSFORM_IDENTIFIER } from "./transform";
 
 export const MESH_RENDERER_IDENTIFIER = "MESH_RENDERER"
@@ -28,9 +29,11 @@ export class MeshRenderer implements IComponent, IRenderer {
         this.mesh = m;
     }
 
-    OnRender(camera: Camera): void {
-        if (this.mesh != undefined)
-            camera.DrawMesh(this.mesh);
+    OnRender(camera: Camera, frameStats: FrameStats): void {
+        if (this.mesh != undefined) {
+            camera.DrawMesh(this.mesh, frameStats);
+            frameStats.IndexCount += this.mesh.mesh.indexCount
+        }
     }
 
     get WhoAmI(): string {

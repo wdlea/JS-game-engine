@@ -1,4 +1,5 @@
 import { mat4 } from "gl-matrix";
+import { FrameStats } from "../../debugger";
 import { Camera } from "./camera";
 import { EngineMesh } from "./mesh";
 import { ShaderProgram } from "./shaderProgram";
@@ -13,6 +14,7 @@ export class MeshInstance {
     public shader: Readonly<ShaderProgram>;
 
     public settings: ObjectSettings;
+
     /**
      * 
      * @param {Readonly<EngineMesh>} mesh The mesh to make an instance of
@@ -27,8 +29,9 @@ export class MeshInstance {
     /**
      * Draws mesh on camera
      * @param {Camera} camera The camera to draw on
+     * @deprecated Use {@link Camera}.DrawMesh() instead
      */
-    Draw(camera: Camera) {
-        camera.DrawMesh(this);
+    Draw(camera: Camera, frameStats: FrameStats) {
+        camera.DrawMesh(this, frameStats);
     }
 }

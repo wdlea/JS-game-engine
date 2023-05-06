@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs core/entity.ts</title>
+  <title>JS-game-engine Docs debugger/FrameStats.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -93,7 +93,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>core/entity.ts</h1>
+                    <h1>debugger/FrameStats.ts</h1>
                 </header>
                 
 
@@ -102,101 +102,48 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Game } from "./game";
-import { IComponent } from "./component";
-import { IRenderer, IsRenderer } from "./rendering";
-
-
-/**
- * A Entity is the smallest possible thing that can
- * interact with the game, it has zero functionality on its own
- * @category Core
+            <pre class="prettyprint source linenums"><code>/**
+ * Class that represents the stats within the frame
+ * @category Debugging
  */
-export class Entity {
 
-    private components: Array&lt;IComponent> = [];
-    private renderers: Array&lt;IRenderer> = [];
 
+export class FrameStats {
+    RendererCount = 0;
+    IndexCount = 0;
+    RenderStartTime = 0;
+    RenderEndTime = 0;
+    CustomAttribCount = 0;
     /**
-     * @param {Game} game An instance of the Game 
-     * @constructor
+     * Closes a FrameStats, fills in remaining fields and returns a frozen copy, the zeros the instance it is called on
+     * @returns {Readonly&lt;FrameStats>}
      */
-    constructor(game: Game) {
-        game.MakeDefaultComponents().forEach(
-            (component: IComponent) => {
-                this.AddComponent(component);
-            }
-        )
-    }
+    End = (): Readonly&lt;FrameStats> => {
+        this.RenderEndTime = performance.now();
+        const ret: Readonly&lt;FrameStats> = Object.freeze({ ...this });
 
-    public get Components(): Array&lt;IComponent> {
-        return this.components
-    }
+        this.Zero()
 
-    public get Renderers(): Array&lt;IRenderer> {
-        return this.renderers;
+        return ret
     }
-
-    public _Awake(): void {
-        this.components.forEach((component: IComponent) => component.Start())
-    }
-
-    public Update(): void {
-        this.components.forEach(
-            (component: IComponent) => {
-                if (component.enabled) {
-                    component.Update()
-                }
-            }
-        )
-    }
-
-    /** Gets the first component added of the specific type, found by calling IComponent.WhoAmI
-     * @param {string} type Compared to every components WhoAmI fuction
-     * @returns {IComponent | null} The component found, if any, otheriwse null
-     */
-    public GetComponentOfType(type: string): IComponent | null {
-        for (let i = 0; i &lt; this.components.length; i++) {
-            const component = this.components[i];
-            if (component.WhoAmI == type) {
-                return component
-            }
-        }
-        return null;
-    }
-
     /**
-     * Much like GetComponentOfType, but returns all matches
-     * @param {string} type Compared to every components WhoAmI fuction
-     * @returns {Array&lt;IComponent>} an array with all the components found, will be empty if there is no matches
+     * Zeros a FrameStats so it can be used in a next fromae
      */
-    public GetComponentsOfType(type: string): Array&lt;IComponent> {
-        let ret: Array&lt;IComponent> = []
-
-        for (let i = 0; i &lt; this.components.length; i++) {
-            const component = this.components[i];
-            if (component.WhoAmI == type) {
-                ret.push(component);
-            }
-        }
-        return ret;
+    Zero = () => {
+        this.RendererCount = 0;
+        this.IndexCount = 0;
+        this.CustomAttribCount = 0;
+    }
+    StartFrame = () => {
+        this.RenderStartTime = performance.now();
     }
 
-    /**
-     * Appends a component to the Entities componenet
-     * @param {IComponent} component the component to add
-     */
-    public AddComponent(component: IComponent) {
-        if (component.IsCompatable(this)) {
-            component.OnAttach(this)
-            // component.Start()
-            this.components.push(component);
+    Stringify = () => {
+        return `Stats for frame: ${this.RendererCount} Renderer(s), ${this.IndexCount} Index(es), ${this.CustomAttribCount} Custom Attribute(s), took ${this.TimeToRender.toPrecision(5)} ms for frame render`.toString();
+    }
 
-            if (IsRenderer(component)) {
-                this.renderers.push(component)
-            }
-        }
-
+    get TimeToRender(): number {
+        return this.RenderEndTime - this.RenderStartTime
     }
 }</code></pre>
         </article>

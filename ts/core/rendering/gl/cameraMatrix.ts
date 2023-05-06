@@ -9,12 +9,12 @@ const CAMERA_FAR = 100;
  * @category Rendering
  */
 export class CameraMatrix {
-    private projectionMatrix = mat4.create();
-    private transformationMatrix = mat4.create();
+    private projectionMatrix: mat4 = mat4.create();
+    private transformationMatrix: mat4 = mat4.create();
 
-    private anyMatrixUpdated = true;
+    private anyMatrixUpdated: boolean = true;
 
-    private finalMatrix = mat4.create();
+    private finalMatrix: mat4 = mat4.create();
 
     constructor(gl: WebGL2RenderingContext) {
         this.RecomputeProjectionMatrix(gl);

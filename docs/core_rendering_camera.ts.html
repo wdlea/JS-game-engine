@@ -85,7 +85,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FetchPrograms">FetchPrograms</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Fetch</h2><h3>Global</h3><ul><li><a href="global.html#FetchEngineMesh">FetchEngineMesh</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FetchPrograms">FetchPrograms</a></li><li><a href="global.html#OnUpdate">OnUpdate</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Debugging</h2><h3>Classes</h3><ul><li><a href="FrameStats.html">FrameStats</a></li></ul></div><div class="category"><h2>Fetch</h2><h3>Global</h3><ul><li><a href="global.html#FetchEngineMesh">FetchEngineMesh</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
                 
             </nav>
         </div>
@@ -103,6 +103,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { mat4, vec3, vec4 } from "gl-matrix";
+import { FrameStats } from "../../debugger";
 import { CameraMatrix } from "./gl/cameraMatrix";
 import { IRenderer } from "./iRenderer";
 import { MeshInstance } from "./meshInstance";
@@ -125,10 +126,11 @@ export class Camera {
     public uniforms: RendererSettings;
 
 
-    private cameraMatrix: Readonly&lt;CameraMatrix>;//todo see if cameramatrix has changed
+    private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
     set CameraMatrix(v: CameraMatrix) {
         v.RecomputeProjectionMatrix(this._gl)
-        this.cameraMatrix = Object.freeze(v)
+
+        this.cameraMatrix = v
 
         this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
     }
@@ -172,17 +174,19 @@ export class Camera {
     /**
      * Draws a mesh to screen, using Depth Buffer
      * @param {MeshInstance} m The mesh to render
+     * @param {FrameStats} frameStats, the current debugging statistics
      */
-    DrawMesh(m: MeshInstance) {
+    DrawMesh(m: MeshInstance, frameStats: FrameStats) {
         m.shader.Use(this._gl);
         this.uniforms.objects = m.settings;
         this.uniforms.WriteBuffer(this._gl, this.uniformBuffer);
 
+
+        frameStats.CustomAttribCount += m.shader.customAttributes.length
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {
             a.Apply(this._gl, m.shader)
         })
-
 
         //set default attributes
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
@@ -231,11 +235,11 @@ export class Camera {
      * Renders multiple objects
      * @param {Array&lt;IRenderer>} objects, an array of the objects to be rendered
      */
-    RenderObjects(objects: Array&lt;IRenderer>) {
+    RenderObjects(objects: Array&lt;IRenderer>, frameStats: FrameStats) {
         this.BeginDraw()
         objects.forEach(
             (renderer) => {
-                renderer.OnRender(this);
+                renderer.OnRender(this, frameStats);
             }
         )
     }
