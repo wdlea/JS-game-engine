@@ -30,4 +30,8 @@ export class FrameStats {
         this.RenderStartTime = performance.now();
         this.RenderEndTime = 0;
     }
+
+    Stringify = () => {
+        return `Stats for frame: ${this.RendererCount} Renderer(s), ${this.IndexCount} Index(es), ${this.CustomAttribCount} Custom Attribute(s), took ${this.RenderEndTime - this.RenderStartTime} ms for frame render`.toString();
+    }
 }

@@ -8,7 +8,7 @@
     "makeDocs": "jsdoc ./ts/ -r -d ./docs -c jsdoc.json",
 
     "prebuild": "npm run test && npm run makeDocs",
-    "build": "tsc",
+    "build": "tsc && npm link",
 
     "quickBuild":  "tsc"
   },

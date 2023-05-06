@@ -22,10 +22,11 @@ export class Camera {
     public uniforms: RendererSettings;
 
 
-    private cameraMatrix: Readonly<CameraMatrix>;//todo see if cameramatrix has changed
+    private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
     set CameraMatrix(v: CameraMatrix) {
         v.RecomputeProjectionMatrix(this._gl)
-        this.cameraMatrix = Object.freeze(v)
+
+        this.cameraMatrix = v
 
         this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
     }

@@ -1,7 +1,3 @@
-/**
- * This file contains the base "Game" class,
- */
-
 import { Transform } from "../components";
 import { FrameStats } from "../debugger";
 
@@ -10,9 +6,10 @@ import { Scene } from "./scene";
 
 const MAX_UPDATE_HZ = 50;
 
-
-const GL_CANVAS_SELECTOR = "canvas#render-canvas";
-
+/**
+ * This is called after every update, if you want to do something then, use this!
+ * @default null
+ */
 export let OnUpdate: { (): void } | null = null;
 
 
@@ -53,34 +50,61 @@ export class Game {
 
     /**initializes WEBGL and begins render/update loop*/
     public DefaultStartup() {
+        console.log("Performing default startup")
+
+        console.log("Starting webgl")
         this.StartWEBGL();
+
+        console.log("Starting render loop")
         this.StartRender();
+
+        console.log("Starting update cycle")
+        setInterval(this.BoundUpdate, 1000 / MAX_UPDATE_HZ);
+
+        console.log("Finished Startup")
     }
 
-
-    public StartWEBGL() {
+    /**
+     * Starts webgl, gets it ready to draw
+     */
+    public StartWEBGL = () => {
+        console.log("Starting WEBGL")
         this.ConfigureWEBGL();
 
         //if no webgl context could be found, the function will error out, then this will not be set to true
         this.GLinitialized = true;
-
-        setInterval(this.BoundUpdate, 1000 / MAX_UPDATE_HZ);
     }
-    public StartRender() {
+    /**
+     * Starts render loop
+     */
+    public StartRender = () => {
+        console.log("Starting render")
         if (!this.GLinitialized) {
             throw new Error("Tried to render before webgl was intialized");
         }
 
-        requestAnimationFrame(this.BoundRecursivelyRender)//start rendering asyncronously
+        console.log("actually begun rendering")
+        requestAnimationFrame(this.RecursivelyRender)
     }
 
+    /**
+     * Update, but bound
+     */
     private BoundUpdate = this.Update.bind(this);
+
+    /**
+     * Update all components in active scene
+     */
     Update() {
         this.activeScene.Update();//update constantly
         if (OnUpdate !== null) { OnUpdate() }//allow other scripts to use CPU ticks 
     }
 
-    //returns an array of all components Entitys will have on them by defualt, such as Transform when i implement it
+    /**
+     * returns an array of all components Entitys will have on them by defualt, such as Transform.
+     * You [the end user] can override this, look at the source.
+     * @returns {Array<IComponent>} New instances of all the default components
+    */
     public MakeDefaultComponents(): Array<IComponent> {
         return [new Transform()];
     }
@@ -95,17 +119,19 @@ export class Game {
         this.Glcontext.clear(this.Glcontext.DEPTH_BUFFER_BIT | this.Glcontext.COLOR_BUFFER_BIT);//clear depth and colour buffers to specified values
     }
 
-    private BoundRecursivelyRender = this.RecursivelyRender.bind(this);
-    /**called every animation frame, only call once*/
-    private RecursivelyRender() {
+    /**
+     * called every animation frame, only call once, it recurses, as the name suggests.
+     */
+    private RecursivelyRender = () => {
         const prevStats = this.frameStats.End()
-        console.debug(prevStats);
+        console.log(prevStats.Stringify());
+
 
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
 
         this.ActiveScene.OnRender(this.frameStats)
 
         //recursive part
-        requestAnimationFrame(this.BoundRecursivelyRender)
+        requestAnimationFrame(this.RecursivelyRender)
     }
 }
