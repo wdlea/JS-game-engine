@@ -155,7 +155,7 @@ export class Scene {
     public OnRender(frameStats: FrameStats) {
         this.camera.BeginDraw()
 
-        frameStats.RendererCount = this.renderers.length;
+        frameStats.RendererCount += this.renderers.length;
 
         this.camera.RenderObjects(this.renderers, frameStats)
     }

@@ -1,4 +1,3 @@
-import { FrameStats } from "../../debugger";
 import { Camera } from "./camera";
 
 /**
@@ -13,7 +12,7 @@ export interface IRenderer {
      * @param {Camera} cam The camera rendering the component 
      * @param {FrameStats} frameStats, the current frames stats
      */
-    OnRender(cam: Camera, frameStats: FrameStats): void;
+    OnRender(cam: Camera): void;
 }
 
 /**
