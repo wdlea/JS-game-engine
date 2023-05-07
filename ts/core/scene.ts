@@ -1,7 +1,6 @@
 import { Game } from "./game";
 import { Entity } from "./entity";
 import { Camera, IRenderer } from "./rendering";
-import { Stats } from "webpack";
 import { stats } from "../debugging";
 /**
  * Base class for a scene in a game, only one can be active at a time, but Entities can be part of multiple scenes
