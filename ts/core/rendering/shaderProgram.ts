@@ -1,4 +1,4 @@
-import { ShaderAttribute } from "./ShaderAttribute";
+import { ShaderAttribute } from "./shaderAttribute";
 
 export type AttributeLookup = {
     name: string,
