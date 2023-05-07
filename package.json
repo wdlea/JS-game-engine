@@ -4,8 +4,8 @@
   "description": "My JS game engine",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
-    "makeDocs": "jsdoc ./ts/ -r -d ./docs -c jsdoc.json",
+    "test": "jest --verbose",
+    "makeDocs": "jsdoc ./ts/ ./README.md -r -d ./docs -c jsdoc.json",
 
     "prebuild": "npm run test && npm run makeDocs",
     "build": "tsc && npm link",

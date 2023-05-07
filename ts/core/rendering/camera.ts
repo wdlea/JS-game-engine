@@ -1,4 +1,5 @@
 import { mat4, vec3, vec4 } from "gl-matrix";
+import { stats } from "../../debugging";
 import { CameraMatrix } from "./gl/cameraMatrix";
 import { IRenderer } from "./iRenderer";
 import { MeshInstance } from "./meshInstance";
@@ -69,9 +70,11 @@ export class Camera {
     /**
      * Draws a mesh to screen, using Depth Buffer
      * @param {MeshInstance} m The mesh to render
-     * @param {FrameStats} frameStats, the current debugging statistics
      */
     DrawMesh(m: MeshInstance) {
+        stats.meshDrawCalls++
+        stats.indexCount += m.mesh.indexCount;
+
         m.shader.Use(this._gl);
         this.uniforms.objects = m.settings;
         this.uniforms.WriteBuffer(this._gl, this.uniformBuffer);

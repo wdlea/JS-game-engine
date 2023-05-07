@@ -1,4 +1,5 @@
 import { Transform } from "../components";
+import { ResetStats, StringifyStats } from "../debugging";
 
 import { IComponent } from "./component";
 import { Scene } from "./scene";
@@ -120,9 +121,11 @@ export class Game {
      * called every animation frame, only call once, it recurses, as the name suggests.
      */
     private RecursivelyRender = () => {
-
+        ResetStats()
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
+        this.activeScene.OnRender()
 
+        console.log(StringifyStats())
         //recursive part
         requestAnimationFrame(this.RecursivelyRender)
     }

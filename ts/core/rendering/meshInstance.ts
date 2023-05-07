@@ -1,5 +1,4 @@
 import { mat4 } from "gl-matrix";
-import { FrameStats } from "../../debugger";
 import { Camera } from "./camera";
 import { EngineMesh } from "./mesh";
 import { ShaderProgram } from "./shaderProgram";
@@ -31,7 +30,7 @@ export class MeshInstance {
      * @param {Camera} camera The camera to draw on
      * @deprecated Use {@link Camera}.DrawMesh() instead
      */
-    Draw(camera: Camera, frameStats: FrameStats) {
-        camera.DrawMesh(this, frameStats);
+    Draw(camera: Camera) {
+        camera.DrawMesh(this);
     }
 }
