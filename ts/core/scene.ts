@@ -2,8 +2,7 @@ import { Game } from "./game";
 import { Entity } from "./entity";
 import { Camera, IRenderer } from "./rendering";
 import { Stats } from "webpack";
-import { FrameStats } from "../debugger";
-
+import { stats } from "../debugging";
 /**
  * Base class for a scene in a game, only one can be active at a time, but Entities can be part of multiple scenes
  * @category Core 
@@ -46,14 +45,13 @@ export class Scene {
     }
     /**
      * Called every AnimationFrame
-     * @param {FrameStats} frameStats, the current frames stats
      */
-    public OnRender(frameStats: FrameStats) {
+    public OnRender() {
         this.camera.BeginDraw()
 
-        frameStats.RendererCount = this.renderers.length;
+        stats.rendererCount += this.renderers.length;
 
-        this.camera.RenderObjects(this.renderers, frameStats)
+        this.camera.RenderObjects(this.renderers)
     }
 
     private renderers: Array<IRenderer> = [];

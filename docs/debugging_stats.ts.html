@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs debugger/FrameStats.ts</title>
+  <title>JS-game-engine Docs debugging/stats.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -85,7 +85,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#FetchPrograms">FetchPrograms</a></li><li><a href="global.html#OnUpdate">OnUpdate</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Debugging</h2><h3>Classes</h3><ul><li><a href="FrameStats.html">FrameStats</a></li></ul></div><div class="category"><h2>Fetch</h2><h3>Global</h3><ul><li><a href="global.html#FetchEngineMesh">FetchEngineMesh</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DisplayStringified">DisplayStringified</a></li><li><a href="global.html#FetchPrograms">FetchPrograms</a></li><li><a href="global.html#OnUpdate">OnUpdate</a></li><li><a href="global.html#ResetStats">ResetStats</a></li><li><a href="global.html#StringifyStats">StringifyStats</a></li><li><a href="global.html#stats">stats</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Fetch</h2><h3>Global</h3><ul><li><a href="global.html#FetchEngineMesh">FetchEngineMesh</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
                 
             </nav>
         </div>
@@ -93,7 +93,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>debugger/FrameStats.ts</h1>
+                    <h1>debugging/stats.ts</h1>
                 </header>
                 
 
@@ -103,49 +103,34 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Class that represents the stats within the frame
- * @category Debugging
+ * This type holds all the debugging stats
  */
+export type Stats = {
+    indexCount: number,
+    rendererCount: number,
+    startFrameTime: number,
+    meshDrawCalls: number
+}
 
-
-export class FrameStats {
-    RendererCount = 0;
-    IndexCount = 0;
-    RenderStartTime = 0;
-    RenderEndTime = 0;
-    CustomAttribCount = 0;
-    /**
-     * Closes a FrameStats, fills in remaining fields and returns a frozen copy, the zeros the instance it is called on
-     * @returns {Readonly&lt;FrameStats>}
-     */
-    End = (): Readonly&lt;FrameStats> => {
-        this.RenderEndTime = performance.now();
-        const ret: Readonly&lt;FrameStats> = Object.freeze({ ...this });
-
-        this.Zero()
-
-        return ret
+/**
+ * Resets the Stats context
+ * @see {stats}
+ */
+export function ResetStats() {
+    stats = {
+        indexCount: 0,
+        rendererCount: 0,
+        startFrameTime: performance.now(),
+        meshDrawCalls: 0,
     }
-    /**
-     * Zeros a FrameStats so it can be used in a next fromae
-     */
-    Zero = () => {
-        this.RendererCount = 0;
-        this.IndexCount = 0;
-        this.CustomAttribCount = 0;
-    }
-    StartFrame = () => {
-        this.RenderStartTime = performance.now();
-    }
+}
 
-    Stringify = () => {
-        return `Stats for frame: ${this.RendererCount} Renderer(s), ${this.IndexCount} Index(es), ${this.CustomAttribCount} Custom Attribute(s), took ${this.TimeToRender.toPrecision(3)} ms for frame render`.toString();
-    }
 
-    get TimeToRender(): number {
-        return this.RenderEndTime - this.RenderStartTime
-    }
-}</code></pre>
+/**
+ * The "context" for debugging
+ */
+export let stats: Stats;
+ResetStats()</code></pre>
         </article>
     </section>
 

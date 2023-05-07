@@ -1,5 +1,5 @@
 import { mat4, vec3, vec4 } from "gl-matrix";
-import { FrameStats } from "../../debugger";
+import { stats } from "../../debugging";
 import { CameraMatrix } from "./gl/cameraMatrix";
 import { IRenderer } from "./iRenderer";
 import { MeshInstance } from "./meshInstance";
@@ -70,15 +70,15 @@ export class Camera {
     /**
      * Draws a mesh to screen, using Depth Buffer
      * @param {MeshInstance} m The mesh to render
-     * @param {FrameStats} frameStats, the current debugging statistics
      */
-    DrawMesh(m: MeshInstance, frameStats: FrameStats) {
+    DrawMesh(m: MeshInstance) {
+        stats.meshDrawCalls++
+        stats.indexCount += m.mesh.indexCount;
+
         m.shader.Use(this._gl);
         this.uniforms.objects = m.settings;
         this.uniforms.WriteBuffer(this._gl, this.uniformBuffer);
 
-
-        frameStats.CustomAttribCount += m.shader.customAttributes.length
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {
             a.Apply(this._gl, m.shader)
@@ -131,11 +131,11 @@ export class Camera {
      * Renders multiple objects
      * @param {Array<IRenderer>} objects, an array of the objects to be rendered
      */
-    RenderObjects(objects: Array<IRenderer>, frameStats: FrameStats) {
+    RenderObjects(objects: Array<IRenderer>) {
         this.BeginDraw()
         objects.forEach(
             (renderer) => {
-                renderer.OnRender(this, frameStats);
+                renderer.OnRender(this);
             }
         )
     }
