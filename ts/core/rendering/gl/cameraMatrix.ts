@@ -16,25 +16,26 @@ export class CameraMatrix {
 
     private finalMatrix: mat4 = mat4.create();
 
+    private _gl: WebGL2RenderingContext;
+
     constructor(gl: WebGL2RenderingContext) {
-        this.RecomputeProjectionMatrix(gl);
+        this._gl = gl;
+        this.RecomputeProjectionMatrix();
     }
 
     /**
      * Recomputes matrix
-     * @param {WebGL2RenderingContext} gl 
      */
-    public RecomputeProjectionMatrix(gl: WebGL2RenderingContext) {
-        if (gl.canvas instanceof OffscreenCanvas)
+    public RecomputeProjectionMatrix() {
+        if (this._gl.canvas instanceof OffscreenCanvas)
             throw new Error("Canvas is offscreen")
 
-        const aspectRatio = gl.canvas.clientWidth / gl.canvas.clientWidth;
         mat4.perspective(
             this.projectionMatrix,
-            45 / 180 * Math.PI,
-            aspectRatio,
-            CAMERA_NEAR,
-            CAMERA_FAR
+            this.Fov,
+            this.AspectRatio,
+            this.NearClip,
+            this.FarClip
         );
         this.anyMatrixUpdated = true;
     }
@@ -55,5 +56,24 @@ export class CameraMatrix {
         }
 
         return this.finalMatrix;
+    }
+
+    get NearClip(): number {
+        return CAMERA_NEAR
+    }
+    get FarClip(): number {
+        return CAMERA_FAR
+    }
+
+    private fov: number = 45 / 180 * Math.PI;
+    get Fov(): number {
+        return this.fov;
+    }
+    set Fov(v: number) {
+        this.fov = v;
+    }
+
+    get AspectRatio(): number {
+        return this._gl.canvas.width / this._gl.canvas.height;
     }
 }

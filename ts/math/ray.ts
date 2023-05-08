@@ -1,4 +1,6 @@
 import { vec3 } from "gl-matrix"
+import { Camera } from "../core/rendering/camera";
+import { CameraMatrix } from "../core/rendering/gl/cameraMatrix";
 
 /**
  * Symbolizes a line in 3d space
@@ -65,5 +67,13 @@ export class Ray {
     InterceptXY(): vec3 {
         return this.InterceptOffsetPlane(0, 2)
     }
+}
 
+/**
+ * Converts a point in clip space to a Ray.
+ * @param {Camera} camera 
+ * @param {vec3} clipSpace 
+ */
+export function ClipSpaceToRay(camera: Camera, clipSpace: vec3): Ray {
+    throw new Error("Not implemented")
 }
