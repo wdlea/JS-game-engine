@@ -1,4 +1,5 @@
-import { mat4 } from "gl-matrix";
+import { mat4, vec3, vec4 } from "gl-matrix";
+import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;
 const CAMERA_FAR = 100;
@@ -8,6 +9,7 @@ const CAMERA_FAR = 100;
  * Uses lazy evaluation for the matrix to save processing power
  * @category Rendering
  */
+
 export class CameraMatrix {
     private projectionMatrix: mat4 = mat4.create();
     private transformationMatrix: mat4 = mat4.create();
@@ -32,7 +34,7 @@ export class CameraMatrix {
 
         mat4.perspective(
             this.projectionMatrix,
-            this.Fov,
+            this.Fovy,
             this.AspectRatio,
             this.NearClip,
             this.FarClip
@@ -65,15 +67,54 @@ export class CameraMatrix {
         return CAMERA_FAR
     }
 
-    private fov: number = 45 / 180 * Math.PI;
-    get Fov(): number {
-        return this.fov;
+    private fovy: number = 45 / 180 * Math.PI;
+    get Fovy(): number {
+        return this.fovy;
     }
-    set Fov(v: number) {
-        this.fov = v;
+    set Fovy(v: number) {
+        this.fovy = v;
     }
 
     get AspectRatio(): number {
         return this._gl.canvas.width / this._gl.canvas.height;
+    }
+
+    /**
+     * Converts a point in clip space to a Ray.
+     * @param {vec4} clipSpace The position in clip space, use (x, y, 0, 0) by default
+     */
+    ClipSpaceToRay(clipSpace: vec4): Ray {
+        // Find x, the distance from the tip of the frustum to the closest plane
+        //                _
+        //               /|\        
+        //              /_|_\   ∠Fovy 
+        //             /  |  \        
+        //            /   x   \          
+        //           /    |    \  
+        // (-1, 0)  /__B__|__A__\    (1, 0)
+        //             (0, 0)
+        // B = A = 1, same lengths
+
+        // tan(Fovy/2) = A/x
+        // tan(Fovy/2) = 1/x
+        // x = 1/tan(Fovy/2)
+        const x = 1 / Math.tan(this.Fovy / 2);
+
+        //make RayOrigin which is at (0, 0, x)
+        const rayOrigin = vec4.fromValues(0, 0, x, 0);
+
+        //make the ray
+        //it has to start from the rayOrigin and intercept the position in clip-space
+        const ray = Ray.FromPoints(
+            rayOrigin,
+            clipSpace,
+            true
+        );
+
+        // apply transformations to ray so that it is positioned like the camera
+        ray.Transform(this.transformationMatrix);
+
+
+        return ray;
     }
 }
