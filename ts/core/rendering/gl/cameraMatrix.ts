@@ -1,4 +1,4 @@
-import { mat4, vec3, vec4 } from "gl-matrix";
+import { mat4, vec2, vec3, vec4 } from "gl-matrix";
 import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;
@@ -81,7 +81,8 @@ export class CameraMatrix {
 
     /**
      * Converts a point in clip space to a Ray.
-     * @param {vec4} clipSpace The position in clip space, use (x, y, 0, 0) by default
+     * @param {vec4} clipSpace The position in clip space, use (x, y, 0, 0)(SEE DOUBLE CHECK IN SOURCE) by default
+     * @returns {Ray} The computed ray
      */
     ClipSpaceToRay(clipSpace: vec4): Ray {
         // Find x, the distance from the tip of the frustum to the closest plane
@@ -91,14 +92,18 @@ export class CameraMatrix {
         //             /  |  \        
         //            /   x   \          
         //           /    |    \  
-        // (-1, 0)  /__B__|__A__\    (1, 0)
-        //             (0, 0)
+        //  (-1, 0) /__B__|__A__\ (1, 0)
+        //             (0, 0)   <--------------- Double check this value, it may be (0, -1)
         // B = A = 1, same lengths
 
         // tan(Fovy/2) = A/x
         // tan(Fovy/2) = 1/x
         // x = 1/tan(Fovy/2)
         const x = 1 / Math.tan(this.Fovy / 2);
+
+        //Double check my dodgy math
+        if (x <= 0)
+            throw new Error("x should NEVER be 0, which would be 180° Fovy, unexpected behavior")
 
         //make RayOrigin which is at (0, 0, x)
         const rayOrigin = vec4.fromValues(0, 0, x, 0);
@@ -114,7 +119,10 @@ export class CameraMatrix {
         // apply transformations to ray so that it is positioned like the camera
         ray.Transform(this.transformationMatrix);
 
-
         return ray;
+    }
+
+    ScreenPositionToClipSpace(screenPosition: vec2): vec4 {
+        throw new Error("Not implemented")
     }
 }

@@ -24,7 +24,7 @@ export class Camera {
 
     private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
     set CameraMatrix(v: CameraMatrix) {
-        v.RecomputeProjectionMatrix(this._gl)
+        v.RecomputeProjectionMatrix()
 
         this.cameraMatrix = v
 

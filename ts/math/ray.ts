@@ -11,13 +11,12 @@ export class Ray {
         this.direction = direction;
     }
 
-
     /**
      * Returns origin + mul * direction
      * @param {number} mul 
      * @returns {vec3} The final position
      */
-    private step(mul: number): vec4 {
+    Step(mul: number): vec4 {
         const delta: vec4 = vec4.create();
 
         vec4.scale(delta, this.direction, mul);
@@ -40,7 +39,7 @@ export class Ray {
 
         const dist = this.origin[plane] - offset;
         const mul = dist / this.direction[plane];
-        return this.step(mul)
+        return this.Step(mul)
     }
 
     /**
@@ -114,6 +113,16 @@ export class Ray {
     Transform(matrix: mat4) {
         vec4.transformMat4(this.direction, this.direction, matrix)
         vec4.transformMat4(this.origin, this.origin, matrix)
+    }
+
+    get Values() {
+        return [this.Origin, this.Direction] as const
+    }
+    get Origin() {
+        return this.origin;
+    }
+    get Direction() {
+        return this.direction;
     }
 }
 
