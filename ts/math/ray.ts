@@ -1,6 +1,8 @@
 import { mat4, vec4 } from "gl-matrix"
 /**
  * Symbolizes a line in 3d space
+ * @memberof module:Math
+ * @alias module:Math.Ray
  */
 export class Ray {
     origin: vec4;
@@ -13,6 +15,7 @@ export class Ray {
 
     /**
      * Returns origin + mul * direction
+     * @alias module:Math.Ray.Step
      * @param {number} mul 
      * @returns {vec3} The final position
      */
@@ -68,8 +71,9 @@ export class Ray {
 
     /**
      * Normalizes the current ray
+     * @returns {void}
      */
-    Normalize() {
+    Normalize(): void {
         vec4.normalize(this.direction, this.direction);
     }
 
@@ -89,7 +93,7 @@ export class Ray {
      * @param {vec3} start The origin of the ray
      * @param {vec3} end A point which the ray intercepts
      * @param {boolean} normalize Whether to normalize the returned ray
-     * @returns 
+     * @returns {Ray} The new ray
      */
     static FromPoints(start: vec4, end: vec4, normalize: boolean = false): Ray {
         const direction = vec4.create()

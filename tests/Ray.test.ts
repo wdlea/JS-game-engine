@@ -1,4 +1,4 @@
-import { Ray } from "../ts/math/ray"
+import { Ray } from "../ts/math"
 import { vec4 } from "gl-matrix"
 
 
