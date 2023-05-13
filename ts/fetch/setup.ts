@@ -5,7 +5,7 @@ export const BASE_RESOURCE_PATH = "http://127.0.0.1:5500/dist/static/game/"
  * Sets up AJAX
  * @category Internal
  */
-export default function SetupAJAX() {
+export function SetupAJAX() {
     $.ajaxSetup({
         type: "GET",
         data: {

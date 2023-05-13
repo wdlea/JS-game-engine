@@ -1,8 +1,18 @@
 {
+<<<<<<< Updated upstream
   "name": "js-game-engine",
   "version": "1.0.0",
+=======
+  "name": "@wdlea/js-game-engine",
+  "version": "1.0.2",
+>>>>>>> Stashed changes
   "description": "My JS game engine",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**",
+    "licenses/**"
+  ],
   "scripts": {
     "test": "jest --verbose",
     "makeDocs": "jsdoc ./ts/ ./README.md -r -d ./docs -c jsdoc.json",
@@ -37,6 +47,11 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+<<<<<<< Updated upstream
+=======
+    "@wdlea/obj-lib": "^0.0.6",
+>>>>>>> Stashed changes
     "jquery": "^3.6.4"
-  }
+  },
+  "bundleDependencies":false
 }

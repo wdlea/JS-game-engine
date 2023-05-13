@@ -75,7 +75,7 @@ export class EngineMesh {
     static FromModel(gl: WebGL2RenderingContext, model: Model): EngineMesh {
         let vertices: Float32Array = new Float32Array(model.vertices.length * 4);
         let UVs: Float32Array = new Float32Array(model.UVs.length * 3);
-        let Normals: Float32Array = new Float32Array(model.Normals.length * 3);
+        let Normals: Float32Array = new Float32Array(model.normals.length * 3);
 
         let i = 0;
         model.vertices.forEach(
@@ -92,8 +92,13 @@ export class EngineMesh {
             }
         )
         i = 0;
+<<<<<<< Updated upstream
         model.Normals.forEach(
             (n) => {
+=======
+        model.normals.forEach(
+            (n: Vector3) => {
+>>>>>>> Stashed changes
                 Normals.set(n, i * 3);
                 i++;
             }

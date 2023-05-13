@@ -13,6 +13,10 @@
  */
 
 import { mat4, vec4 } from "gl-matrix";
+import { ShaderProgram } from "./shaderProgram";
+
+export const DEFUALT_UNIFORM_BLOCK_NAME: string = "defaultUniforms";
+export const DEFAULT_UNIFORM_BLOCK_LOCATION = 0;
 
 const FLOAT_LENGTH = 4;
 const VECTOR_LENGTH = 4;
@@ -27,17 +31,30 @@ export class RendererSettings {
     public objects: Readonly<ObjectSettings>;
     public lights: LightSettings;
 
+    private buffer: WebGLBuffer;
+
+    private _gl: WebGL2RenderingContext;
+
     /**
      * 
      * @param globals GlobalSettings, the settings that are constant between objecs
      * @param objects Readonly<ObjectSettings>, the settings that are pecific for each object HINT:to make it Readonly<> use Object.Freeze(obj)
      * @param lights LightSettings, the settings that can be changes based on nearby light[note singular pluralization]
      */
-    constructor(globals: GlobalSettings, objects: Readonly<ObjectSettings>, lights: LightSettings) {
+    constructor(gl: WebGL2RenderingContext, globals: GlobalSettings, objects: Readonly<ObjectSettings>, lights: LightSettings) {
+        this._gl = gl;
+
         // objects is readonly to prevent the user(me) from overwriting other objects becuase the settings are stored in a reference type(class) and are thus mutable
         this.globals = globals;
         this.objects = objects
         this.lights = lights;
+
+        const tBuffer = gl.createBuffer();
+        if (tBuffer === null)
+            throw new Error('could not create buffer')
+
+        this.buffer = tBuffer;
+        this.InitBuffer()
     }
 
     get AsArray(): Float32Array {
@@ -48,9 +65,37 @@ export class RendererSettings {
 
         return f
     }
-    public WriteBuffer(gl: WebGL2RenderingContext, buffer: WebGLBuffer) {
-        gl.bindBuffer(gl.UNIFORM_BUFFER, buffer);
-        gl.bufferData(gl.UNIFORM_BUFFER, this.AsArray, gl.STATIC_DRAW);
+
+    /**
+     * Initializes uniform buffer
+     */
+    private InitBuffer() {
+        this._gl.bindBuffer(this._gl.UNIFORM_BUFFER, this.buffer);
+        this._gl.bufferData(this._gl.UNIFORM_BUFFER, this.AsArray, this._gl.DYNAMIC_DRAW);
+        this._gl.bindBuffer(this._gl.UNIFORM_BUFFER, null);
+        this._gl.bindBufferBase(this._gl.UNIFORM_BUFFER, DEFAULT_UNIFORM_BLOCK_LOCATION, this.buffer)
+    }
+
+    /**
+     * Updates the data within the UBO
+     */
+    public UpdateBuffer() {
+        this._gl.bindBuffer(this._gl.UNIFORM_BUFFER, this.buffer)
+        this._gl.bufferData(this._gl.UNIFORM_BUFFER, this.AsArray, this._gl.DYNAMIC_DRAW)
+        this._gl.bindBuffer(this._gl.UNIFORM_BUFFER, null);
+        this._gl.bindBufferBase(this._gl.UNIFORM_BUFFER, DEFAULT_UNIFORM_BLOCK_LOCATION, this.buffer);
+    }
+
+    /**
+     * Writes UBO to current shader program
+     * @param {ShaderProgram} program The shaderprogram to write to
+     */
+    public UseBuffer(program: ShaderProgram) {
+        this._gl.uniformBlockBinding(
+            program.Program,
+            program.DefaultUBI,
+            DEFAULT_UNIFORM_BLOCK_LOCATION
+        )
     }
 }
 

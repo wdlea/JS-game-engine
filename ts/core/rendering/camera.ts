@@ -77,7 +77,7 @@ export class Camera {
 
         m.shader.Use(this._gl);
         this.uniforms.objects = m.settings;
-        this.uniforms.WriteBuffer(this._gl, this.uniformBuffer);
+        this.uniforms.UseBuffer(this._gl, this.uniformBuffer);
 
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {

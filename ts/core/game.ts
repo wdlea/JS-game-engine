@@ -1,5 +1,7 @@
 import { Transform } from "../components";
 import { ResetStats, StringifyStats } from "../debugging";
+import { DisplayStringified } from "../debugging/stringify";
+import { SetupAJAX } from "../fetch";
 
 import { IComponent } from "./component";
 import { Scene } from "./scene";
@@ -14,6 +16,10 @@ export let OnUpdate: { (): void } | null = null;
 
 
 export const DEFAULT_PROGRAM_NAME = "default"
+
+
+const DEBUG_ELEMENT_SELECTOR = "#debug-stats"
+const debugElement: HTMLElement | null = document.querySelector(DEBUG_ELEMENT_SELECTOR);
 
 /**
  * Base class for a Game
@@ -38,7 +44,7 @@ export class Game {
     }
 
     constructor(startingScene: Scene, gl: WebGL2RenderingContext) {
-
+        SetupAJAX()
         //load specified scene
         this.activeScene = startingScene;
         startingScene.Load(this);
@@ -125,7 +131,8 @@ export class Game {
         this.Glcontext.clear(this.Glcontext.COLOR_BUFFER_BIT | this.Glcontext.DEPTH_BUFFER_BIT)
         this.activeScene.OnRender()
 
-        console.log(StringifyStats())
+        if (debugElement !== null)
+            DisplayStringified(debugElement)
         //recursive part
         requestAnimationFrame(this.RecursivelyRender)
     }
