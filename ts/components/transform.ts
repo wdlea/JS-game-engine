@@ -8,8 +8,9 @@ let it_recieves = vec3.create();
 
 /**
  * Component that represents an objects tranformations in 3D space
- * @category Components
  * @implements {IComponent}
+ * 
+ * @memberof module:Components
  */
 export class Transform implements IComponent {
 

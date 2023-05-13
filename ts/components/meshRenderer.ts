@@ -10,7 +10,8 @@ export const MESH_RENDERER_IDENTIFIER = "MESH_RENDERER"
  * A basic renderer
  * @implements {IComponent}
  * @implements {IRenderer}
- * @category Components
+ * 
+ * @memberof module:Components
  */
 export class MeshRenderer implements IComponent, IRenderer {
     public enabled: boolean = true;

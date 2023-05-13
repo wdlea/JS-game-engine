@@ -1,5 +1,6 @@
 import { mat4, vec2, vec4 } from "gl-matrix";
-import { constants, Ray, trash } from "../../../math";
+import { trash, constants, Remap } from "../../../math";
+import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;
 const CAMERA_FAR = 100;
@@ -9,6 +10,7 @@ const CAMERA_FAR = 100;
  * Uses lazy evaluation for the matrix to save processing power
  * @category Rendering
  */
+
 export class CameraMatrix {
     private projectionMatrix: mat4 = mat4.create();
     private transformationMatrix: mat4 = mat4.create();
@@ -20,25 +22,23 @@ export class CameraMatrix {
     private _gl: WebGL2RenderingContext;
 
     constructor(gl: WebGL2RenderingContext) {
-        this._gl = gl
-        this.RecomputeProjectionMatrix(gl);
+        this._gl = gl;
+        this.RecomputeProjectionMatrix();
     }
 
     /**
      * Recomputes matrix
-     * @param {WebGL2RenderingContext} gl 
      */
-    public RecomputeProjectionMatrix(gl: WebGL2RenderingContext) {
-        if (gl.canvas instanceof OffscreenCanvas)
+    public RecomputeProjectionMatrix() {
+        if (this._gl.canvas instanceof OffscreenCanvas)
             throw new Error("Canvas is offscreen")
 
-        const aspectRatio = gl.canvas.clientWidth / gl.canvas.clientWidth;
         mat4.perspective(
             this.projectionMatrix,
-            45 / 180 * Math.PI,
-            aspectRatio,
-            CAMERA_NEAR,
-            CAMERA_FAR
+            this.Fovy,
+            this.AspectRatio,
+            this.NearClip,
+            this.FarClip
         );
         this.anyMatrixUpdated = true;
     }
@@ -178,7 +178,7 @@ export class CameraMatrix {
 
         return vec4.fromValues(
             x, y,
-            -1, 0
+            0, 0
         )
     }
 

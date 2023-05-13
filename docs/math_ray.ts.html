@@ -121,7 +121,7 @@ export class Ray {
      * Returns origin + mul * direction
      * @alias module:Math.Ray.Step
      * @param {number} mul 
-     * @returns {vec3} The final position
+     * @returns {vec4} The final position
      */
     Step(mul: number): vec4 {
         const delta: vec4 = vec4.create();
@@ -139,7 +139,7 @@ export class Ray {
      * @alias module:Math.Ray.InterceptOffsetPlane
      * @param offset the offset, in whatever unit you are using along the normal of the plane
      * @param plane 0 -> YZ, 1 -> XZ, 2 -> XY planes
-     * @returns {vec3} The point of intersection with the given plane
+     * @returns {vec4} The point of intersection with the given plane
      */
     InterceptOffsetPlane(offset: number, plane: number): vec4 {
         if (plane &lt; 0 || plane > 2)
@@ -153,7 +153,7 @@ export class Ray {
     /**
      * alias for InterceptOffsetPlane(0, 0)
      * @alias module:Math.Ray.InterceptYZ
-     * @returns {vec3} The point of intersection with the YZ plane
+     * @returns {vec4} The point of intersection with the YZ plane
      */
     InterceptYZ(): vec4 {
         return this.InterceptOffsetPlane(0, 0)
@@ -162,7 +162,7 @@ export class Ray {
     /**
      * alias for InterceptOffsetPlane(0, 1)
      * @alias module:Math.Ray.InterceptXZ
-     * @returns {vec3} The point of intersection with the XZ plane
+     * @returns {vec4} The point of intersection with the XZ plane
      */
     InterceptXZ(): vec4 {
         return this.InterceptOffsetPlane(0, 1)
@@ -171,7 +171,7 @@ export class Ray {
     /**
      * alias for InterceptOffsetPlane(0, 2)
      * @alias module:Math.Ray.InterceptXY
-     * @returns {vec3} The point of intersection with the XY plane
+     * @returns {vec4} The point of intersection with the XY plane
      */
     InterceptXY(): vec4 {
         return this.InterceptOffsetPlane(0, 2)
@@ -179,7 +179,6 @@ export class Ray {
 
     /**
      * Normalizes the current ray
-     * @alias module:Math.Ray.Normalize
      * @returns {void}
      */
     Normalize(): void {
@@ -188,7 +187,6 @@ export class Ray {
 
     /**
      * Makes a copy of the current ray
-     * @alias module:Math.Ray.Copy
      * @returns {Ray} the made copy
      */
     Copy(): Ray {
@@ -200,7 +198,6 @@ export class Ray {
 
     /**
      * Creates a new ray with an origin at start that intercepts end
-     * @alias module:Math.Ray.FromPoints
      * @param {vec3} start The origin of the ray
      * @param {vec3} end A point which the ray intercepts
      * @param {boolean} normalize Whether to normalize the returned ray
@@ -223,7 +220,6 @@ export class Ray {
 
     /**
      * Applies matrix transformations to the ray
-     * @alias module:Math.Ray.Transform
      * @param {mat4} matrix The transformation matrix
      */
     Transform(matrix: mat4) {
@@ -231,28 +227,13 @@ export class Ray {
         vec4.transformMat4(this.origin, this.origin, matrix)
     }
 
-    /**
-     * The Origin and Direction of the Ray
-     * @alias module:Math.Ray.Values
-     * @returns The origin and direction
-     */
-    get Values(): readonly [vec4, vec4] {
+    get Values() {
         return [this.Origin, this.Direction] as const
     }
-    /**
-     * The origin of the Ray
-     * @alias module:Math.Ray.Origin
-     * @returns {vec4} The origin of the ray
-     */
-    get Origin(): vec4 {
+    get Origin() {
         return this.origin;
     }
-    /**
-     * The direction of the Ray
-     * @alias module:Math.Ray.Direction
-     * @returns {vec4} The direction of the ray
-     */
-    get Direction(): vec4 {
+    get Direction() {
         return this.direction;
     }
 }

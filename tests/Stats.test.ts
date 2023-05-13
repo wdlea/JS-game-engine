@@ -11,7 +11,7 @@ describe(
 
                 expect(stats.indexCount).toBe(69420)
             }
-        ), test(
+        ); test(
             "Stats clears properly",
             () => {
                 ResetStats();

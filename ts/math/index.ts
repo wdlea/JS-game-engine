@@ -1,3 +1,8 @@
-export { Ray } from "./ray"
+/**
+ * @module Math
+ */
 
-export * from "./constants"
+export { Ray } from "./ray"
+export { constants, trash } from "./constants"
+
+export { Remap } from "./remap"

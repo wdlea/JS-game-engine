@@ -1,7 +1,8 @@
-import { mat4, vec3, vec4 } from "gl-matrix"
-
+import { mat4, vec4 } from "gl-matrix"
 /**
  * Symbolizes a line in 3d space
+ * @memberof module:Math
+ * @alias module:Math.Ray
  */
 export class Ray {
     origin: vec4;
@@ -12,21 +13,21 @@ export class Ray {
         this.direction = direction;
     }
 
-
     /**
      * Returns origin + mul * direction
+     * @alias module:Math.Ray.Step
      * @param {number} mul 
      * @returns {vec4} The final position
      */
-    private step(mul: number): vec4 {
+    Step(mul: number): vec4 {
         const delta: vec4 = vec4.create();
 
         vec4.scale(delta, this.direction, mul);
 
-        const intercept: vec4 = vec4.create();
-        vec4.add(intercept, delta, this.origin);
+        const point: vec4 = vec4.create();
+        vec4.add(point, delta, this.origin);
 
-        return intercept;
+        return point;
     }
 
     /**
@@ -42,7 +43,7 @@ export class Ray {
 
         const dist = this.origin[plane] - offset;
         const mul = dist / this.direction[plane];
-        return this.step(mul)
+        return this.Step(mul)
     }
 
     /**
@@ -53,6 +54,7 @@ export class Ray {
     InterceptYZ(): vec4 {
         return this.InterceptOffsetPlane(0, 0)
     }
+
     /**
      * alias for InterceptOffsetPlane(0, 1)
      * @alias module:Math.Ray.InterceptXZ
@@ -61,6 +63,7 @@ export class Ray {
     InterceptXZ(): vec4 {
         return this.InterceptOffsetPlane(0, 1)
     }
+
     /**
      * alias for InterceptOffsetPlane(0, 2)
      * @alias module:Math.Ray.InterceptXY
@@ -72,7 +75,6 @@ export class Ray {
 
     /**
      * Normalizes the current ray
-     * @alias module:Math.Ray.Normalize
      * @returns {void}
      */
     Normalize(): void {
@@ -81,7 +83,6 @@ export class Ray {
 
     /**
      * Makes a copy of the current ray
-     * @alias module:Math.Ray.Copy
      * @returns {Ray} the made copy
      */
     Copy(): Ray {
@@ -93,9 +94,8 @@ export class Ray {
 
     /**
      * Creates a new ray with an origin at start that intercepts end
-     * @alias module:Math.Ray.FromPoints
-     * @param {vec4} start The origin of the ray
-     * @param {vec4} end A point which the ray intercepts
+     * @param {vec3} start The origin of the ray
+     * @param {vec3} end A point which the ray intercepts
      * @param {boolean} normalize Whether to normalize the returned ray
      * @returns {Ray} The new ray
      */
@@ -116,7 +116,6 @@ export class Ray {
 
     /**
      * Applies matrix transformations to the ray
-     * @alias module:Math.Ray.Transform
      * @param {mat4} matrix The transformation matrix
      */
     Transform(matrix: mat4) {
@@ -124,28 +123,13 @@ export class Ray {
         vec4.transformMat4(this.origin, this.origin, matrix)
     }
 
-    /**
-     * The Origin and Direction of the Ray
-     * @alias module:Math.Ray.Values
-     * @returns The origin and direction
-     */
-    get Values(): readonly [vec4, vec4] {
+    get Values() {
         return [this.Origin, this.Direction] as const
     }
-    /**
-     * The origin of the Ray
-     * @alias module:Math.Ray.Origin
-     * @returns {vec4} The origin of the ray
-     */
-    get Origin(): vec4 {
+    get Origin() {
         return this.origin;
     }
-    /**
-     * The direction of the Ray
-     * @alias module:Math.Ray.Direction
-     * @returns {vec4} The direction of the ray
-     */
-    get Direction(): vec4 {
+    get Direction() {
         return this.direction;
     }
 }

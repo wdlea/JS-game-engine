@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs fetch/setup.ts</title>
+  <title>JS-game-engine Docs Rays</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -85,44 +83,110 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Components.html">Components</a></li><li><a href="module-Core.html">Core</a></li><li><a href="module-Math.html">Math</a></li></ul><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li><li><a href="module-Components.exports.MeshRenderer.html">exports.MeshRenderer</a></li><li><a href="module-Components.exports.Transform.html">exports.Transform</a></li><li><a href="module-Math.Ray.html">Ray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DisplayStringified">DisplayStringified</a></li><li><a href="global.html#FetchPrograms">FetchPrograms</a></li><li><a href="global.html#OnUpdate">OnUpdate</a></li><li><a href="global.html#ResetStats">ResetStats</a></li><li><a href="global.html#StringifyStats">StringifyStats</a></li><li><a href="global.html#stats">stats</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Fetch</h2><h3>Global</h3><ul><li><a href="global.html#FetchEngineMesh">FetchEngineMesh</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li><li><a href="global.html#SetupAJAX">SetupAJAX</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Rays.html">Rays</a></li></ul><h3>Classes</h3><ul><li><a href="Camera_Camera.html">Camera</a></li><li><a href="EngineMesh_EngineMesh.html">EngineMesh</a></li><li><a href="Entity_Entity.html">Entity</a></li><li><a href="LightSettings_LightSettings.html">LightSettings</a></li><li><a href="MeshInstance_MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings_ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings_RendererSettings.html">RendererSettings</a></li><li><a href="Scene_Scene.html">Scene</a></li><li><a href="ShaderAttribute_ShaderAttribute.html">ShaderAttribute</a></li><li><a href="module-Rays.Ray.html">Ray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#DisplayStringified">DisplayStringified</a></li><li><a href="global.html#FetchPrograms">FetchPrograms</a></li><li><a href="global.html#OnUpdate">OnUpdate</a></li><li><a href="global.html#Remap">Remap</a></li><li><a href="global.html#ResetStats">ResetStats</a></li><li><a href="global.html#StringifyStats">StringifyStats</a></li><li><a href="global.html#stats">stats</a></li></ul></div><div class="category"><h2>Components</h2><h3>Classes</h3><ul><li><a href="MeshRenderer.html">MeshRenderer</a></li><li><a href="Transform.html">Transform</a></li></ul></div><div class="category"><h2>Core</h2><h3>Classes</h3><ul><li><a href="BaseComponent.html">BaseComponent</a></li><li><a href="Entity.html">Entity</a></li><li><a href="Game.html">Game</a></li><li><a href="Scene.html">Scene</a></li></ul><h3>Interfaces</h3><ul><li><a href="IComponent.html">IComponent</a></li></ul></div><div class="category"><h2>Fetch</h2><h3>Global</h3><ul><li><a href="global.html#FetchEngineMesh">FetchEngineMesh</a></li></ul></div><div class="category"><h2>Internal</h2><h3>Classes</h3><ul><li><a href="ShaderAttribute.html">ShaderAttribute</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MakeProgram">MakeProgram</a></li><li><a href="global.html#MakeProgramFromSource">MakeProgramFromSource</a></li><li><a href="global.html#MakeShaderFromSource">MakeShaderFromSource</a></li></ul></div><div class="category"><h2>Rendering</h2><h3>Classes</h3><ul><li><a href="Camera.html">Camera</a></li><li><a href="CameraMatrix.html">CameraMatrix</a></li><li><a href="EngineMesh.html">EngineMesh</a></li><li><a href="GlobalSettings.html">GlobalSettings</a></li><li><a href="GlobalSettings_GlobalSettings.html">GlobalSettings</a></li><li><a href="LightSettings.html">LightSettings</a></li><li><a href="MeshInstance.html">MeshInstance</a></li><li><a href="ObjectSettings.html">ObjectSettings</a></li><li><a href="RendererSettings.html">RendererSettings</a></li><li><a href="ShaderProgram.html">ShaderProgram</a></li></ul><h3>Interfaces</h3><ul><li><a href="IRenderer.html">IRenderer</a></li><li><a href="ISettings.html">ISettings</a></li></ul><h3>Global</h3><ul><li><a href="global.html#IsRenderer">IsRenderer</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>fetch/setup.ts</h1>
+                    <p>Module</p>
+                    <h1>Rays</h1>
                 </header>
                 
 
 
 
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import $ from "jquery"
 
-export const BASE_RESOURCE_PATH = "http://127.0.0.1:5500/dist/static/game/"
-/**
- * Sets up AJAX
- * @category Internal
- */
-export function SetupAJAX() {
-    $.ajaxSetup({
-        type: "GET",
-        data: {
-            'api-key': "a key that is very secure and 100% hidden from the user and anyone that wants to use my resources"
-        },
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain: false
-    })
-}</code></pre>
-        </article>
-    </section>
+<section>
+
+<header>
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="math_ray.ts.html" class="button">View Source</a>
+            <span>
+                <a href="math_ray.ts.html">math/ray.ts</a>, <a href="math_ray.ts.html#line2">line 2</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-Rays.Ray.html">Ray</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
