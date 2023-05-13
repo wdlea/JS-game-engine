@@ -1,13 +1,13 @@
-import { vec3 } from "gl-matrix"
+import { mat4, vec3, vec4 } from "gl-matrix"
 
 /**
  * Symbolizes a line in 3d space
  */
 export class Ray {
-    origin: vec3;
-    direction: vec3;
+    origin: vec4;
+    direction: vec4;
 
-    constructor(origin: vec3, direction: vec3) {
+    constructor(origin: vec4, direction: vec4) {
         this.origin = origin;
         this.direction = direction;
     }
@@ -16,15 +16,15 @@ export class Ray {
     /**
      * Returns origin + mul * direction
      * @param {number} mul 
-     * @returns {vec3} The final position
+     * @returns {vec4} The final position
      */
-    private step(mul: number): vec3 {
-        const delta: vec3 = vec3.create();
+    private step(mul: number): vec4 {
+        const delta: vec4 = vec4.create();
 
-        vec3.scale(delta, this.direction, mul);
+        vec4.scale(delta, this.direction, mul);
 
-        const intercept: vec3 = vec3.create();
-        vec3.add(intercept, intercept, this.origin);
+        const intercept: vec4 = vec4.create();
+        vec4.add(intercept, delta, this.origin);
 
         return intercept;
     }
@@ -34,9 +34,9 @@ export class Ray {
      * @alias module:Math.Ray.InterceptOffsetPlane
      * @param offset the offset, in whatever unit you are using along the normal of the plane
      * @param plane 0 -> YZ, 1 -> XZ, 2 -> XY planes
-     * @returns {vec3} The point of intersection with the given plane
+     * @returns {vec4} The point of intersection with the given plane
      */
-    InterceptOffsetPlane(offset: number, plane: number): vec3 {
+    InterceptOffsetPlane(offset: number, plane: number): vec4 {
         if (plane < 0 || plane > 2)
             throw new Error(`Invalid plane ${plane}`)
 
@@ -48,31 +48,28 @@ export class Ray {
     /**
      * alias for InterceptOffsetPlane(0, 0)
      * @alias module:Math.Ray.InterceptYZ
-     * @returns {vec3} The point of intersection with the YZ plane
+     * @returns {vec4} The point of intersection with the YZ plane
      */
-    InterceptYZ(): vec3 {
+    InterceptYZ(): vec4 {
         return this.InterceptOffsetPlane(0, 0)
     }
     /**
      * alias for InterceptOffsetPlane(0, 1)
      * @alias module:Math.Ray.InterceptXZ
-     * @returns {vec3} The point of intersection with the XZ plane
+     * @returns {vec4} The point of intersection with the XZ plane
      */
-    InterceptXZ(): vec3 {
+    InterceptXZ(): vec4 {
         return this.InterceptOffsetPlane(0, 1)
     }
     /**
      * alias for InterceptOffsetPlane(0, 2)
      * @alias module:Math.Ray.InterceptXY
-     * @returns {vec3} The point of intersection with the XY plane
+     * @returns {vec4} The point of intersection with the XY plane
      */
-    InterceptXY(): vec3 {
+    InterceptXY(): vec4 {
         return this.InterceptOffsetPlane(0, 2)
     }
 
-<<<<<<< Updated upstream
-}
-=======
     /**
      * Normalizes the current ray
      * @alias module:Math.Ray.Normalize
@@ -97,8 +94,8 @@ export class Ray {
     /**
      * Creates a new ray with an origin at start that intercepts end
      * @alias module:Math.Ray.FromPoints
-     * @param {vec3} start The origin of the ray
-     * @param {vec3} end A point which the ray intercepts
+     * @param {vec4} start The origin of the ray
+     * @param {vec4} end A point which the ray intercepts
      * @param {boolean} normalize Whether to normalize the returned ray
      * @returns {Ray} The new ray
      */
@@ -153,4 +150,3 @@ export class Ray {
     }
 }
 
->>>>>>> Stashed changes

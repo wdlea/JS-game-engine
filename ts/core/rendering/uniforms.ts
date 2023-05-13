@@ -90,7 +90,7 @@ export class RendererSettings {
      * Writes UBO to current shader program
      * @param {ShaderProgram} program The shaderprogram to write to
      */
-    public UseBuffer(program: ShaderProgram) {
+    public UseBuffer(program: Readonly<ShaderProgram>) {
         this._gl.uniformBlockBinding(
             program.Program,
             program.DefaultUBI,

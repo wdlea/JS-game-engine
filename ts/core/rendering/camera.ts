@@ -16,10 +16,7 @@ const NORMAL_ATTRIB_LOCATION = 2
 export class Camera {
     public _gl: WebGL2RenderingContext;
 
-    private uniformBuffer: WebGLBuffer;
-
-    //@ts-expect-error, it is actually initialized with InitializeUniforms()
-    public uniforms: RendererSettings;
+    public uniforms!: RendererSettings;
 
 
     private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
@@ -41,12 +38,6 @@ export class Camera {
         this.cameraMatrix = new CameraMatrix(gl)
 
         this.InitializeUniforms();
-
-        const tempUniformBuffer = gl.createBuffer();
-        if (tempUniformBuffer === null)
-            throw Error("Could not create buffer")
-
-        this.uniformBuffer = tempUniformBuffer;
     }
     /**
      * Creates an new RenderSettings object, and fills it with some settings
@@ -56,7 +47,7 @@ export class Camera {
         const object = new ObjectSettings(mat4.create(), 0);
         const lighting = new LightSettings(vec4.create(), vec4.create(), 0, vec4.create());
 
-        this.uniforms = new RendererSettings(globals, object, lighting);
+        this.uniforms = new RendererSettings(this._gl, globals, object, lighting);
     }
 
     /**
@@ -77,7 +68,7 @@ export class Camera {
 
         m.shader.Use(this._gl);
         this.uniforms.objects = m.settings;
-        this.uniforms.UseBuffer(this._gl, this.uniformBuffer);
+        this.uniforms.UseBuffer(m.shader)
 
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {

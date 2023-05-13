@@ -1,4 +1,5 @@
-import { mat4 } from "gl-matrix";
+import { mat4, vec2, vec4 } from "gl-matrix";
+import { constants, Ray, trash } from "../../../math";
 
 const CAMERA_NEAR = 0.01;
 const CAMERA_FAR = 100;
@@ -16,7 +17,10 @@ export class CameraMatrix {
 
     private finalMatrix: mat4 = mat4.create();
 
+    private _gl: WebGL2RenderingContext;
+
     constructor(gl: WebGL2RenderingContext) {
+        this._gl = gl
         this.RecomputeProjectionMatrix(gl);
     }
 
@@ -56,8 +60,6 @@ export class CameraMatrix {
 
         return this.finalMatrix;
     }
-<<<<<<< Updated upstream
-=======
 
     get NearClip(): number {
         return CAMERA_NEAR
@@ -188,5 +190,4 @@ export class CameraMatrix {
     ScreenPositionToRay(screenPosition: vec2): Ray {
         return this.ClipSpaceToRay(this.ScreenPositionToClipSpace(screenPosition))
     }
->>>>>>> Stashed changes
 }
