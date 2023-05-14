@@ -1,5 +1,5 @@
 import { ShaderAttribute } from "./shaderAttribute";
-import { DEFUALT_UNIFORM_BLOCK_NAME } from "./uniforms";
+import { DEFAULT_UNIFORM_BLOCK_NAME } from "./uniforms";
 
 export type AttributeLookup = {
     name: string,
@@ -108,7 +108,7 @@ export class ShaderProgram {
 
         const shader = new ShaderProgram(
             program,
-            gl.getUniformBlockIndex(program, DEFUALT_UNIFORM_BLOCK_NAME),
+            gl.getUniformBlockIndex(program, DEFAULT_UNIFORM_BLOCK_NAME),
             attribs
         )
 

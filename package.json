@@ -1,6 +1,6 @@
 {
   "name": "@wdlea/js-game-engine",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "My JS game engine",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -39,8 +39,13 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@wdlea/obj-lib": "^0.0.2",
+    "@wdlea/obj-lib": "^0.0.6",
     "jquery": "^3.6.4"
   },
+
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  },
+
   "bundleDependencies":false
 }
