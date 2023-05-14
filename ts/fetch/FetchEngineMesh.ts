@@ -1,4 +1,4 @@
-import { Model } from "obj-lib"
+import { OBJFile } from "@wdlea/obj-lib"
 import { EngineMesh } from "../core"
 import { BASE_RESOURCE_PATH } from "./setup"
 
@@ -22,15 +22,18 @@ export function FetchEngineMesh(gl: WebGL2RenderingContext, name: string): Promi
             url: PATH
         }).done(
             (data) => {
+                console.log("fetched")
                 if (typeof data == "string") {
-                    const model = Model.FromSrc(data)
-                    resolve(EngineMesh.FromModel(gl, model))
+                    const obj = OBJFile.FromSrc(data)
+                    console.log('Sucessfully fetched')
+                    resolve(EngineMesh.FromModel(gl, obj.Model))
                 } else {
                     throw new Error("Ajax request did not return string")
                     reject()
                 }
             }).fail(
                 () => {
+                    console.log("uh oh")
                     throw new Error("Ajax request failed");
                     reject();
                 }

@@ -1,4 +1,5 @@
-import { Model } from "obj-lib";
+import { Model } from "@wdlea/obj-lib";
+import { Vector3, Vector4 } from "@wdlea/obj-lib/lib/vectors";
 import { MeshInstance } from "./meshInstance";
 import { ShaderProgram } from "./shaderProgram";
 
@@ -75,25 +76,25 @@ export class EngineMesh {
     static FromModel(gl: WebGL2RenderingContext, model: Model): EngineMesh {
         let vertices: Float32Array = new Float32Array(model.vertices.length * 4);
         let UVs: Float32Array = new Float32Array(model.UVs.length * 3);
-        let Normals: Float32Array = new Float32Array(model.Normals.length * 3);
+        let Normals: Float32Array = new Float32Array(model.normals.length * 3);
 
         let i = 0;
         model.vertices.forEach(
-            (v) => {
+            (v: Vector4) => {
                 vertices.set(v, i * 4)
                 i++;
             }
         )
         i = 0;
         model.UVs.forEach(
-            (u) => {
+            (u: Vector3) => {
                 UVs.set(u, i * 3)
                 i++;
             }
         )
         i = 0;
-        model.Normals.forEach(
-            (n) => {
+        model.normals.forEach(
+            (n: Vector3) => {
                 Normals.set(n, i * 3);
                 i++;
             }

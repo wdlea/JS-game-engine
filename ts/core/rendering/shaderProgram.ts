@@ -1,4 +1,5 @@
 import { ShaderAttribute } from "./shaderAttribute";
+import { DEFAULT_UNIFORM_BLOCK_NAME } from "./uniforms";
 
 export type AttributeLookup = {
     name: string,
@@ -41,9 +42,22 @@ export class ShaderProgram {
     private program: WebGLProgram;
     public customAttributes: Array<ShaderAttribute>;
 
-    constructor(program: WebGLProgram, attributes: Array<ShaderAttribute> = []) {
+    private defaultUBI: number = -1;
+    /**
+     * Default Uniform Buffer Index
+     */
+    get DefaultUBI(): number {
+        return this.defaultUBI;
+    }
+
+    get Program(): WebGLProgram {
+        return this.program;
+    }
+
+    constructor(program: WebGLProgram, defaultUBI: number, attributes: Array<ShaderAttribute> = []) {
         this.program = program;
         this.customAttributes = attributes;
+        this.defaultUBI = defaultUBI;
     }
 
     /**
@@ -93,7 +107,9 @@ export class ShaderProgram {
 
 
         const shader = new ShaderProgram(
-            program, attribs
+            program,
+            gl.getUniformBlockIndex(program, DEFAULT_UNIFORM_BLOCK_NAME),
+            attribs
         )
 
         return shader
