@@ -5,7 +5,8 @@ export type Stats = {
     indexCount: number,
     rendererCount: number,
     startFrameTime: number,
-    meshDrawCalls: number
+    meshDrawCalls: number,
+    attribCalls: number;
 }
 
 /**
@@ -18,6 +19,7 @@ export function ResetStats() {
         rendererCount: 0,
         startFrameTime: performance.now(),
         meshDrawCalls: 0,
+        attribCalls: 0,
     }
 }
 

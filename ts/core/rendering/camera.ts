@@ -21,10 +21,7 @@ export class Camera {
 
     private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
     set CameraMatrix(v: CameraMatrix) {
-        v.RecomputeProjectionMatrix()
-
         this.cameraMatrix = v
-
         this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
     }
 
@@ -72,6 +69,7 @@ export class Camera {
 
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {
+            stats.attribCalls++;
             a.Apply(this._gl, m.shader)
         })
 
