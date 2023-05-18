@@ -45,6 +45,7 @@ export class Camera {
         const lighting = new LightSettings(vec4.create(), vec4.create(), 0, vec4.create());
 
         this.uniforms = new RendererSettings(this._gl, globals, object, lighting);
+        this.uniforms.UpdateBuffer()
     }
 
     /**
@@ -65,7 +66,9 @@ export class Camera {
 
         m.shader.Use(this._gl);
         this.uniforms.objects = m.settings;
-        this.uniforms.UseBuffer(m.shader)
+        this.uniforms.UpdateBuffer();
+        this.uniforms.UseBuffer(m.shader);
+
 
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {

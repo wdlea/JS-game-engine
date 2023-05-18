@@ -159,7 +159,7 @@ export class CameraMatrix {
     get Matrix() {
         if (this.anyMatrixUpdated) {
             this.anyMatrixUpdated = false
-            mat4.mul(this.finalMatrix, this.transformationMatrix, this.projectionMatrix);// transform the projection, not project the transformation
+            mat4.mul(this.finalMatrix, this.projectionMatrix, this.transformationMatrix);// transform the projection, not project the transformation
         }
 
         return this.finalMatrix;

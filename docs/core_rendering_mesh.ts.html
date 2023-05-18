@@ -178,35 +178,23 @@ export class EngineMesh {
      * @returns {EngineMesh}
      */
     static FromModel(gl: WebGL2RenderingContext, model: Model): EngineMesh {
-        let vertices: Float32Array = new Float32Array(model.vertices.length * 4);
+        let Vertices: Float32Array = new Float32Array(model.vertices.length * 4);
         let UVs: Float32Array = new Float32Array(model.UVs.length * 3);
         let Normals: Float32Array = new Float32Array(model.normals.length * 3);
 
-        let i = 0;
-        model.vertices.forEach(
-            (v: Vector4) => {
-                vertices.set(v, i * 4)
-                i++;
-            }
-        )
-        i = 0;
-        model.UVs.forEach(
-            (u: Vector3) => {
-                UVs.set(u, i * 3)
-                i++;
-            }
-        )
-        i = 0;
-        model.normals.forEach(
-            (n: Vector3) => {
-                Normals.set(n, i * 3);
-                i++;
-            }
-        )
+        for (let i = 0; i &lt; model.vertices.length; i++) {
+            Vertices.set(model.vertices[i], i * 4);
+        }
+        for (let i = 0; i &lt; model.UVs.length; i++) {
+            Normals.set(model.normals[i], i * 3);
+        }
+        for (let i = 0; i &lt; model.normals.length; i++) {
+            Normals.set(model.normals[i], i * 3);
+        }
 
         return new EngineMesh(
             gl,
-            new Float32Array(vertices),
+            new Float32Array(Vertices),
             new Uint16Array(model.indices),
             new Float32Array(UVs),
             new Float32Array(Normals)
