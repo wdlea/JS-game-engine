@@ -178,38 +178,45 @@ export class Camera {
         })
 
         //set default attributes
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
-        this._gl.vertexAttribPointer(
-            m.shader.Locations.Position,
-            4,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
+        if (m.shader.Locations.Position != null) {
+            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
+            this._gl.vertexAttribPointer(
+                m.shader.Locations.Position,
+                4,
+                this._gl.FLOAT,
+                false,
+                0,
+                0
+            )
+            this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
+        }
 
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
-        this._gl.vertexAttribPointer(
-            m.shader.Locations.Texture,
-            3,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
+        if (m.shader.Locations.Texture != null) {
+            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
+            this._gl.vertexAttribPointer(
+                m.shader.Locations.Texture,
+                3,
+                this._gl.FLOAT,
+                false,
+                0,
+                0
+            )
+            this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
+        }
 
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
-        this._gl.vertexAttribPointer(
-            m.shader.Locations.Normal,
-            3,
-            this._gl.FLOAT,
-            true,//normalize normals
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
+        if (m.shader.Locations.Normal != null) {
+            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
+            this._gl.vertexAttribPointer(
+                m.shader.Locations.Normal,
+                3,
+                this._gl.FLOAT,
+                true,//normalize normals
+                0,
+                0
+            )
+            this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
+        }
+
 
         this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, m.mesh.indexBuffer)
         this._gl.drawElements(

@@ -23,9 +23,9 @@ type maybeCompiledShader = {
 }
 
 export type AttribLocations = {
-    Position: number,
-    Texture: number,
-    Normal: number
+    Position: number | null,
+    Texture: number | null,
+    Normal: number | null
 }
 
 function CompileMaybeCompiled(gl: WebGL2RenderingContext, m: maybeCompiledShader): maybeCompiledShader {
@@ -87,10 +87,11 @@ export class ShaderProgram {
             program,
             TEXTURE_ATTRIBUTE_NAME
         )
+
         this.locations = {
-            Position: positionLocation,
-            Normal: normalLocation,
-            Texture: textureLocation
+            Position: positionLocation >= 0 ? positionLocation : null,
+            Normal: normalLocation >= 0 ? normalLocation : null,
+            Texture: textureLocation >= 0 ? textureLocation : null
         }
     }
 
