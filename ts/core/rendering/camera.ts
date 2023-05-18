@@ -76,7 +76,7 @@ export class Camera {
         //set default attributes
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
         this._gl.vertexAttribPointer(
-            VERTEX_ATTRIB_LOCATION,
+            m.shader.Locations.Position,
             4,
             this._gl.FLOAT,
             false,
@@ -87,7 +87,7 @@ export class Camera {
 
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
         this._gl.vertexAttribPointer(
-            UV_ATTRIB_LOCATION,
+            m.shader.Locations.Texture,
             3,
             this._gl.FLOAT,
             false,
@@ -98,7 +98,7 @@ export class Camera {
 
         this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
         this._gl.vertexAttribPointer(
-            NORMAL_ATTRIB_LOCATION,
+            m.shader.Locations.Normal,
             3,
             this._gl.FLOAT,
             true,//normalize normals
