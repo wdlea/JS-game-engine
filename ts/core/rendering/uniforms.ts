@@ -18,6 +18,8 @@ import { ShaderProgram } from "./shaderProgram";
 export const DEFAULT_UNIFORM_BLOCK_NAME: string = "defaultUniforms";
 export const DEFAULT_UNIFORM_BLOCK_LOCATION = 0;
 
+const LOG_ARRAY: boolean = true;
+
 const FLOAT_LENGTH = 4;
 const VECTOR_LENGTH = 4;
 const MAT4_LENGTH = 4 * VECTOR_LENGTH;
@@ -62,6 +64,9 @@ export class RendererSettings {
         f.set(this.globals.AsArray, 0);
         f.set(this.objects.AsArray, GLOBAL_SETTINGS_LENGTH);
         f.set(this.lights.AsArray, GLOBAL_SETTINGS_LENGTH + OBJECT_SETTINGS_LENGTH);
+
+        if (LOG_ARRAY)
+            console.log(f.toString())
 
         return f
     }

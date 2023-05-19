@@ -104,11 +104,11 @@
         <article>
             <pre class="prettyprint source linenums"><code>import { mat4, vec3 } from "gl-matrix";
 import { Entity, IComponent } from "../";
+import { trash } from "../math";
 
 export const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
 
-//this vector is here so i can set things to this and not worry about consequences, DO NOT read from it
-let it_recieves = vec3.create();
+const LOG_MATRIX: boolean = true;
 
 /**
  * Component that represents an objects tranformations in 3D space
@@ -120,9 +120,9 @@ export class Transform implements IComponent {
 
     public enabled = true;
 
-    private position = vec3.create();
-    private rotationRAD = vec3.create();
-    private scale = vec3.create();
+    private position = vec3.fromValues(0, 0, 0);
+    private rotationRAD = vec3.fromValues(0, 0, 0);
+    private scale = vec3.fromValues(1, 1, 1);
 
     //Whether the position, rotation or scale respectively have changed since recomputation
     private scaleUpdated = false;
@@ -136,6 +136,10 @@ export class Transform implements IComponent {
 
     public get ModelMatrix() {
         this.RecomputeAll();
+
+        if (LOG_MATRIX)
+            console.log(this.movedMatrix)
+
         return this.movedMatrix;
     }
 
@@ -199,7 +203,7 @@ export class Transform implements IComponent {
 
     get Position() { return this.position }
     get RotationRAD() { return this.rotationRAD }
-    get RotationDEG() { return vec3.scale(it_recieves, this.rotationRAD, 180 / Math.PI) }
+    get RotationDEG() { return vec3.scale(trash.vec3, this.rotationRAD, 180 / Math.PI) }
     get Scale() { return this.scale }
 
     set Position(v: vec3) {
@@ -211,7 +215,7 @@ export class Transform implements IComponent {
         this.rotationRAD = v
     }
     set RotationDEG(v: vec3) {
-        this.rotationRAD = vec3.scale(it_recieves, v, Math.PI / 180)
+        this.rotationRAD = vec3.scale(trash.vec3, v, Math.PI / 180)
     }
     set Scale(v: vec3) {
         this.scaleUpdated = true;

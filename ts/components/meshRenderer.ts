@@ -2,6 +2,7 @@ import { IComponent, Entity } from "../";
 import { Camera } from "../core/rendering/camera";
 import { IRenderer } from "../core/rendering/iRenderer";
 import { MeshInstance } from "../core/rendering/meshInstance";
+import { ObjectSettings } from "../core/rendering/uniforms";
 import { Transform, TRANSFORM_IDENTIFIER } from "./transform";
 
 export const MESH_RENDERER_IDENTIFIER = "MESH_RENDERER"
@@ -20,7 +21,9 @@ export class MeshRenderer implements IComponent, IRenderer {
     private mesh: MeshInstance | undefined;
     public program: WebGLProgram | null = null
 
+    private settings!: ObjectSettings;
 
+    private transform!: Transform;
 
     //@ts-expect-error, engine handles this
     private transform: Transform;
@@ -31,7 +34,8 @@ export class MeshRenderer implements IComponent, IRenderer {
 
     OnRender(camera: Camera): void {
         if (this.mesh != undefined) {
-            camera.DrawMesh(this.mesh);
+            this.settings.TransformMatrix = this.transform.ModelMatrix;
+            camera.DrawMesh(this.mesh, this.settings);
         }
     }
 
@@ -44,9 +48,18 @@ export class MeshRenderer implements IComponent, IRenderer {
     }
 
     OnAttach(parent: Entity): void {
-        //@ts-expect-error, IsCompatable will only let this run if it can be attatched
+        //@ts-expect-error Will always be transform
         this.transform = parent.GetComponentOfType(TRANSFORM_IDENTIFIER);
+
+        this.settings = new ObjectSettings(
+            this.transform.ModelMatrix,
+            0
+        )
     }
     Start(): void { }
     Update(): void { }
+
+    set MaterialIndex(value: number) {
+        this.settings.MaterialIndex = value
+    }
 }

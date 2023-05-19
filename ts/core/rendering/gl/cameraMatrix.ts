@@ -3,7 +3,7 @@ import { trash, constants, Remap } from "../../../math";
 import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;
-const CAMERA_FAR = 100;
+const CAMERA_FAR = 10000;
 
 /**
  * Class representing a 4x4 projection matrix

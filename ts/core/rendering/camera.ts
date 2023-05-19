@@ -60,12 +60,12 @@ export class Camera {
      * Draws a mesh to screen, using Depth Buffer
      * @param {MeshInstance} m The mesh to render
      */
-    DrawMesh(m: MeshInstance) {
+    DrawMesh(m: MeshInstance, settings: ObjectSettings) {
         stats.meshDrawCalls++
         stats.indexCount += m.mesh.indexCount;
 
         m.shader.Use(this._gl);
-        this.uniforms.objects = m.settings;
+        this.uniforms.objects = settings;
         this.uniforms.UpdateBuffer();
         this.uniforms.UseBuffer(m.shader);
 

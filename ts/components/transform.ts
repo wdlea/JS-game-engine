@@ -1,10 +1,10 @@
 import { mat4, vec3 } from "gl-matrix";
 import { Entity, IComponent } from "../";
+import { trash } from "../math";
 
 export const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
 
-//this vector is here so i can set things to this and not worry about consequences, DO NOT read from it
-let it_recieves = vec3.create();
+const LOG_MATRIX: boolean = true;
 
 /**
  * Component that represents an objects tranformations in 3D space
@@ -16,14 +16,14 @@ export class Transform implements IComponent {
 
     public enabled = true;
 
-    private position = vec3.create();
-    private rotationRAD = vec3.create();
-    private scale = vec3.create();
+    private position = vec3.fromValues(0, 0, 0);
+    private rotationRAD = vec3.fromValues(0, 0, 0);
+    private scale = vec3.fromValues(1, 1, 1);
 
-    //Whether the position, rotation or scale respectively have changed since recomputation
-    private scaleUpdated = false;
-    private rotationUpdated = false;
-    private positionUpdated = false;
+    //Whether the position, rotation or scale respectively have been recomputed
+    private scaleRecomputed = false;
+    private rotationRecomputed = false;
+    private positionRecomputed = false;
 
     //Matrices at each stage of computation
     private scaledMatrix: mat4 = mat4.create();
@@ -32,36 +32,40 @@ export class Transform implements IComponent {
 
     public get ModelMatrix() {
         this.RecomputeAll();
+
+        if (LOG_MATRIX)
+            console.log(this.movedMatrix)
+
         return this.movedMatrix;
     }
 
     /**
      * Recomputes model view matrix scale, its position
-     *  will remain at origin if callnext is not set to true
-     * @param callnext whether to recursively call functions to recompute rotation and transformation
+     *  will remain at origin if cascade is not set to true
+     * @param cascade whether to recursively call functions to recompute rotation and transformation
      */
-    private RecomputeScale(callnext: boolean = true) {
+    private RecomputeScale(cascade: boolean = true) {
         mat4.scale(this.scaledMatrix, mat4.create(), this.scale);
-        this.scaleUpdated = true;
-        if (callnext) this.RecomputeRotation(callnext = true)
+        this.scaleRecomputed = true;
+        if (cascade) this.RecomputeRotation(cascade = true)
     }
 
     /**
      * Recomputes model view matrix rotation, 
      * this is in XYZ order, its position will remain at 
-     * origin if callnext is not set to true
-     * @param callnext whether to recursively call functions to recompute transformation
+     * origin if cascade is not set to true
+     * @param cascade whether to recursively call functions to recompute transformation
      */
-    private RecomputeRotation(callnext: boolean = true) {
-        if (!this.scaleUpdated) {
+    private RecomputeRotation(cascade: boolean = true) {
+        if (!this.scaleRecomputed) {
             this.RecomputeScale(true)
         }
-        this.rotationUpdated = true;
+        this.rotationRecomputed = true;
 
         mat4.rotateX(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[0])
         mat4.rotateY(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[1])
         mat4.rotateZ(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[2])
-        if (callnext) this.RecomputePosition();
+        if (cascade) this.RecomputePosition();
     }
 
     /**
@@ -70,13 +74,13 @@ export class Transform implements IComponent {
     private RecomputePosition() {
 
         //check if other parts of matrix have been recomputed
-        if (!this.scaleUpdated) {
+        if (!this.scaleRecomputed) {
             this.RecomputeScale(true)
         }
-        if (!this.rotationUpdated) {
+        else if (!this.rotationRecomputed) {
             this.RecomputeRotation(true)
         }
-        this.positionUpdated = true;
+        this.positionRecomputed = true;
 
 
         mat4.translate(this.movedMatrix, this.rotatedMatrix, this.position)
@@ -87,7 +91,7 @@ export class Transform implements IComponent {
      * in scale, rotation(X->Y->Z)(RADS), position order
      */
     private RecomputeAll() {
-        if (this.positionUpdated || this.rotationUpdated || this.scaleUpdated) {
+        if (!this.positionRecomputed || !this.rotationRecomputed || !this.scaleRecomputed) {
             this.RecomputePosition();
         }
     }
@@ -95,22 +99,22 @@ export class Transform implements IComponent {
 
     get Position() { return this.position }
     get RotationRAD() { return this.rotationRAD }
-    get RotationDEG() { return vec3.scale(it_recieves, this.rotationRAD, 180 / Math.PI) }
+    get RotationDEG() { return vec3.scale(trash.vec3, this.rotationRAD, 180 / Math.PI) }
     get Scale() { return this.scale }
 
     set Position(v: vec3) {
-        this.positionUpdated = true;
+        this.positionRecomputed = false;
         this.position = v
     }
     set RotationRAD(v: vec3) {
-        this.rotationUpdated = true;
+        this.rotationRecomputed = false;
         this.rotationRAD = v
     }
     set RotationDEG(v: vec3) {
-        this.rotationRAD = vec3.scale(it_recieves, v, Math.PI / 180)
+        this.rotationRAD = vec3.scale(trash.vec3, v, Math.PI / 180)
     }
     set Scale(v: vec3) {
-        this.scaleUpdated = true;
+        this.scaleRecomputed = false;
         this.scale = v
     }
 
