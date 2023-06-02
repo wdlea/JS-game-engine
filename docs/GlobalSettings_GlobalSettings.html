@@ -103,7 +103,7 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="GlobalSettings.html">GlobalSettings</a>#</span>GlobalSettings<span class="signature">(cameraMatrix)</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="GlobalSettings.html">GlobalSettings</a>#</span>GlobalSettings<span class="signature">(cameraMatrix, viewMatrix)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -127,7 +127,7 @@
         
         <span class="code-name">
             
-                new GlobalSettings<span class="signature">(cameraMatrix)</span><span class="type-signature"></span>
+                new GlobalSettings<span class="signature">(cameraMatrix, viewMatrix)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -175,13 +175,43 @@
 
   <td class="type">
   
+      
+<code class="param-type">mat4</code>
+
+
+  
   </td>
 
   
 
   
 
-  <td class="description last">The Camera Matrix, represents the position and projection of the camera</td>
+  <td class="description last">The Camera Matrix, represents the projection of the camera</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>viewMatrix</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">mat4</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">the viewmatrix, represents the position and rotation of the camera</td>
 </tr>
 
 
@@ -236,7 +266,7 @@
         <p class="tag-source">
             <a href="core_rendering_uniforms.ts.html" class="button">View Source</a>
             <span>
-                <a href="core_rendering_uniforms.ts.html">core/rendering/uniforms.ts</a>, <a href="core_rendering_uniforms.ts.html#line279">line 279</a>
+                <a href="core_rendering_uniforms.ts.html">core/rendering/uniforms.ts</a>, <a href="core_rendering_uniforms.ts.html#line296">line 296</a>
             </span>
         </p>
     

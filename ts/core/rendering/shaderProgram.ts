@@ -1,5 +1,9 @@
-import { ShaderAttribute } from "./shaderAttribute";
+import { ShaderAttribute } from "./ShaderAttribute";
 import { DEFAULT_UNIFORM_BLOCK_NAME } from "./uniforms";
+
+const POSITION_ATTRIBUTE_NAME = "aPosition"
+const NORMAL_ATTRIBUTE_NAME = "aNormal"
+const TEXTURE_ATTRIBUTE_NAME = "aTexture"
 
 export type AttributeLookup = {
     name: string,
@@ -17,6 +21,13 @@ type maybeCompiledShader = {
     shader: WebGLShader | null,
     type: number
 }
+
+export type AttribLocations = {
+    Position: number | null,
+    Texture: number | null,
+    Normal: number | null
+}
+
 function CompileMaybeCompiled(gl: WebGL2RenderingContext, m: maybeCompiledShader): maybeCompiledShader {
     if (m.shader === null) {
         const tShader = gl.createShader(m.type);
@@ -42,6 +53,11 @@ export class ShaderProgram {
     private program: WebGLProgram;
     public customAttributes: Array<ShaderAttribute>;
 
+    private locations: AttribLocations
+    get Locations(): AttribLocations {
+        return this.locations
+    }
+
     private defaultUBI: number = -1;
     /**
      * Default Uniform Buffer Index
@@ -54,10 +70,29 @@ export class ShaderProgram {
         return this.program;
     }
 
-    constructor(program: WebGLProgram, defaultUBI: number, attributes: Array<ShaderAttribute> = []) {
+    constructor(gl: WebGL2RenderingContext, program: WebGLProgram, defaultUBI: number, attributes: Array<ShaderAttribute> = []) {
         this.program = program;
         this.customAttributes = attributes;
         this.defaultUBI = defaultUBI;
+
+        const positionLocation = gl.getAttribLocation(
+            program,
+            POSITION_ATTRIBUTE_NAME
+        )
+        const normalLocation = gl.getAttribLocation(
+            program,
+            NORMAL_ATTRIBUTE_NAME
+        )
+        const textureLocation = gl.getAttribLocation(
+            program,
+            TEXTURE_ATTRIBUTE_NAME
+        )
+
+        this.locations = {
+            Position: positionLocation >= 0 ? positionLocation : null,
+            Normal: normalLocation >= 0 ? normalLocation : null,
+            Texture: textureLocation >= 0 ? textureLocation : null
+        }
     }
 
     /**
@@ -107,6 +142,7 @@ export class ShaderProgram {
 
 
         const shader = new ShaderProgram(
+            gl,
             program,
             gl.getUniformBlockIndex(program, DEFAULT_UNIFORM_BLOCK_NAME),
             attribs

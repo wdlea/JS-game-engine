@@ -129,7 +129,7 @@ export function FetchEngineMesh(gl: WebGL2RenderingContext, name: string): Promi
                 console.log("fetched")
                 if (typeof data == "string") {
                     const obj = OBJFile.FromSrc(data)
-                    console.log('Sucessfully fetched')
+                    console.log(`Sucessfully fetched model: ${obj.Model.vertices}`)
                     resolve(EngineMesh.FromModel(gl, obj.Model))
                 } else {
                     throw new Error("Ajax request did not return string")

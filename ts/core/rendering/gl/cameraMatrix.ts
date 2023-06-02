@@ -3,7 +3,7 @@ import { trash, constants, Remap } from "../../../math";
 import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;
-const CAMERA_FAR = 100;
+const CAMERA_FAR = 10000;
 
 /**
  * Class representing a 4x4 projection matrix
@@ -13,7 +13,7 @@ const CAMERA_FAR = 100;
 
 export class CameraMatrix {
     private projectionMatrix: mat4 = mat4.create();
-    private transformationMatrix: mat4 = mat4.create();
+    private viewMatrix: mat4 = mat4.create();
 
     private anyMatrixUpdated: boolean = true;
 
@@ -43,8 +43,8 @@ export class CameraMatrix {
         this.anyMatrixUpdated = true;
     }
 
-    set TransformationMatrix(v: mat4) {
-        this.transformationMatrix = v;
+    set ViewMatrix(v: mat4) {
+        this.viewMatrix = v;
         this.anyMatrixUpdated = true;
     }
     set ProjectionMatrix(v: mat4) {
@@ -52,13 +52,11 @@ export class CameraMatrix {
         this.anyMatrixUpdated = true;
     }
 
-    get Matrix() {
-        if (this.anyMatrixUpdated) {
-            this.anyMatrixUpdated = false
-            mat4.mul(this.finalMatrix, this.transformationMatrix, this.projectionMatrix);// transform the projection, not project the transformation
-        }
-
-        return this.finalMatrix;
+    get ProjectionMatrix() {
+        return this.projectionMatrix;
+    }
+    get ViewMatrix() {
+        return this.viewMatrix;
     }
 
     get NearClip(): number {
@@ -77,15 +75,18 @@ export class CameraMatrix {
     }
 
     get AspectRatio(): number {
-        return this._gl.canvas.width / this._gl.canvas.height;
+        if (this._gl.canvas instanceof HTMLCanvasElement)
+            return this._gl.canvas.clientWidth / this._gl.canvas.clientHeight;
+        else
+            return this._gl.canvas.width / this._gl.canvas.height;
     }
 
     get Position(): vec4 {
-        return vec4.transformMat4(vec4.create(), constants.ORIGIN, this.transformationMatrix)
+        return vec4.transformMat4(vec4.create(), constants.ORIGIN, this.viewMatrix)
     }
     get Direction(): vec4 {
         const d = vec4.create()
-        vec4.transformMat4(d, constants.FORWARD, this.transformationMatrix)
+        vec4.transformMat4(d, constants.FORWARD, this.viewMatrix)
 
         return vec4.normalize(d, d);
     }
@@ -154,7 +155,7 @@ export class CameraMatrix {
         );
 
         // apply transformations to ray so that it is positioned like the camera
-        ray.Transform(this.transformationMatrix);
+        ray.Transform(this.viewMatrix);
 
         return ray;
     }

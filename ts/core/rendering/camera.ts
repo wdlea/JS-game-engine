@@ -19,13 +19,11 @@ export class Camera {
     public uniforms!: RendererSettings;
 
 
-    private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
+    private cameraMatrix: CameraMatrix;
     set CameraMatrix(v: CameraMatrix) {
-        v.RecomputeProjectionMatrix()
-
         this.cameraMatrix = v
-
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
+        this.uniforms.globals.CameraMatrix = this.cameraMatrix.ProjectionMatrix;
+        this.uniforms.globals.ViewMatrix = this.cameraMatrix.ViewMatrix;
     }
 
     /**
@@ -38,16 +36,21 @@ export class Camera {
         this.cameraMatrix = new CameraMatrix(gl)
 
         this.InitializeUniforms();
+
+        window.onresize = (ev: UIEvent): any => {
+            this.CameraMatrix = new CameraMatrix(gl)
+        }
     }
     /**
      * Creates an new RenderSettings object, and fills it with some settings
      */
     private InitializeUniforms() {
-        const globals = new GlobalSettings(this.cameraMatrix.Matrix);
+        const globals = new GlobalSettings(this.cameraMatrix.ProjectionMatrix, this.cameraMatrix.ViewMatrix);
         const object = new ObjectSettings(mat4.create(), 0);
         const lighting = new LightSettings(vec4.create(), vec4.create(), 0, vec4.create());
 
         this.uniforms = new RendererSettings(this._gl, globals, object, lighting);
+        this.uniforms.UpdateBuffer()
     }
 
     /**
@@ -55,59 +58,70 @@ export class Camera {
      */
     BeginDraw() {
         this._gl.clear(this._gl.DEPTH_BUFFER_BIT | this._gl.COLOR_BUFFER_BIT)
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
+        this.uniforms.globals.CameraMatrix = this.cameraMatrix.ProjectionMatrix;
+        this.uniforms.globals.ViewMatrix = this.cameraMatrix.ViewMatrix;
     }
 
     /**
      * Draws a mesh to screen, using Depth Buffer
      * @param {MeshInstance} m The mesh to render
      */
-    DrawMesh(m: MeshInstance) {
+    DrawMesh(m: MeshInstance, settings: ObjectSettings) {
         stats.meshDrawCalls++
         stats.indexCount += m.mesh.indexCount;
 
         m.shader.Use(this._gl);
-        this.uniforms.objects = m.settings;
-        this.uniforms.UseBuffer(m.shader)
+        this.uniforms.objects = settings;
+        this.uniforms.UpdateBuffer();
+        this.uniforms.UseBuffer(m.shader);
+
 
         //set custom attributes
         m.shader.customAttributes.forEach((a) => {
+            stats.attribCalls++;
             a.Apply(this._gl, m.shader)
         })
 
         //set default attributes
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
-        this._gl.vertexAttribPointer(
-            VERTEX_ATTRIB_LOCATION,
-            4,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
+        if (m.shader.Locations.Position != null) {
+            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.vertexBuffer)
+            this._gl.vertexAttribPointer(
+                m.shader.Locations.Position,
+                4,
+                this._gl.FLOAT,
+                false,
+                0,
+                0
+            )
+            this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
+        }
 
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
-        this._gl.vertexAttribPointer(
-            UV_ATTRIB_LOCATION,
-            3,
-            this._gl.FLOAT,
-            false,
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
+        if (m.shader.Locations.Texture != null) {
+            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.UVBuffer)
+            this._gl.vertexAttribPointer(
+                m.shader.Locations.Texture,
+                3,
+                this._gl.FLOAT,
+                false,
+                0,
+                0
+            )
+            this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
+        }
 
-        this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
-        this._gl.vertexAttribPointer(
-            NORMAL_ATTRIB_LOCATION,
-            3,
-            this._gl.FLOAT,
-            true,//normalize normals
-            0,
-            0
-        )
-        this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
+        if (m.shader.Locations.Normal != null) {
+            this._gl.bindBuffer(this._gl.ARRAY_BUFFER, m.mesh.NormalBuffer)
+            this._gl.vertexAttribPointer(
+                m.shader.Locations.Normal,
+                3,
+                this._gl.FLOAT,
+                true,//normalize normals
+                0,
+                0
+            )
+            this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
+        }
+
 
         this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, m.mesh.indexBuffer)
         this._gl.drawElements(

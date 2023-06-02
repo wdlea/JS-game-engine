@@ -102,7 +102,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>GlobalSettings<span class="signature">(cameraMatrix)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>GlobalSettings<span class="signature">(cameraMatrix, viewMatrix)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Represents settings that are relatively constant</div>
         
@@ -128,7 +128,7 @@
         
         <span class="code-name">
             
-                new GlobalSettings<span class="signature">(cameraMatrix)</span><span class="type-signature"></span>
+                new GlobalSettings<span class="signature">(cameraMatrix, viewMatrix)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -176,13 +176,43 @@
 
   <td class="type">
   
+      
+<code class="param-type">mat4</code>
+
+
+  
   </td>
 
   
 
   
 
-  <td class="description last">The Camera Matrix, represents the position and projection of the camera</td>
+  <td class="description last">The Camera Matrix, represents the projection of the camera</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>viewMatrix</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">mat4</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">the viewmatrix, represents the position and rotation of the camera</td>
 </tr>
 
 
@@ -237,7 +267,7 @@
         <p class="tag-source">
             <a href="core_rendering_uniforms.ts.html" class="button">View Source</a>
             <span>
-                <a href="core_rendering_uniforms.ts.html">core/rendering/uniforms.ts</a>, <a href="core_rendering_uniforms.ts.html#line74">line 74</a>
+                <a href="core_rendering_uniforms.ts.html">core/rendering/uniforms.ts</a>, <a href="core_rendering_uniforms.ts.html#line77">line 77</a>
             </span>
         </p>
     

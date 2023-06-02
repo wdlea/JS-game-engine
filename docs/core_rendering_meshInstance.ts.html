@@ -128,15 +128,6 @@ export class MeshInstance {
         this.shader = shader;
         this.settings = new ObjectSettings(mat4.create(), 0)
     }
-
-    /**
-     * Draws mesh on camera
-     * @param {Camera} camera The camera to draw on
-     * @deprecated Use {@link Camera}.DrawMesh() instead
-     */
-    Draw(camera: Camera) {
-        camera.DrawMesh(this);
-    }
 }</code></pre>
         </article>
     </section>
