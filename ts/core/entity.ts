@@ -92,6 +92,8 @@ export class Entity {
                 this.renderers.push(component)
                 console.log("Renderer added!")
             }
+        } else {
+            throw Error("Incompatable component attatched")
         }
     }
 }

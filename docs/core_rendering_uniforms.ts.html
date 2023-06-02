@@ -217,7 +217,7 @@ interface ISettings {
     get Length(): Number;
 }
 
-const GLOBAL_SETTINGS_LENGTH = MAT4_LENGTH;
+const GLOBAL_SETTINGS_LENGTH = MAT4_LENGTH * 2;
 /**
  * Represents settings that are relatively constant
  * @implements {ISettings}
@@ -227,21 +227,32 @@ export class GlobalSettings implements ISettings {
     private cameraMatrix: mat4;
     private cameraMatrixUpdated = true;
 
+    private viewMatrix: mat4;
+    private viewMatrixUpdated = true;
+
     private array: Float32Array = new Float32Array(GLOBAL_SETTINGS_LENGTH);
 
     get CameraMatrix() { return this.cameraMatrix }
-    set CameraMatrix(v) {
+    set CameraMatrix(v: mat4) {
         this.cameraMatrixUpdated = true;
         this.cameraMatrix = v
     }
 
+    get ViewMatrix() { return this.viewMatrix }
+    set ViewMatrix(v: mat4) {
+        this.viewMatrixUpdated = true;
+        this.viewMatrix = v;
+    }
+
     /**
-     * @param cameraMatrix The Camera Matrix, represents the position and projection of the camera
+     * @param {mat4} cameraMatrix The Camera Matrix, represents the projection of the camera
+     * @param {mat4} viewMatrix the viewmatrix, represents the position and rotation of the camera
      * @implements {ISettings}
      * @category Rendering
      */
-    constructor(cameraMatrix: mat4) {
+    constructor(cameraMatrix: mat4, viewMatrix: mat4) {
         this.cameraMatrix = cameraMatrix;
+        this.viewMatrix = viewMatrix;
     }
 
     public get AsArray(): Float32Array {
@@ -251,6 +262,9 @@ export class GlobalSettings implements ISettings {
     private RecomputeArray() {
         if (this.cameraMatrixUpdated) {
             this.array.set(this.cameraMatrix, 0);
+        }
+        if (this.viewMatrixUpdated) {
+            this.array.set(this.viewMatrix, MAT4_LENGTH)
         }
     }
 

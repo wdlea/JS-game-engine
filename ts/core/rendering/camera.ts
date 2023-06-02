@@ -19,10 +19,11 @@ export class Camera {
     public uniforms!: RendererSettings;
 
 
-    private cameraMatrix: CameraMatrix;//todo see if cameramatrix has changed
+    private cameraMatrix: CameraMatrix;
     set CameraMatrix(v: CameraMatrix) {
         this.cameraMatrix = v
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
+        this.uniforms.globals.CameraMatrix = this.cameraMatrix.ProjectionMatrix;
+        this.uniforms.globals.ViewMatrix = this.cameraMatrix.ViewMatrix;
     }
 
     /**
@@ -35,12 +36,16 @@ export class Camera {
         this.cameraMatrix = new CameraMatrix(gl)
 
         this.InitializeUniforms();
+
+        window.onresize = (ev: UIEvent): any => {
+            this.CameraMatrix = new CameraMatrix(gl)
+        }
     }
     /**
      * Creates an new RenderSettings object, and fills it with some settings
      */
     private InitializeUniforms() {
-        const globals = new GlobalSettings(this.cameraMatrix.Matrix);
+        const globals = new GlobalSettings(this.cameraMatrix.ProjectionMatrix, this.cameraMatrix.ViewMatrix);
         const object = new ObjectSettings(mat4.create(), 0);
         const lighting = new LightSettings(vec4.create(), vec4.create(), 0, vec4.create());
 
@@ -53,7 +58,8 @@ export class Camera {
      */
     BeginDraw() {
         this._gl.clear(this._gl.DEPTH_BUFFER_BIT | this._gl.COLOR_BUFFER_BIT)
-        this.uniforms.globals.CameraMatrix = this.cameraMatrix.Matrix;
+        this.uniforms.globals.CameraMatrix = this.cameraMatrix.ProjectionMatrix;
+        this.uniforms.globals.ViewMatrix = this.cameraMatrix.ViewMatrix;
     }
 
     /**
