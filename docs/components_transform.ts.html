@@ -167,8 +167,8 @@ export class Transform implements IComponent {
         this.rotationRecomputed = true;
 
         mat4.rotateX(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[0])
-        mat4.rotateY(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[1])
-        mat4.rotateZ(this.rotatedMatrix, this.scaledMatrix, this.rotationRAD[2])
+        mat4.rotateY(this.rotatedMatrix, this.rotatedMatrix, this.rotationRAD[1])//second param used to be scaled matrix, bug
+        mat4.rotateZ(this.rotatedMatrix, this.rotatedMatrix, this.rotationRAD[2])// ^
         if (cascade) this.RecomputePosition();
     }
 
@@ -215,6 +215,7 @@ export class Transform implements IComponent {
         this.rotationRAD = v
     }
     set RotationDEG(v: vec3) {
+        this.rotationRecomputed = false;//was previously not here, causing bug
         this.rotationRAD = vec3.scale(trash.vec3, v, Math.PI / 180)
     }
     set Scale(v: vec3) {
