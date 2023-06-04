@@ -225,11 +225,11 @@ export class CameraMatrix {
         // const focalLength = 1 / Math.tan(this.Fovy / 2);
         // but it is also matrix element 11 (one-one or (1, 1), not eleven) so im using
         // the value in the matrix to save calculations
-        const focalLength = this.projectionMatrix[11]
+        const focalLength = -this.projectionMatrix[11]
 
         // Double check my dodgy math
         if (focalLength &lt;= 0)
-            throw new Error("focalLength should NEVER be 0, which would be 180° Fovy, unexpected behavior")
+            throw new Error(`focalLength should NEVER be 0, which would be 180° Fovy, unexpected behavior ${focalLength}`)
 
         // find focal point
         const focalPoint = vec4.add(trash.vec4, this.Position, vec4.scale(trash.vec4, this.Direction, focalLength))
@@ -270,14 +270,17 @@ export class CameraMatrix {
      * @returns {vec4} The clip-space coordinates
      */
     ScreenPositionToClipSpace(screenPosition: vec2): vec4 {
+        if (this._gl.canvas instanceof OffscreenCanvas)
+            throw new Error("Canvas is offscreen")
+
         const x = Remap(
             screenPosition[0],
-            0, this._gl.canvas.width,
+            0, this._gl.canvas.clientWidth,
             -1, 1
         )
         const y = Remap(
             screenPosition[1],
-            0, this._gl.canvas.height,
+            0, this._gl.canvas.clientHeight,
             -1, 1
         )
 
