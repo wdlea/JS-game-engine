@@ -5,12 +5,18 @@ import { mat4, vec4 } from "gl-matrix"
  * @alias module:Math.Ray
  */
 export class Ray {
-    origin: vec4;
-    direction: vec4;
+    private origin: vec4;
+    private direction: vec4;
 
     constructor(origin: vec4, direction: vec4) {
-        this.origin = origin;
-        this.direction = direction;
+        this.origin = vec4.fromValues(origin[0], origin[1], origin[2], 1)//deep copy values
+        this.direction = vec4.fromValues(direction[0], direction[1], direction[2], 1)
+        this.fixVectors()
+    }
+
+    private fixVectors() {
+        this.origin[4] = 1
+        this.direction[4] = 1
     }
 
     /**
@@ -26,6 +32,10 @@ export class Ray {
 
         const point: vec4 = vec4.create();
         vec4.add(point, delta, this.origin);
+
+        this.fixVectors()
+
+        point[3] = 1
 
         return point;
     }
