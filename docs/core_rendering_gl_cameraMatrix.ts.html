@@ -182,7 +182,7 @@ export class CameraMatrix {
         if (this._gl.canvas instanceof HTMLCanvasElement)
             return this._gl.canvas.clientWidth / this._gl.canvas.clientHeight;
         else
-            return this._gl.canvas.width / this._gl.canvas.height;
+            throw new Error("Canvas offscreen")
     }
 
     get Position(): vec4 {
