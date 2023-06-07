@@ -1,4 +1,5 @@
 import { Entity } from "./entity"
+import { Game } from "./game"
 
 /**
  * Interface that all components must derive from
@@ -17,7 +18,7 @@ export interface IComponent {
     IsCompatable(object: Entity): boolean
 
     /**Called once when the component is attatched to an entity */
-    OnAttach(parent: Entity): void
+    OnAttach(parent: Entity, game: Game): void
 
     /*Called every time the entities scene is loaded*/
     Start(): void

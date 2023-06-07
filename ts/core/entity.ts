@@ -9,7 +9,7 @@ import { IRenderer, IsRenderer } from "./rendering";
  * @category Core
  */
 export class Entity {
-
+    private game: Game;
     private components: Array<IComponent> = [];
     private renderers: Array<IRenderer> = [];
 
@@ -23,6 +23,7 @@ export class Entity {
                 this.AddComponent(component);
             }
         )
+        this.game = game
     }
 
     public get Components(): Array<IComponent> {
@@ -84,7 +85,7 @@ export class Entity {
      */
     public AddComponent(component: IComponent) {
         if (component.IsCompatable(this)) {
-            component.OnAttach(this)
+            component.OnAttach(this, this.game)
             // component.Start()
             this.components.push(component);
 
