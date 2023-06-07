@@ -25,6 +25,9 @@ export class Camera {
         this.uniforms.globals.CameraMatrix = this.cameraMatrix.ProjectionMatrix;
         this.uniforms.globals.ViewMatrix = this.cameraMatrix.ViewMatrix;
     }
+    get CameraMatrix() {
+        return this.cameraMatrix
+    }
 
     /**
      * Makes a new Camera

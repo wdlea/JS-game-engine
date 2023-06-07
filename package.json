@@ -1,6 +1,6 @@
 {
   "name": "@wdlea/js-game-engine",
-  "version": "1.2.0a",
+  "version": "1.2.0b",
   "description": "My JS game engine",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
