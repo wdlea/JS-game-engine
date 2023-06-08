@@ -27,7 +27,12 @@ export type AttribLocations = {
     Texture: number | null,
     Normal: number | null
 }
-
+/**
+ * makes sure that a maybeCompiledShader is compiled
+ * @param {WebGL2RenderingContext} gl The webgl rendering context
+ * @param {maybeCompiledShader} m The sahder to compile
+ * @returns 
+ */
 function CompileMaybeCompiled(gl: WebGL2RenderingContext, m: maybeCompiledShader): maybeCompiledShader {
     if (m.shader === null) {
         const tShader = gl.createShader(m.type);
@@ -228,7 +233,7 @@ export class ShaderProgram {
         return finishedOrders;
     }
     /**
-     * 
+     * Uses a shader program for subsequent renders
      * @param gl makes the current program active
      */
     Use(gl: WebGL2RenderingContext) {
