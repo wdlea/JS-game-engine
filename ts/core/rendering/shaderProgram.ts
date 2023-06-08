@@ -31,7 +31,7 @@ export type AttribLocations = {
  * makes sure that a maybeCompiledShader is compiled
  * @param {WebGL2RenderingContext} gl The webgl rendering context
  * @param {maybeCompiledShader} m The sahder to compile
- * @returns 
+ * @returns {maybeCompiledShader}
  */
 function CompileMaybeCompiled(gl: WebGL2RenderingContext, m: maybeCompiledShader): maybeCompiledShader {
     if (m.shader === null) {
