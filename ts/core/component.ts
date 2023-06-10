@@ -41,6 +41,7 @@ export interface IComponent {
  * @category Core
  */
 export class BaseComponent implements IComponent {
+
     enabled: boolean = true;
     IsCompatable(object: Entity): boolean {
         return false
@@ -49,5 +50,12 @@ export class BaseComponent implements IComponent {
     Start(): void { }
     Update(): void { }
     get WhoAmI(): string { return ""; }
+}
 
+export function IsComponentOfType<Type extends IComponent>(obj: any, t: Type): obj is Type {
+    try {
+        return typeof obj.WhoAmI != undefined && obj.WhoAmI == t.WhoAmI
+    } catch {
+        return false
+    }
 }

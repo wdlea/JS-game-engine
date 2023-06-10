@@ -5,6 +5,9 @@ import { trash } from "../math";
 
 export const GRID_IDENTIFIER = "GRID_COMPONENT"
 
+/**
+ * This component defines a grid component
+ */
 export class Grid<element extends IComponent> implements IComponent {
     public grid: Array<element>
 

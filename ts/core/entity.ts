@@ -1,5 +1,5 @@
 import { Game } from "./game";
-import { IComponent } from "./component";
+import { BaseComponent, IComponent, IsComponentOfType } from "./component";
 import { IRenderer, IsRenderer } from "./rendering";
 
 
@@ -49,17 +49,16 @@ export class Entity {
     }
 
     /** Gets the first component added of the specific type, found by calling IComponent.WhoAmI
-     * @param {string} type Compared to every components WhoAmI fuction
      * @returns {IComponent | null} The component found, if any, otheriwse null
      */
-    public GetComponentOfType(type: string): IComponent | null {
+    public GetComponentOfType<Type extends IComponent>(t: Type): Type | undefined {
         for (let i = 0; i < this.components.length; i++) {
             const component = this.components[i];
-            if (component.WhoAmI == type) {
+            if (IsComponentOfType(component, t)) {
                 return component
             }
         }
-        return null;
+        return undefined;
     }
 
     /**
