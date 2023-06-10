@@ -66,12 +66,12 @@ export class Entity {
      * @param {string} type Compared to every components WhoAmI fuction
      * @returns {Array<IComponent>} an array with all the components found, will be empty if there is no matches
      */
-    public GetComponentsOfType(type: string): Array<IComponent> {
-        let ret: Array<IComponent> = []
+    public GetComponentsOfType<Type extends IComponent>(t: Type): Array<Type> {
+        let ret: Array<Type> = []
 
         for (let i = 0; i < this.components.length; i++) {
             const component = this.components[i];
-            if (component.WhoAmI == type) {
+            if (IsComponentOfType(component, t)) {
                 ret.push(component);
             }
         }
