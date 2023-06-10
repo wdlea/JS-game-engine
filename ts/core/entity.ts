@@ -49,7 +49,7 @@ export class Entity {
     }
 
     /** Gets the first component added of the specific type, found by calling IComponent.WhoAmI
-     * @returns {IComponent | null} The component found, if any, otheriwse null
+     * @returns {Type | null} The component found, if any, otheriwse null
      */
     public GetComponentOfType<Type extends IComponent>(t: Type): Type | undefined {
         for (let i = 0; i < this.components.length; i++) {
@@ -63,8 +63,7 @@ export class Entity {
 
     /**
      * Much like GetComponentOfType, but returns all matches
-     * @param {string} type Compared to every components WhoAmI fuction
-     * @returns {Array<IComponent>} an array with all the components found, will be empty if there is no matches
+     * @returns {Array<Type>} an array with all the components found, will be empty if there is no matches
      */
     public GetComponentsOfType<Type extends IComponent>(t: Type): Array<Type> {
         let ret: Array<Type> = []

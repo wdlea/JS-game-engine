@@ -5,6 +5,8 @@ import { trash } from "../math";
 
 export const GRID_IDENTIFIER = "GRID_COMPONENT"
 
+export type Coords = readonly [number, number]
+
 /**
  * This component defines a grid component
  */
@@ -31,11 +33,11 @@ export class Grid<element extends IComponent> implements IComponent {
     }
 
     IsCompatable(object: Entity): boolean {
-        return object.GetComponentOfType(TRANSFORM_IDENTIFIER) != null
+        return object.GetComponentOfType(new Transform()) != null
     }
 
     OnAttach(parent: Entity, game: Game): void {
-        const t_trans = parent.GetComponentOfType(TRANSFORM_IDENTIFIER)
+        const t_trans = parent.GetComponentOfType(new Transform())
         if (t_trans === null)
             throw new Error("No Transform componenet")
 
@@ -59,19 +61,19 @@ export class Grid<element extends IComponent> implements IComponent {
 
     /**
      * Returns the index of a square in the grid array
-     * @param {readonly [number, number]} coords The XY coords of the square
-     * @returns {number} The index of the square in the grid array
+     * @param {Array<number>} coords The XY coords of the square
+     * @returns {Coords} The index of the square in the grid array
      */
-    public GetSquareIndexFromPackedCoords(coords: readonly [number, number]): number {
+    public GetSquareIndexFromPackedCoords(coords: Coords): number {
         const [x, y] = coords
         return this.GetSquareIndex(x, y)
     }
     /**
      * Returns the grid items x, y coords in the grid
      * @param {number} index The index of the element in the grid array
-     * @returns {readonly [number, number]} The xy coordinates of the square
+     * @returns {Coords} The xy coordinates of the square
      */
-    public GetSquareCoordinates(index: number): readonly [number, number] {
+    public GetSquareCoordinates(index: number): Coords {
         return [
             index % this.width,
             Math.floor(index / this.width)
@@ -81,13 +83,13 @@ export class Grid<element extends IComponent> implements IComponent {
     /**
      * Returns the point as the index of the closest square determined
      * by roundingFunction
-     * @param point 
-     * @param roundingFunction 
-     * @param checkBounds 
-     * @param silent 
-     * @returns 
+     * @param {vec3} point The point in 3D space to find the closest square
+     * @param {function} roundingFunction The function used when rounding the value to the nearest square
+     * @param {boolean} checkBounds Whether to make sure that the point exists inside the grid
+     * @param {boolean} silent Whether to error out on invalid inputs
+     * @returns {Coords | null} The coords, if any
      */
-    public PointToSquare(point: vec3, roundingFunction: (arg0: number) => number = Math.floor, checkBounds: boolean = true, silent: boolean = false): readonly [number, number] | null {
+    public PointToSquare(point: vec3, roundingFunction: (arg0: number) => number = Math.floor, checkBounds: boolean = true, silent: boolean = false): Coords | null {
         const inverseTransform = mat4.invert(trash.mat4, this.transform.ModelMatrix)
 
         const rawPoint = vec3.transformMat4(trash.vec3, point, inverseTransform)

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JS-game-engine Docs IComponent</title>
+  <title>JS-game-engine Docs grid/grid.ts</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -90,416 +92,142 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Interface</p>
-                    <h1>IComponent</h1>
+                    <p>Source</p>
+                    <h1>grid/grid.ts</h1>
                 </header>
                 
 
 
 
-
-<section>
-
-<header>
-    
-        <h2>IComponent</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Interface that all components must derive from</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="core_component.ts.html" class="button">View Source</a>
-            <span>
-                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line27">line 27</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">boolean</code>
-
-
-    </span>
-
-<h4 class="name" id="IsCompatable">
-    <a class="href-link" href="#IsCompatable">#</a>
-    
-    <span class="code-name">
-        IsCompatable
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    Checks if a component can go on a Entity, implemented with th idea that this could help preventduplicate components, or components that rely on others, such as transform.
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="core_component.ts.html" class="button">View Source</a>
-            <span>
-                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line32">line 32</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">void</code>
-
-
-    </span>
-
-<h4 class="name" id="OnAttach">
-    <a class="href-link" href="#OnAttach">#</a>
-    
-    <span class="code-name">
-        OnAttach
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    Called once when the component is attatched to an entity
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="core_component.ts.html" class="button">View Source</a>
-            <span>
-                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line41">line 41</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">void</code>
-
-
-    </span>
-
-<h4 class="name" id="Update">
-    <a class="href-link" href="#Update">#</a>
-    
-    <span class="code-name">
-        Update
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    Called repeatedly
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="core_component.ts.html" class="button">View Source</a>
-            <span>
-                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line45">line 45</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">string</code>
-
-
-    </span>
-
-<h4 class="name" id="WhoAmI">
-    <a class="href-link" href="#WhoAmI">#</a>
-    
-    <span class="code-name">
-        WhoAmI
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    Used in the engine to compare objects types, could also be hacked to get components to "mimic" othercomponents, i dont know how useful that is but it is a possible use case.
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="core_component.ts.html" class="button">View Source</a>
-            <span>
-                <a href="core_component.ts.html">core/component.ts</a>, <a href="core_component.ts.html#line49">line 49</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { mat4, vec3 } from "gl-matrix";
+import { Transform, TRANSFORM_IDENTIFIER } from "../components";
+import { Entity, Game, IComponent } from "../core";
+import { trash } from "../math";
+
+export const GRID_IDENTIFIER = "GRID_COMPONENT"
+
+export type Coords = readonly [number, number]
+
+/**
+ * This component defines a grid component
+ */
+export class Grid&lt;element extends IComponent> implements IComponent {
+    public grid: Array&lt;element>
+
+    enabled: boolean = true;
+
+    transform!: Transform;
+
+    public tileWidth: number;
+    public tileHeight: number;
+
+    private width: number;
+    private height: number;
+
+    constructor(width: number, height: number, tileWidth: number = 1, tileHeight: number = 1) {
+        this.grid = new Array&lt;element>(width * height)
+
+        this.tileHeight = tileHeight
+        this.tileWidth = tileWidth
+        this.width = width
+        this.height = height
+    }
+
+    IsCompatable(object: Entity): boolean {
+        return object.GetComponentOfType(new Transform()) != null
+    }
+
+    OnAttach(parent: Entity, game: Game): void {
+        const t_trans = parent.GetComponentOfType(new Transform())
+        if (t_trans === null)
+            throw new Error("No Transform componenet")
+
+        this.transform = t_trans as Transform
+    }
+    Start(): void { }
+    Update(): void { }
+    get WhoAmI(): string {
+        throw new Error("Method not implemented.");
+    }
+
+    /**
+     * Returns the index of a square in the grid array
+     * @param {number} x The x coordinate of the square
+     * @param {number} y The y coordinate of the square
+     * @returns {number} The index of the square in the grid array
+     */
+    public GetSquareIndex(x: number, y: number): number {
+        return this.width * y + x
+    }
+
+    /**
+     * Returns the index of a square in the grid array
+     * @param {Array&lt;number>} coords The XY coords of the square
+     * @returns {Coords} The index of the square in the grid array
+     */
+    public GetSquareIndexFromPackedCoords(coords: Coords): number {
+        const [x, y] = coords
+        return this.GetSquareIndex(x, y)
+    }
+    /**
+     * Returns the grid items x, y coords in the grid
+     * @param {number} index The index of the element in the grid array
+     * @returns {Coords} The xy coordinates of the square
+     */
+    public GetSquareCoordinates(index: number): Coords {
+        return [
+            index % this.width,
+            Math.floor(index / this.width)
+        ] as const
+    }
+
+    /**
+     * Returns the point as the index of the closest square determined
+     * by roundingFunction
+     * @param {vec3} point The point in 3D space to find the closest square
+     * @param {function} roundingFunction The function used when rounding the value to the nearest square
+     * @param {boolean} checkBounds Whether to make sure that the point exists inside the grid
+     * @param {boolean} silent Whether to error out on invalid inputs
+     * @returns {Coords | null} The coords, if any
+     */
+    public PointToSquare(point: vec3, roundingFunction: (arg0: number) => number = Math.floor, checkBounds: boolean = true, silent: boolean = false): Coords | null {
+        const inverseTransform = mat4.invert(trash.mat4, this.transform.ModelMatrix)
+
+        const rawPoint = vec3.transformMat4(trash.vec3, point, inverseTransform)
+
+        const rawPos = [
+            rawPoint[0] / this.tileWidth,
+            rawPoint[1] / this.tileHeight
+        ]
+        rawPoint[0] = roundingFunction(rawPos[0])
+        rawPoint[1] = roundingFunction(rawPos[1])
+
+        if (rawPoint[0] % 1 != 0 || rawPoint[1] % 1 != 0) {
+            if (silent) {
+                return null
+            } else {
+                throw new Error("Rounding function didnt return an integer")
+            }
+        }
+
+        if (checkBounds) {
+            if (rawPoint[0] > this.width || rawPoint[1] > this.height)
+                if (silent) {
+                    return null
+                } else {
+                    throw new Error("Point outside bounds of array")
+                }
+        }
+
+        //@ts-expect-error, rawPos will have 2 elements
+        return rawPos as const
+    }
+}</code></pre>
+        </article>
+    </section>
 
 
 
