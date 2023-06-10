@@ -148,12 +148,12 @@ export class MeshRenderer implements IComponent, IRenderer {
     }
 
     IsCompatable(object: Entity): boolean {
-        return object.GetComponentOfType(TRANSFORM_IDENTIFIER) != null
+        return object.GetComponentOfType(new Transform()) != null
     }
 
     OnAttach(parent: Entity): void {
         //@ts-expect-error Will always be transform
-        this.transform = parent.GetComponentOfType(TRANSFORM_IDENTIFIER);
+        this.transform = parent.GetComponentOfType(new Transform());
 
         this.settings = new ObjectSettings(
             this.transform.ModelMatrix,
