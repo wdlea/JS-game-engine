@@ -215,6 +215,9 @@ export class CameraMatrix {
 
         const ray_world = vec4.transformMat4(vec4.create(), ray_eye, I_worldMatrix);
 
+        vec4.normalize(ray_world, ray_world)
+        ray_world[3] = 1
+
         const ray = new Ray(
             this.Position,
             ray_world
