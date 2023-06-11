@@ -21,3 +21,10 @@ export const trash = {
     vec2: vec2.create(),
     mat4: mat4.create()
 }
+
+export class make {
+    static get vec4(): vec4 { return vec4.create() }
+    static get vec3(): vec3 { return vec3.create() }
+    static get vec2(): vec2 { return vec2.create() }
+    static get mat4(): mat4 { return mat4.create() }
+}
