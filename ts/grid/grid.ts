@@ -1,5 +1,5 @@
 import { mat4, vec3 } from "gl-matrix";
-import { Transform, TRANSFORM_IDENTIFIER } from "../components";
+import { Transform } from "../components";
 import { Entity, Game, IComponent } from "../core";
 import { trash } from "../math";
 
@@ -84,7 +84,7 @@ export class Grid<element extends IComponent> implements IComponent {
      * Returns the point as the index of the closest square determined
      * by roundingFunction
      * @param {vec3} point The point in 3D space to find the closest square
-     * @param {function} roundingFunction The function used when rounding the value to the nearest square
+     * @param {Function} roundingFunction The function used when rounding the value to the nearest square
      * @param {boolean} checkBounds Whether to make sure that the point exists inside the grid
      * @param {boolean} silent Whether to error out on invalid inputs
      * @returns {Coords | null} The coords, if any
