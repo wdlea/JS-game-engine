@@ -1,6 +1,6 @@
 import { mat4, vec3 } from "gl-matrix";
 import { Entity, IComponent } from "../";
-import { trash } from "../math";
+import { make } from "../math";
 
 const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
 
@@ -99,7 +99,7 @@ export class Transform implements IComponent {
 
     get Position() { return this.position }
     get RotationRAD() { return this.rotationRAD }
-    get RotationDEG() { return vec3.scale(trash.vec3, this.rotationRAD, 180 / Math.PI) }
+    get RotationDEG() { return vec3.scale(make.vec3, this.rotationRAD, 180 / Math.PI) }
     get Scale() { return this.scale }
 
     set Position(v: vec3) {
@@ -112,7 +112,7 @@ export class Transform implements IComponent {
     }
     set RotationDEG(v: vec3) {
         this.rotationRecomputed = false;//was previously not here, causing bug
-        this.rotationRAD = vec3.scale(trash.vec3, v, Math.PI / 180)
+        this.rotationRAD = vec3.scale(make.vec3, v, Math.PI / 180)
     }
     set Scale(v: vec3) {
         this.scaleRecomputed = false;

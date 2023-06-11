@@ -3,6 +3,6 @@
  */
 
 export { Ray } from "./ray"
-export { constants, trash } from "./constants"
+export { constants, make } from "./constants"
 
 export { Remap } from "./remap"
