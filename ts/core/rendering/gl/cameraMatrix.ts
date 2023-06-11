@@ -101,16 +101,19 @@ export class CameraMatrix {
         //https://antongerdelan.net/opengl/raycasting.html
 
         const I_projectionMatrix = mat4.create()
-        mat4.invert(I_projectionMatrix, this.projectionMatrix)
+        mat4.invert(I_projectionMatrix, this.ProjectionMatrix)
+
+        const I_viewMatrix = mat4.create()
+        mat4.invert(I_viewMatrix, this.ViewMatrix)
 
         var ray = new Ray(
-            vec4.fromValues(0, 0, 0, 1),
-            vec4.fromValues(0, 0, -1, 1)
+            vec4.fromValues(clipSpace[0], clipSpace[1], 0, 1),
+            vec4.fromValues(clipSpace[0], clipSpace[1], -1, 1)
         )
 
         ray.Transform(I_projectionMatrix)
 
-        ray.Transform(this.viewMatrix)
+        ray.Transform(I_viewMatrix)
 
         return ray
     }
