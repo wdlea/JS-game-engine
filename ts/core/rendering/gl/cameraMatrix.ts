@@ -98,33 +98,17 @@ export class CameraMatrix {
      * @returns {Ray} The computed ray
      */
     ClipSpaceToRay(clipSpace: vec4): Ray {
-        const FOVy = this.Fovy
-        const FOVx = FOVy * this.AspectRatio
+        //https://antongerdelan.net/opengl/raycasting.html
 
-        const [hFOVx, hFOVy] = [FOVy / 2, FOVx / 2]
+        const I_projectionMatrix = mat4.create()
+        mat4.invert(I_projectionMatrix, this.projectionMatrix)
 
-        const [clipX, clipY] = [clipSpace[0], clipSpace[1]]
-
-        const [thetaX, thetaY] = [clipX * hFOVx, clipY * hFOVy]
-
-        let unitX = 0
-        let unitY = Math.sin(thetaX)
-        let unitZ = Math.cos(thetaX)
-
-        unitX = Math.sin(thetaY)
-        unitZ = Math.cos(thetaY)
-
-        const ray = new Ray(
-            vec4.fromValues(
-                0, 0, 0, 1
-            ),
-            vec4.fromValues(
-                unitX,
-                unitY,
-                unitZ,
-                1
-            )
+        var ray = new Ray(
+            vec4.fromValues(0, 0, 0, 1),
+            vec4.fromValues(0, 0, -1, 1)
         )
+
+        ray.Transform(I_projectionMatrix)
 
         ray.Transform(this.viewMatrix)
 
