@@ -2,7 +2,7 @@ import { mat4, vec3 } from "gl-matrix";
 import { Entity, IComponent } from "../";
 import { trash } from "../math";
 
-export const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
+const TRANSFORM_IDENTIFIER: string = "TRANSFORM"
 
 const LOG_MATRIX: boolean = false;
 
