@@ -100,20 +100,21 @@ export class CameraMatrix {
     ClipSpaceToRay(clipSpace: vec4): Ray {
         //https://antongerdelan.net/opengl/raycasting.html
 
-        const I_projectionMatrix = mat4.create()
-        mat4.invert(I_projectionMatrix, this.ProjectionMatrix)
+        const I_projectionMatrix = mat4.create();
+        mat4.invert(I_projectionMatrix, this.projectionMatrix)
 
-        const I_viewMatrix = mat4.create()
-        mat4.invert(I_viewMatrix, this.ViewMatrix)
+        const I_worldMatrix = mat4.create()
+        mat4.invert(I_worldMatrix, this.viewMatrix)
 
-        var ray = new Ray(
-            vec4.fromValues(clipSpace[0], clipSpace[1], 0, 1),
-            vec4.fromValues(clipSpace[0], clipSpace[1], -1, 1)
+        var ray_eye = vec4.transformMat4(vec4.create(), clipSpace, I_projectionMatrix);
+        ray_eye = vec4.fromValues(ray_eye[0], ray_eye[1], -1.0, 0.0);
+
+        const ray_world = vec4.transformMat4(vec4.create(), ray_eye, I_worldMatrix);
+
+        const ray = new Ray(
+            this.Position,
+            ray_world
         )
-
-        ray.Transform(I_projectionMatrix)
-
-        ray.Transform(I_viewMatrix)
 
         return ray
     }
@@ -140,7 +141,7 @@ export class CameraMatrix {
 
         return vec4.fromValues(
             x, y,
-            0, 0
+            -1, 1
         )
     }
 

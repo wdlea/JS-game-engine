@@ -131,6 +131,7 @@ export class Ray {
     Transform(matrix: mat4) {
         vec4.transformMat4(this.direction, this.direction, matrix)
         vec4.transformMat4(this.origin, this.origin, matrix)
+        this.fixVectors()
     }
 
     get Values() {
