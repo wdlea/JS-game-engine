@@ -1,4 +1,4 @@
-import { constants, Ray, trash } from "../ts/math"
+import { constants, make, Ray } from "../ts/math"
 import { mat4, vec3, vec4 } from "gl-matrix"
 
 
@@ -85,11 +85,11 @@ describe(
 
 
                 expect(ray.Origin).toMatchObject(
-                    vec4.add(trash.vec4, o, tv4)
+                    vec4.add(make.vec4, o, tv4)
                 )
 
                 expect(ray.Direction).toMatchObject(
-                    vec4.add(trash.vec4, d, tv4)
+                    vec4.add(make.vec4, d, tv4)
                 )
             }
         )

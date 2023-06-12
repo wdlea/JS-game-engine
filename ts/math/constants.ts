@@ -11,9 +11,11 @@ export class constants {
 }
 
 /**
+ * BUGGED -use make instead
  * Use in when you dont care about the out parameter of a calculation
  * @memberof module:Math
  * @alias module:Math.trash
+ * @deprecated Do not use
  */
 export const trash = {
     vec4: vec4.create(),
