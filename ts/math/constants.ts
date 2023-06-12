@@ -11,13 +11,25 @@ export class constants {
 }
 
 /**
+ * BUGGED -use make instead
  * Use in when you dont care about the out parameter of a calculation
  * @memberof module:Math
  * @alias module:Math.trash
+ * @deprecated Do not use
  */
 export const trash = {
     vec4: vec4.create(),
     vec3: vec3.create(),
     vec2: vec2.create(),
     mat4: mat4.create()
+}
+
+/**
+ * Creates new instances of types
+ */
+export class make {
+    static get vec4(): vec4 { return vec4.create() }
+    static get vec3(): vec3 { return vec3.create() }
+    static get vec2(): vec2 { return vec2.create() }
+    static get mat4(): mat4 { return mat4.create() }
 }

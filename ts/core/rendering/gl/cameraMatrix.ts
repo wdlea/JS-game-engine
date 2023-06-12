@@ -1,5 +1,5 @@
 import { mat4, vec2, vec4 } from "gl-matrix";
-import { trash, constants, Remap } from "../../../math";
+import { make, constants, Remap } from "../../../math";
 import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;

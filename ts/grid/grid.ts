@@ -1,7 +1,7 @@
 import { mat4, vec3 } from "gl-matrix";
 import { Transform } from "../components";
 import { Entity, Game, IComponent } from "../core";
-import { trash } from "../math";
+import { make } from "../math";
 
 export const GRID_IDENTIFIER = "GRID_COMPONENT"
 
@@ -90,9 +90,9 @@ export class Grid<element extends IComponent> implements IComponent {
      * @returns {Coords | null} The coords, if any
      */
     public PointToSquare(point: vec3, roundingFunction: (arg0: number) => number = Math.floor, checkBounds: boolean = true, silent: boolean = false): Coords | null {
-        const inverseTransform = mat4.invert(trash.mat4, this.transform.ModelMatrix)
+        const inverseTransform = mat4.invert(make.mat4, this.transform.ModelMatrix)
 
-        const rawPoint = vec3.transformMat4(trash.vec3, point, inverseTransform)
+        const rawPoint = vec3.transformMat4(make.vec3, point, inverseTransform)
 
         const rawPos = [
             rawPoint[0] / this.tileWidth,
