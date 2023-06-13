@@ -131,14 +131,16 @@ export class CameraMatrix {
         if (this._gl.canvas instanceof OffscreenCanvas)
             throw new Error("Canvas is offscreen")
 
+        const rect = this._gl.canvas.getBoundingClientRect()
+
         const x = Remap(
             screenPosition[0],
-            0, this._gl.canvas.clientWidth,
+            rect.x, rect.x + rect.width,
             -1, 1
         )
         const y = Remap(
             screenPosition[1],
-            0, this._gl.canvas.clientHeight,
+            rect.y, rect.y + rect.height,
             -1, 1
         )
 

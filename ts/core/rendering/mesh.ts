@@ -1,5 +1,4 @@
 import { Model } from "@wdlea/obj-lib";
-import { Vector3, Vector4 } from "@wdlea/obj-lib/lib/vectors";
 import { MeshInstance } from "./meshInstance";
 import { ShaderProgram } from "./shaderProgram";
 
