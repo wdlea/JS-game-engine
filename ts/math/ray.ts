@@ -143,5 +143,9 @@ export class Ray {
     get Direction() {
         return this.direction;
     }
+
+    public ToString(): string {
+        return `Ray from ${this.origin.values.toString()} in direction ${this.direction.values.toString()}`
+    }
 }
 
