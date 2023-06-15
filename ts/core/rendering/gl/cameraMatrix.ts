@@ -106,10 +106,10 @@ export class CameraMatrix {
         const I_worldMatrix = mat4.create()
         mat4.invert(I_worldMatrix, this.viewMatrix)
 
-        var ray_eye = vec4.transformMat4(vec4.create(), clipSpace, I_projectionMatrix);
-        ray_eye = vec4.fromValues(ray_eye[0], ray_eye[1], -1.0, 0.0);
+        var ray_eye = vec4.transformMat4(make.vec4, clipSpace, I_projectionMatrix);
+        ray_eye = vec4.fromValues(ray_eye[0], ray_eye[1], -1.0, 1.0);
 
-        const ray_world = vec4.transformMat4(vec4.create(), ray_eye, I_worldMatrix);
+        const ray_world = vec4.transformMat4(make.vec4, ray_eye, I_worldMatrix);
 
         vec4.normalize(ray_world, ray_world)
         ray_world[3] = 1
