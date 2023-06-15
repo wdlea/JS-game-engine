@@ -102,7 +102,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { mat4, vec2, vec4 } from "gl-matrix";
+            <pre class="prettyprint source linenums"><code>import { mat4, vec2, vec3, vec4 } from "gl-matrix";
 import { make, constants, Remap } from "../../../math";
 import { Ray } from "../../../math/ray";
 
@@ -198,10 +198,10 @@ export class CameraMatrix {
 
     /**
      * Converts a point in clip space to a Ray.
-     * @param {vec4} clipSpace The position in clip space, use (x, y, 0, 0)(SEE DOUBLE CHECK IN SOURCE) by default
+     * @param {vec4} ndc The position in clip space, use (x, y, 0, 0)(SEE DOUBLE CHECK IN SOURCE) by default
      * @returns {Ray} The computed ray
      */
-    ClipSpaceToRay(clipSpace: vec4): Ray {
+    ClipSpaceToRay(ndc: vec3): Ray {
         //https://antongerdelan.net/opengl/raycasting.html
 
         const I_projectionMatrix = mat4.create();
@@ -210,17 +210,22 @@ export class CameraMatrix {
         const I_worldMatrix = mat4.create()
         mat4.invert(I_worldMatrix, this.viewMatrix)
 
-        var ray_eye = vec4.transformMat4(make.vec4, clipSpace, I_projectionMatrix);
-        ray_eye = vec4.fromValues(ray_eye[0], ray_eye[1], -1.0, 1.0);
+        var ray_eye = vec3.transformMat4(make.vec3, ndc, I_projectionMatrix);
+        ray_eye = vec3.fromValues(ray_eye[0], ray_eye[1], -1.0);
 
-        const ray_world = vec4.transformMat4(make.vec4, ray_eye, I_worldMatrix);
+        const ray_world = vec3.transformMat4(make.vec3, ray_eye, I_worldMatrix);
 
-        vec4.normalize(ray_world, ray_world)
-        ray_world[3] = 1
+        vec3.normalize(ray_world, ray_world)
+        const v4_ray_world = vec4.fromValues(
+            ray_world[0],
+            ray_world[1],
+            ray_world[2],
+            1
+        )
 
         const ray = new Ray(
             this.Position,
-            ray_world
+            v4_ray_world
         )
 
         return ray
@@ -231,7 +236,7 @@ export class CameraMatrix {
      * @param {vec2} screenPosition The position relative to the canvas
      * @returns {vec4} The clip-space coordinates
      */
-    ScreenPositionToClipSpace(screenPosition: vec2): vec4 {
+    ScreenPositionToClipSpace(screenPosition: vec2): vec3 {
         if (this._gl.canvas instanceof OffscreenCanvas)
             throw new Error("Canvas is offscreen")
 
@@ -248,9 +253,9 @@ export class CameraMatrix {
             -1, 1
         )
 
-        return vec4.fromValues(
+        return vec3.fromValues(
             -x, y,
-            -1, 1
+            -1
         )
     }
 
