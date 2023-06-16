@@ -195,6 +195,11 @@ export class CameraMatrix {
         return vec4.normalize(d, d);
     }
 
+    get FocalPoint(): vec4 {
+        const delta = vec4.scale(make.vec4, this.Direction, this.ProjectionMatrix[0])//assuming index [0] is matrix position 11
+        return vec4.add(delta, delta, this.Position)
+    }
+
 
     /**
      * Converts a point in clip space to a Ray.
@@ -236,7 +241,7 @@ export class CameraMatrix {
         )
 
         const ray = new Ray(
-            this.Position,
+            this.FocalPoint,
             v4_ray_world
         )
 
