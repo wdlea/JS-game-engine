@@ -1,4 +1,4 @@
-import { mat4, vec2, vec4 } from "gl-matrix";
+import { mat4, vec2, vec3, vec4 } from "gl-matrix";
 import { make, constants, Remap } from "../../../math";
 import { Ray } from "../../../math/ray";
 
@@ -91,13 +91,18 @@ export class CameraMatrix {
         return vec4.normalize(d, d);
     }
 
+    get FocalPoint(): vec4 {
+        const delta = vec4.scale(make.vec4, this.Direction, this.ProjectionMatrix[0])//assuming index [0] is matrix position 11
+        return vec4.add(delta, delta, this.Position)
+    }
+
 
     /**
      * Converts a point in clip space to a Ray.
-     * @param {vec4} clipSpace The position in clip space, use (x, y, 0, 0)(SEE DOUBLE CHECK IN SOURCE) by default
+     * @param {vec4} ndc The position in clip space, use (x, y, 0, 0)(SEE DOUBLE CHECK IN SOURCE) by default
      * @returns {Ray} The computed ray
      */
-    ClipSpaceToRay(clipSpace: vec4): Ray {
+    ClipSpaceToRay(ndc: vec3): Ray {
         //https://antongerdelan.net/opengl/raycasting.html
 
         const I_projectionMatrix = mat4.create();
@@ -106,18 +111,36 @@ export class CameraMatrix {
         const I_worldMatrix = mat4.create()
         mat4.invert(I_worldMatrix, this.viewMatrix)
 
-        var ray_eye = vec4.transformMat4(vec4.create(), clipSpace, I_projectionMatrix);
-        ray_eye = vec4.fromValues(ray_eye[0], ray_eye[1], -1.0, 0.0);
+        const ray_clip = vec4.fromValues(
+            ndc[0],
+            ndc[1],
+            -1,
+            1
+        )
 
-        const ray_world = vec4.transformMat4(vec4.create(), ray_eye, I_worldMatrix);
+        var ray_eye = vec4.transformMat4(make.vec4, ray_clip, I_projectionMatrix);
+        ray_eye = vec4.fromValues(
+            ray_eye[0],
+            ray_eye[1],
+            -1,
+            0
+        )
+
+        const ray_world = vec4.transformMat4(make.vec4, ray_eye, I_worldMatrix);
 
         vec4.normalize(ray_world, ray_world)
-        ray_world[3] = 1
+        const v4_ray_world = vec4.fromValues(
+            ray_world[0],
+            ray_world[1],
+            ray_world[2],
+            1
+        )
 
         const ray = new Ray(
-            this.Position,
-            ray_world
+            this.FocalPoint,
+            v4_ray_world
         )
+
 
         return ray
     }
@@ -127,7 +150,7 @@ export class CameraMatrix {
      * @param {vec2} screenPosition The position relative to the canvas
      * @returns {vec4} The clip-space coordinates
      */
-    ScreenPositionToClipSpace(screenPosition: vec2): vec4 {
+    ScreenPositionToClipSpace(screenPosition: vec2): vec3 {
         if (this._gl.canvas instanceof OffscreenCanvas)
             throw new Error("Canvas is offscreen")
 
@@ -144,9 +167,9 @@ export class CameraMatrix {
             -1, 1
         )
 
-        return vec4.fromValues(
-            x, y,
-            -1, 1
+        return vec3.fromValues(
+            -x, y,
+            1
         )
     }
 
