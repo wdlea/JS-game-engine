@@ -242,8 +242,9 @@ export class CameraMatrix {
 
         const ray = new Ray(
             this.FocalPoint,
-            v4_ray_world
+            vec4.scale(v4_ray_world, v4_ray_world, -1)//flip ray
         )
+
 
         return ray
     }
