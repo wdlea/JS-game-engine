@@ -195,10 +195,12 @@ export class CameraMatrix {
         )
     }
     get Direction(): vec4 {
-        const d = vec4.create()
-        vec4.transformMat4(d, constants.FORWARD, this.viewMatrix)
+        const dir = mat4.getRotation(make.quat, this.ViewMatrix)
+        let dir_vector = vec4.transformQuat(make.vec4, constants.FORWARD, dir)
 
-        return vec4.normalize(d, d);
+        vec4.normalize(dir_vector, dir_vector)
+
+        return dir_vector
     }
 
     get FocalPoint(): vec4 {
