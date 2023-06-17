@@ -116,7 +116,7 @@ import { Ray, Remap } from "../math";
 export class Cursor {
     private camera: Camera;
     private ray: Ray | undefined;
-    private cursorElement: HTMLElement | undefined;
+    cursorElement: HTMLElement | undefined;
 
     constructor(camera: Camera) {
         this.camera = camera
@@ -161,7 +161,7 @@ export class Cursor {
         if (this.cursorElement !== undefined) {
             const [x, y] = this.AlteredPos
             this.cursorElement.style.left = String(x) + "px"
-            this.cursorElement.style.right = String(y) + "px"
+            this.cursorElement.style.top = String(y) + "px"
         }
     }
     private BoundHandleMouseMove = this.HandleMouseMove.bind(this)

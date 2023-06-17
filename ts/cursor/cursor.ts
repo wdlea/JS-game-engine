@@ -12,7 +12,9 @@ import { Ray, Remap } from "../math";
 export class Cursor {
     private camera: Camera;
     private ray: Ray | undefined;
-    private cursorElement: HTMLElement | undefined;
+    cursorElement: HTMLElement | undefined;
+    cursorAccuratePlane: number = 1;
+    cursorAccuratePlaneOffset: number = 0;
 
     constructor(camera: Camera) {
         this.camera = camera
@@ -33,7 +35,7 @@ export class Cursor {
     }
 
     get AlteredPos(): vec2 {
-        const point = this.Ray.Step(1)
+        const point = this.Ray.InterceptOffsetPlane(this.cursorAccuratePlaneOffset, this.cursorAccuratePlane)
         const newPos = vec4.transformMat4(point, point, this.camera.CameraMatrix.ProjectionMatrix)
 
         if (this.camera._gl.canvas instanceof OffscreenCanvas)
@@ -57,7 +59,7 @@ export class Cursor {
         if (this.cursorElement !== undefined) {
             const [x, y] = this.AlteredPos
             this.cursorElement.style.left = String(x) + "px"
-            this.cursorElement.style.right = String(y) + "px"
+            this.cursorElement.style.top = String(y) + "px"
         }
     }
     private BoundHandleMouseMove = this.HandleMouseMove.bind(this)
