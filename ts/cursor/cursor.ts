@@ -9,7 +9,7 @@ import { Ray, Remap } from "../math";
  * back to the camera.
  * NOTE: call Activate to start tracking position
  */
-class Cursor {
+export class Cursor {
     private camera: Camera;
     private ray: Ray | undefined;
     private cursorElement: HTMLElement | undefined;
