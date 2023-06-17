@@ -7,9 +7,6 @@ import { GlobalSettings, LightSettings, ObjectSettings, RendererSettings } from 
 import { Cursor } from "../../cursor"
 
 
-const VERTEX_ATTRIB_LOCATION = 0
-const UV_ATTRIB_LOCATION = 1
-const NORMAL_ATTRIB_LOCATION = 2
 /**
  * Class that represents a camera in 3D space
  * @category Rendering
@@ -100,7 +97,7 @@ export class Camera {
                 0,
                 0
             )
-            this._gl.enableVertexAttribArray(VERTEX_ATTRIB_LOCATION)
+            this._gl.enableVertexAttribArray(m.shader.Locations.Position)
         }
 
         if (m.shader.Locations.Texture != null) {
@@ -113,7 +110,7 @@ export class Camera {
                 0,
                 0
             )
-            this._gl.enableVertexAttribArray(UV_ATTRIB_LOCATION)
+            this._gl.enableVertexAttribArray(m.shader.Locations.Texture)
         }
 
         if (m.shader.Locations.Normal != null) {
@@ -126,7 +123,7 @@ export class Camera {
                 0,
                 0
             )
-            this._gl.enableVertexAttribArray(NORMAL_ATTRIB_LOCATION)
+            this._gl.enableVertexAttribArray(m.shader.Locations.Normal)
         }
 
 
