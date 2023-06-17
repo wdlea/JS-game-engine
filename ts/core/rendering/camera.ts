@@ -4,6 +4,7 @@ import { CameraMatrix } from "./gl/cameraMatrix";
 import { IRenderer } from "./iRenderer";
 import { MeshInstance } from "./meshInstance";
 import { GlobalSettings, LightSettings, ObjectSettings, RendererSettings } from "./uniforms";
+import { Cursor } from "../../cursor"
 
 
 const VERTEX_ATTRIB_LOCATION = 0
@@ -17,6 +18,8 @@ export class Camera {
     public _gl: WebGL2RenderingContext;
 
     public uniforms!: RendererSettings;
+
+    public cursor: Cursor;
 
 
     private cameraMatrix: CameraMatrix;
@@ -43,6 +46,7 @@ export class Camera {
         window.onresize = (ev: UIEvent): any => {
             this.CameraMatrix = new CameraMatrix(gl)
         }
+        this.cursor = new Cursor(this)
     }
     /**
      * Creates an new RenderSettings object, and fills it with some settings
