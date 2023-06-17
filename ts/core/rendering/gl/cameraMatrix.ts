@@ -82,7 +82,13 @@ export class CameraMatrix {
     }
 
     get Position(): vec4 {
-        return vec4.transformMat4(vec4.create(), constants.ORIGIN, this.viewMatrix)
+        const pos = mat4.getTranslation(make.vec3, this.ViewMatrix)
+        return vec4.fromValues(
+            pos[0],
+            pos[1],
+            pos[2],
+            1
+        )
     }
     get Direction(): vec4 {
         const d = vec4.create()
