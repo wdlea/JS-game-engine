@@ -2,10 +2,23 @@ import { vec2, vec4 } from "gl-matrix";
 import { Camera } from "../core";
 import { Ray, Remap } from "../math";
 
+/**
+ * Cursor is my "bugfix" for the 
+ * cursor being out of sync with the ray's position
+ * It steps the ray by one, then projects that point 
+ * back to the camera.
+ * NOTE: call Activate to start tracking position
+ */
 class Cursor {
     private camera: Camera;
     private ray: Ray | undefined;
     private cursorElement: HTMLElement | undefined;
+
+    constructor(camera: Camera) {
+        this.camera = camera
+        this.pos = vec2.create()
+    }
+
 
     get Ray(): Ray {
         if (this.ray === undefined) {
@@ -33,20 +46,26 @@ class Cursor {
         return canvasPos
     }
 
-    constructor(camera: Camera) {
-        this.camera = camera
-        this.pos = vec2.create()
-    }
 
-    HandleMouseMove(ev: MouseEvent) {
+    private HandleMouseMove(ev: MouseEvent) {
         this.pos = vec2.fromValues(
             ev.clientX,
             ev.clientY
         )
         this.ray = undefined//reset ray for recomputation
-    }
 
+        if (this.cursorElement !== undefined) {
+            const [x, y] = this.AlteredPos
+            this.cursorElement.style.left = String(x) + "px"
+            this.cursorElement.style.right = String(y) + "px"
+        }
+    }
+    private BoundHandleMouseMove = this.HandleMouseMove.bind(this)
+
+    /**
+     * Activates the cursor
+     */
     Activate() {
-        document.onmousemove = this.HandleMouseMove
+        document.onmousemove = this.BoundHandleMouseMove
     }
 }
