@@ -57,6 +57,8 @@ export class Cursor {
             ev.clientX,
             ev.clientY
         )
+
+
         this.ray = undefined//reset ray for recomputation
 
         if (this.cursorElement !== undefined) {
