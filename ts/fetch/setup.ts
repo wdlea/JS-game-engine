@@ -1,6 +1,6 @@
 import $ from "jquery"
 
-export const BASE_RESOURCE_PATH = "http://127.0.0.1:5500/dist/static/game/"
+export const BASE_RESOURCE_PATH = "./static/game/"
 /**
  * Sets up AJAX
  * @category Internal
