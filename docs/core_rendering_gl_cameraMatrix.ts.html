@@ -107,7 +107,7 @@ import { make, constants, Remap } from "../../../math";
 import { Ray } from "../../../math/ray";
 
 const CAMERA_NEAR = 0.01;
-const CAMERA_FAR = 10000;
+const CAMERA_FAR = 1000000;
 
 /**
  * Class representing a 4x4 projection matrix
@@ -280,7 +280,7 @@ export class CameraMatrix {
         )
 
         return vec3.fromValues(
-            -x, y,
+            x, y,
             1
         )
     }

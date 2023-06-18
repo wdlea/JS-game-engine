@@ -176,7 +176,7 @@ export class CameraMatrix {
         )
 
         return vec3.fromValues(
-            -x, y,
+            x, y,
             1
         )
     }
