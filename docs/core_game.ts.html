@@ -221,7 +221,7 @@ export class Game {
     private ConfigureWEBGL() {
         this.Glcontext.enable(this.Glcontext.DEPTH_TEST);//enable depth testing
 
-        this.Glcontext.clearColor(1, 0, 1, 1);//clear to magenta so i know its working
+        this.Glcontext.clearColor(0, 0, 0, 0);
         this.Glcontext.clearDepth(1.0);//clear depth to 1 which is as far as possible from the camera
 
         this.Glcontext.clear(this.Glcontext.DEPTH_BUFFER_BIT | this.Glcontext.COLOR_BUFFER_BIT);//clear depth and colour buffers to specified values
