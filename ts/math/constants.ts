@@ -1,4 +1,4 @@
-import { mat4, vec2, vec3, vec4 } from "gl-matrix";
+import { mat4, quat, vec2, vec3, vec4 } from "gl-matrix";
 
 /**
  * Mathematical constants
@@ -32,4 +32,5 @@ export class make {
     static get vec3(): vec3 { return vec3.create() }
     static get vec2(): vec2 { return vec2.create() }
     static get mat4(): mat4 { return mat4.create() }
+    static get quat(): quat { return quat.create() }
 }

@@ -37,13 +37,16 @@ export class Cursor {
     get AlteredPos(): vec2 {
         const point = this.Ray.InterceptOffsetPlane(this.cursorAccuratePlaneOffset, this.cursorAccuratePlane)
         const newPos = vec4.transformMat4(point, point, this.camera.CameraMatrix.ProjectionMatrix)
+        const w = newPos[3]
+
 
         if (this.camera._gl.canvas instanceof OffscreenCanvas)
             throw Error("Canvas is offscreen")
 
+        //divide by w to perform perspective divide
         const canvasPos = vec2.fromValues(
-            Remap(newPos[0], -1, 1, 0, this.camera._gl.canvas.clientWidth),
-            Remap(newPos[1], -1, 1, 0, this.camera._gl.canvas.clientHeight),
+            Remap(newPos[0] / w, -1, 1, 0, this.camera._gl.canvas.clientWidth),
+            Remap(newPos[1] / w, -1, 1, 0, this.camera._gl.canvas.clientHeight),
         )
         return canvasPos
     }
