@@ -96,12 +96,12 @@ export class Grid<element extends IComponent> implements IComponent {
 
         const rawPos = [
             rawPoint[0] / this.tileWidth,
-            rawPoint[1] / this.tileHeight
+            rawPoint[2] / this.tileHeight
         ]
-        rawPoint[0] = roundingFunction(rawPos[0])
-        rawPoint[1] = roundingFunction(rawPos[1])
+        rawPos[0] = roundingFunction(rawPos[0])
+        rawPos[1] = roundingFunction(rawPos[1])
 
-        if (rawPoint[0] % 1 != 0 || rawPoint[1] % 1 != 0) {
+        if (rawPos[0] % 1 != 0 || rawPos[1] % 1 != 0) {
             if (silent) {
                 return null
             } else {
@@ -110,7 +110,7 @@ export class Grid<element extends IComponent> implements IComponent {
         }
 
         if (checkBounds) {
-            if (rawPoint[0] > this.width || rawPoint[1] > this.height)
+            if (rawPos[0] > this.width || rawPos[1] > this.height)
                 if (silent) {
                     return null
                 } else {
